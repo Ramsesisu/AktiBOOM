@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "aktimod",
+    "name": "AktiMod",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/Ramsesisu/AktiMod",
+    "updateUrl": "https://github.com/Ramsesisu/AktiMod/releases",
+    "authorList": [
+      "Ramses"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
