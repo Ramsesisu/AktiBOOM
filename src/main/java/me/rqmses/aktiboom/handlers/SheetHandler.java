@@ -10,17 +10,20 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.ValueRange;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.List;
 
 public class SheetHandler {
     public static Sheets sheetsService;
-
-    public static String APPLICATION_NAME = "Example";
+    public static String APPLICATION_NAME = "Schnittstelle-Aktinachweis";
     public static String SPREADSHEET_ID = "1c_PII4g37sQC635shFre0tyMDBspNK-Sd2jmkKgBEkY";
 
     public static Credential authorize() throws IOException, GeneralSecurityException {
@@ -30,7 +33,7 @@ public class SheetHandler {
                 GsonFactory.getDefaultInstance(), new InputStreamReader(in)
         );
 
-        List<String> scopes = List.of(SheetsScopes.SPREADSHEETS);
+        List<String> scopes = Collections.singletonList(SheetsScopes.SPREADSHEETS);
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 GoogleNetHttpTransport.newTrustedTransport(), GsonFactory.getDefaultInstance(),
@@ -51,5 +54,20 @@ public class SheetHandler {
                 GsonFactory.getDefaultInstance(), credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+    }
+
+    public static boolean checkConnection() throws IOException {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+
+        ValueRange valueRange = sheetsService.spreadsheets().values()
+                .get(SPREADSHEET_ID, player.getName() + "!F21:H23")
+                .execute();
+        Object object;
+        try {
+            object = valueRange.getValues().get(0).get(0);
+        } catch (RuntimeException e) {
+            object = "";
+        }
+        return object.equals(player.getName());
     }
 }

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: aktiboom
+Implementation-Version: 1.0-SNAPSHOT
+Specification-Vendor: Ramses
+Specification-Title: aktiboom
+Implementation-Timestamp: 2023-01-04T09:59:27+0100
+Specification-Version: 1
+Main-Class: me.rqmses.aktiboom.AktiBoom
+Implementation-Vendor: Ramses
+
