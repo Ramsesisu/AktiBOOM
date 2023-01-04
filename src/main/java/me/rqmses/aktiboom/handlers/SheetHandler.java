@@ -24,7 +24,7 @@ import java.util.List;
 public class SheetHandler {
     public static Sheets sheetsService;
     public static String APPLICATION_NAME = "Schnittstelle-Aktinachweis";
-    public static String SPREADSHEET_ID = "1c_PII4g37sQC635shFre0tyMDBspNK-Sd2jmkKgBEkY";
+    public static String SPREADSHEET_ID = "1qNJK29KxPqzCjoYJ5Hmw1wrxRAwxtOT4jrFjLnHbuaw";
 
     public static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream in = SheetHandler.class.getResourceAsStream("/credentials.json");
@@ -62,11 +62,10 @@ public class SheetHandler {
         ValueRange valueRange = sheetsService.spreadsheets().values()
                 .get(SPREADSHEET_ID, player.getName() + "!F21:H23")
                 .execute();
-        Object object;
+        Object object = "";
         try {
             object = valueRange.getValues().get(0).get(0);
-        } catch (RuntimeException e) {
-            object = "";
+        } catch (RuntimeException ignored) {
         }
         return object.equals(player.getName());
     }
