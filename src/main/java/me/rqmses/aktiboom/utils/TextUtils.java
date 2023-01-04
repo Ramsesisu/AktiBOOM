@@ -1,4 +1,4 @@
-package me.rqmses.aktimod.utils;
+package me.rqmses.aktiboom.utils;
 
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;

@@ -1,12 +1,12 @@
 [
   {
-    "modid": "aktimod",
-    "name": "AktiMod",
-    "description": "",
-    "version": "${version}",
+    "modid": "aktiboom",
+    "name": "AktiBOOM",
+    "description": "Mod zum Eintragen der Aktivit\u00e4ten der Terroristen-Fraktion UnicaCitys.",
+    "version": "1.0-SNAPSHOT",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/Ramsesisu/AktiMod",
-    "updateUrl": "https://github.com/Ramsesisu/AktiMod/releases",
+    "url": "https://github.com/Ramsesisu/AktiBOOM",
+    "updateUrl": "https://github.com/Ramsesisu/AktiBOOM/releases",
     "authorList": [
       "Ramses"
     ],

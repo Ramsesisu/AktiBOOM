@@ -1,6 +1,6 @@
-package me.rqmses.aktimod.commands;
+package me.rqmses.aktiboom.commands;
 
-import me.rqmses.aktimod.utils.TextUtils;
+import me.rqmses.aktiboom.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
@@ -17,13 +17,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-import static me.rqmses.aktimod.AktiBOOM.VERSION;
-import static me.rqmses.aktimod.AktiBOOM.connected;
+import static me.rqmses.aktiboom.AktiBoom.VERSION;
+import static me.rqmses.aktiboom.AktiBoom.connected;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
-public class AktiBOOMCommand extends CommandBase implements IClientCommand {
+public class AktiBoomCommand extends CommandBase implements IClientCommand {
 
     @Override
     @Nonnull
