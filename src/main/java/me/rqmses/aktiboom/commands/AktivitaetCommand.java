@@ -2,6 +2,7 @@ package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.ActivityType;
 import me.rqmses.aktiboom.enums.EquipType;
+import me.rqmses.aktiboom.global.LocationUtils;
 import me.rqmses.aktiboom.global.SheetUtils;
 import me.rqmses.aktiboom.handlers.ScreenHandler;
 import net.minecraft.client.Minecraft;
@@ -60,7 +61,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
         }
 
         if (args.length == 1) {
-            targets = new ArrayList<>(Arrays.asList("Gebietseinahme", "Flugzeugentf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
+            targets = new ArrayList<>(Arrays.asList("Gebietseinnahme", "Flugzeugentf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
                     "Menschenhandel", "Ausraub", "Autobombe", "Equip", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
                     "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay"));
         }
@@ -72,8 +73,33 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekruierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
             }
         }
+        if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("Gebietseinnahme")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("Flugzeugentf\u00fchrung")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("Geiselnahme")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("Sprengg\u00fcrtel")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("Training")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+        }
+        if (args.length == 4) {
+            if (args[0].equalsIgnoreCase("Bombe")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+        }
         if (args.length == 5) {
             if (args[0].equalsIgnoreCase("Sprengg\u00fcrtel")) {
+                targets = new ArrayList<>(Arrays.asList("Ja", "Nein"));
+            }
+            if (args[0].equalsIgnoreCase("Autobombe")) {
                 targets = new ArrayList<>(Arrays.asList("Ja", "Nein"));
             }
         }
@@ -104,10 +130,10 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
 
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
-                case "gebietseinahme":
+                case "gebietseinnahme":
                     type = ActivityType.GEBIETSEINNAHMEN;
                     argslenght = 2;
-                    usage = "/aktivit\u00e4t Gebiebtseinahme [Leiter] [Ort] ([Einnahme]) ([Protokoll])";
+                    usage = "/aktivit\u00e4t Gebietseinahme [Leiter] [Ort] ([Einnahme]) ([Protokoll])";
                     break;
                 case "flugzeugentf\u00fchrung":
                     type = ActivityType.FLUGZEUGENTFUEHRUNGEN;
@@ -341,7 +367,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case ROLEPLAY:
                     try {
-                        SheetUtils.addValues(type, new String[]{date, args[1], args[2], link});
+                        SheetUtils.addValues(type, new String[]{date, args[2], args[1], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;

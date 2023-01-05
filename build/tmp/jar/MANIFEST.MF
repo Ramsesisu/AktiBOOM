@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: aktiboom
+Implementation-Version: 1.1
+FMLCorePluginContainsFMLMod: true
+Specification-Vendor: Ramses
+Specification-Title: aktiboom
+Implementation-Timestamp: 2023-01-05T20:58:40+0100
+Specification-Version: 1
+Implementation-Vendor: Ramses
+Main-Class: me.rqmses.aktiboom.AktiBoom
+

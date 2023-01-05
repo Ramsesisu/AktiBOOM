@@ -42,7 +42,7 @@ public class AktiBoomCommand extends CommandBase implements IClientCommand {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        player.sendMessage(new TextComponentString(TextFormatting.GOLD + "AktiBOOM " + TextFormatting.DARK_GRAY + "- " + TextFormatting.YELLOW + VERSION + TextFormatting.DARK_GRAY + " - " + TextFormatting.DARK_RED + "Ramses"));
+        player.sendMessage(new TextComponentString(TextFormatting.GOLD + "AktiBOOM " + TextFormatting.DARK_GRAY + "- " + TextFormatting.YELLOW + "Version " + VERSION + TextFormatting.DARK_GRAY + " - " + TextFormatting.DARK_RED + "Ramses"));
         player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "\u27A5 " + TextFormatting.RED + "Code", TextFormatting.DARK_AQUA + "GitHub", ClickEvent.Action.OPEN_URL, "https://github.com/Ramsesisu/AktiBOOM"));
         player.sendMessage(new TextComponentString(""));
         try {
