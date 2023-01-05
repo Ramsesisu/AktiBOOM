@@ -103,6 +103,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 targets = new ArrayList<>(Arrays.asList("Ja", "Nein"));
             }
         }
+        Collections.sort(targets);
         for (String target : targets) {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
                 list.add(target);

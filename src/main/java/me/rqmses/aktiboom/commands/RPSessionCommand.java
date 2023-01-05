@@ -65,6 +65,7 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
                 list.add(target);
         }
+        Collections.sort(targets);
         return list;
     }
 
