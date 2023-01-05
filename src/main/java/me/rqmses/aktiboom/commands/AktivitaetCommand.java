@@ -41,7 +41,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/aktivit\u00e4t [Kategorie]";
+        return "/aktivit\u00e4t [Kategorie] [weitere Argumente]";
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 targets = new ArrayList<>(Arrays.asList("MP5", "Pistole", "Kevlar", "Schwere-Kevlar", "RPG-7", "Nachzahlung"));
             }
             if (args[0].equalsIgnoreCase("RolePlay")) {
-                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rektruierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
+                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekruierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
             }
         }
         if (args.length == 5) {
@@ -99,9 +99,8 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
         String money = "";
         String usage;
         String date = new SimpleDateFormat("dd.MM.yy").format(new Date());
-        String link = ScreenHandler.handleScreenshotFile();
 
-        TextComponentString errormsg = new TextComponentString(PREFIX + TextFormatting.YELLOW + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden.");
+        TextComponentString errormsg = new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden.");
 
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
@@ -178,12 +177,12 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     usage = "/aktivit\u00e4t RolePlay [Art] [Partner]";
                     break;
                 default:
-                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + args[0] + " ist keine Kategorie!"));
+                    player.sendMessage(new TextComponentString(PREFIX + args[0] + " ist keine Kategorie!"));
                     return;
             }
 
             if (args.length < (argslenght + 1)) {
-                player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + usage));
+                player.sendMessage(new TextComponentString(PREFIX + usage));
                 return;
             }
 
@@ -214,12 +213,12 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     case "nachzahlung":
                         equiptype = EquipType.NACHZAHLUNG;
                         if (args.length < 3) {
-                            player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + "Gib einen Betrag an!"));
+                            player.sendMessage(new TextComponentString(PREFIX + "Gib einen Betrag an!"));
                             return;
                         }
                         break;
                     default:
-                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + args[1] + " ist kein Gegenstand!"));
+                        player.sendMessage(new TextComponentString(PREFIX + args[1] + " ist kein Gegenstand!"));
                         return;
                 }
 
@@ -227,6 +226,8 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     price = args[2];
                 }
             }
+
+            String link = ScreenHandler.handleFile();
 
             switch (type) {
                 case FLUGZEUGENTFUEHRUNGEN:
@@ -243,7 +244,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], money, link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case BOMBEN:
@@ -255,7 +256,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], args[3], link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case SPRENGGUERTEL:
@@ -269,7 +270,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, args[1], args[2], args[3], dead, link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case MENSCHENHANDEL_AUSRAUB:
@@ -277,7 +278,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, category, args[1], args[2], args[3], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case EQUIP:
@@ -285,7 +286,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, price, equiptype.getName(), link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case TRAININGS:
@@ -297,7 +298,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case SONSTIGES:
@@ -335,7 +336,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, args[1], category, link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 case ROLEPLAY:
@@ -343,16 +344,16 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         SheetUtils.addValues(type, new String[]{date, args[1], args[2], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
-                        throw new RuntimeException(e);
+                        return;
                     }
                     break;
                 default:
-                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + "Beim Eintragen der Aktivit\u00e4t ist ein Fehler unterlaufen."));
+                    player.sendMessage(new TextComponentString(PREFIX + "Beim Eintragen der Aktivit\u00e4t ist ein Fehler unterlaufen."));
                     return;
             }
-            player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + "-" + TextFormatting.YELLOW + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
+            player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + "-" + TextFormatting.YELLOW + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
         } else {
-            player.sendMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + getUsage(sender)));
+            player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
         }
     }
 

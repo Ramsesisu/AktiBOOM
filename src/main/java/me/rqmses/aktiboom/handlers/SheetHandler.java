@@ -10,9 +10,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
-import com.google.api.services.sheets.v4.model.ValueRange;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +21,8 @@ import java.util.List;
 
 public class SheetHandler {
     public static Sheets sheetsService;
-    public static String APPLICATION_NAME = "Schnittstelle-Aktinachweis";
-    public static String SPREADSHEET_ID = "1qNJK29KxPqzCjoYJ5Hmw1wrxRAwxtOT4jrFjLnHbuaw";
+    public static final String APPLICATION_NAME = "Schnittstelle-Aktinachweis";
+    public static final String SPREADSHEET_ID = "1qNJK29KxPqzCjoYJ5Hmw1wrxRAwxtOT4jrFjLnHbuaw";
 
     public static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream in = SheetHandler.class.getResourceAsStream("/credentials.json");
@@ -57,16 +55,14 @@ public class SheetHandler {
     }
 
     public static boolean checkConnection() throws IOException {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
-
-        ValueRange valueRange = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID, player.getName() + "!F21:H23")
-                .execute();
-        Object object = "";
         try {
-            object = valueRange.getValues().get(0).get(0);
-        } catch (RuntimeException ignored) {
+            sheetsService.spreadsheets().values()
+                    .get(SPREADSHEET_ID, Minecraft.getMinecraft().player.getName() + "!F21:H23")
+                    .execute();
+        } catch (IOException e) {
+            return false;
         }
-        return object.equals(player.getName());
+
+        return true;
     }
 }

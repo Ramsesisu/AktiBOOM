@@ -7,6 +7,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 import static me.rqmses.aktiboom.handlers.SheetHandler.SPREADSHEET_ID;
@@ -55,7 +56,7 @@ public class SheetUtils {
                         break;
                 }
                 sheetsService.spreadsheets().values()
-                        .append(SPREADSHEET_ID, player.getName()+"!B"+ (type.getStart() + i), new ValueRange().setValues(Arrays.asList(Arrays.asList(values))))
+                        .append(SPREADSHEET_ID, player.getName()+"!B"+ (type.getStart() + i), new ValueRange().setValues(Collections.singletonList(Arrays.asList(values))))
                         .setValueInputOption("USER_ENTERED")
                         .setInsertDataOption("OVERWRITE")
                         .setIncludeValuesInResponse(true)

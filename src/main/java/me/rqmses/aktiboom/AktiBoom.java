@@ -2,6 +2,8 @@ package me.rqmses.aktiboom;
 
 import me.rqmses.aktiboom.commands.AktiBoomCommand;
 import me.rqmses.aktiboom.commands.AktivitaetCommand;
+import me.rqmses.aktiboom.commands.RPCommand;
+import me.rqmses.aktiboom.commands.RPSessionCommand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -24,12 +26,12 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.0-SNAPSHOT";
+    public static final String VERSION = "1.1";
 
     @Mod.Instance(MOD_ID)
     public static AktiBoom INSTANCE;
 
-    public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] ";
+    public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws GeneralSecurityException, IOException {
@@ -46,6 +48,9 @@ public class AktiBoom {
     public void CommandRegistration() {
         ClientCommandHandler.instance.registerCommand(new AktiBoomCommand());
         ClientCommandHandler.instance.registerCommand(new AktivitaetCommand());
+        ClientCommandHandler.instance.registerCommand(new RPSessionCommand());
+        ClientCommandHandler.instance.registerCommand(new RPSessionCommand());
+        ClientCommandHandler.instance.registerCommand(new RPCommand());
     }
 
     public void ListenerRegistration() {

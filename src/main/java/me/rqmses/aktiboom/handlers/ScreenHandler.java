@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ScreenHandler {
 
-    public static String handleScreenshotFile() {
+    public static String handleFile() {
         File file;
         try {
             file = FileHandler.getNewImageFile();
@@ -23,11 +23,11 @@ public class ScreenHandler {
     }
 
     public static String handleScreenshotWithUpload(File file) throws IOException {
-        File screenshotFile = handleScreenshotFile(file);
+        File screenshotFile = handleFile(file);
         return uploadScreenshot(screenshotFile);
     }
 
-    private static File handleScreenshotFile(File file) {
+    public static File handleFile(File file) {
         if (file != null) {
             try {
                 Framebuffer framebuffer = ReflectionUtils.getValue(Minecraft.getMinecraft(), Framebuffer.class);
