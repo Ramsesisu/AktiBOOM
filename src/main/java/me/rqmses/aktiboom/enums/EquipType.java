@@ -15,8 +15,7 @@ public enum EquipType {
         return this.name;
     }
 
-    EquipType(String name)
-    {
+    EquipType(String name) {
         this.name = name;
     }
 }
