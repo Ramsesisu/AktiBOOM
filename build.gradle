@@ -101,8 +101,6 @@ dependencies {
     shade 'com.google.apis:google-api-services-sheets:v4-rev20221216-2.0.0'
     implementation 'com.google.http-client:google-http-client-gson:1.42.3'
     shade 'com.google.http-client:google-http-client-gson:1.42.3'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    shade 'com.squareup.okhttp3:okhttp:4.10.0'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
