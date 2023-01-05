@@ -49,7 +49,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new AktiBoomCommand());
         ClientCommandHandler.instance.registerCommand(new AktivitaetCommand());
         ClientCommandHandler.instance.registerCommand(new RPSessionCommand());
-        ClientCommandHandler.instance.registerCommand(new RPSessionCommand());
         ClientCommandHandler.instance.registerCommand(new RPCommand());
     }
 
