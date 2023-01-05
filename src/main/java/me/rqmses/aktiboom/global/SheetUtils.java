@@ -1,21 +1,25 @@
 package me.rqmses.aktiboom.global;
 
 import com.google.api.services.sheets.v4.model.ValueRange;
-import org.example.enums.ActivityType;
+import me.rqmses.aktiboom.enums.ActivityType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
-import static me.rqmses.aktiboom.AktiBoom.NAME;
 import static me.rqmses.aktiboom.handlers.SheetHandler.SPREADSHEET_ID;
 import static me.rqmses.aktiboom.handlers.SheetHandler.sheetsService;
 
 public class SheetUtils {
 
     public static Object getValue(ActivityType type, int row, int line) throws IOException {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+
         ValueRange valueRange = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID, NAME + "!B" + type.getStart() + ":I" + (type.getStart() + type.getRange()))
+                .get(SPREADSHEET_ID, player.getName() + "!B" + type.getStart() + ":I" + (type.getStart() + type.getRange()))
                 .execute();
         try {
             return valueRange.getValues().get(row).get(line);
@@ -25,9 +29,11 @@ public class SheetUtils {
     }
 
     public static void addValues(ActivityType type, String[] args) throws IOException {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+
         for (int i = 0; i < type.getRange(); i++) {
             if (Objects.equals(getValue(type, i, 0).toString(), "")) {
-                Object[] values = new Object[8];
+                Object[] values = new Object[10];
                 switch (type) {
                     case GEBIETSEINNAHMEN:
                     case FLUGZEUGENTFUEHRUNGEN:
@@ -50,7 +56,7 @@ public class SheetUtils {
                         break;
                 }
                 sheetsService.spreadsheets().values()
-                        .append(SPREADSHEET_ID, NAME+"!B"+ (type.getStart() + i), new ValueRange().setValues(List.of(List.of(values))))
+                        .append(SPREADSHEET_ID, player.getName()+"!B"+ (type.getStart() + i), new ValueRange().setValues(Collections.singletonList(Arrays.asList(values))))
                         .setValueInputOption("USER_ENTERED")
                         .setInsertDataOption("OVERWRITE")
                         .setIncludeValuesInResponse(true)
@@ -58,9 +64,5 @@ public class SheetUtils {
                 return;
             }
         }
-    }
-
-    private static void setValues(ValueRange valueRange, String range) throws IOException {
-
     }
 }

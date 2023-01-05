@@ -1,4 +1,4 @@
-package org.example.enums;
+package me.rqmses.aktiboom.enums;
 
 public enum ActivityType {
 
@@ -22,12 +22,6 @@ public enum ActivityType {
 
     public Integer getStart() {
         return this.range[0];
-    }
-
-    public String[] getArgs() {
-        return new String[] {"Gebietseinahme", "Flugzeugentf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
-                "Menschenhandel", "Ausraub", "Autobombe", "Equip", "Training", "Waffentransport", "Zuzahlung" , "Bombenspot",
-                "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay"};
     }
 
     ActivityType(Integer[] range)
