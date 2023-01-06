@@ -54,7 +54,7 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
         ArrayList<String> targets = new ArrayList<>();
         if (!session) {
             if (args.length == 1) {
-                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekruierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
+                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
             } else if (args.length == 2) {
                 for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
                     targets.add(String.valueOf(playerInfo.getGameProfile().getName()));
@@ -114,9 +114,8 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
                 case "propaganda":
                     category = "Propaganda";
                     break;
-                case "rektrutierung":
-                    // Rechtschreibfehler im Aktinachweis
-                    category = "Rektrutierung";
+                case "rekrutierung":
+                    category = "Rekrutierung";
                     break;
                 case "sprengg\u00fcrteldrohung":
                     category = "Sprengg\u00fcrteldrohung";
@@ -129,14 +128,21 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
                     category = "Verhandlung";
                     break;
             }
+
+            boolean success;
+
             try {
-                SheetUtils.addValues(ActivityType.ROLEPLAY, new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), partner, category, link});
+                success = SheetUtils.addValues(ActivityType.ROLEPLAY, new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), partner, category, link});
             } catch (IOException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
                 return;
             }
             partner = "";
-            player.sendMessage(new TextComponentString(PREFIX + "Die Aufnahmen der RolePlay-Sitzung wurden gespeichert."));
+            if (success) {
+                player.sendMessage(new TextComponentString(PREFIX + "Die Aufnahmen der RolePlay-Sitzung wurden gespeichert."));
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
+            }
         }
     }
 

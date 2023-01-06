@@ -69,7 +69,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 targets = new ArrayList<>(Arrays.asList("MP5", "Pistole", "Kevlar", "Schwere-Kevlar", "RPG-7", "Nachzahlung"));
             }
             if (args[0].equalsIgnoreCase("RolePlay")) {
-                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekruierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
+                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
             }
             if (args[0].equalsIgnoreCase("Auftragsauslieferung")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
@@ -302,6 +302,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             }
 
             String link = ScreenHandler.handleFile();
+            boolean success = false;
 
             switch (type) {
                 case FLUGZEUGENTFUEHRUNGEN:
@@ -315,7 +316,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         }
                     }
                     try {
-                        SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], money, link, forum});
+                        success = SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], money, link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -327,7 +328,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         forum = args[4];
                     }
                     try {
-                        SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], args[3], link, forum});
+                        success = SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], args[3], link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -341,7 +342,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         dead = args[4];
                     }
                     try {
-                        SheetUtils.addValues(type, new String[]{date, args[1], args[2], args[3], dead, link});
+                        success = SheetUtils.addValues(type, new String[]{date, args[1], args[2], args[3], dead, link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -349,7 +350,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case MENSCHENHANDEL_AUSRAUB:
                     try {
-                        SheetUtils.addValues(type, new String[]{date, category, args[1], args[2], args[3], link});
+                        success = SheetUtils.addValues(type, new String[]{date, category, args[1], args[2], args[3], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -357,7 +358,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case EQUIP:
                     try {
-                        SheetUtils.addValues(type, new String[]{date, price, equiptype.getName(), link});
+                        success = SheetUtils.addValues(type, new String[]{date, price, equiptype.getName(), link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -369,7 +370,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         forum = args[3];
                     }
                     try {
-                        SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], link, forum});
+                        success = SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -407,7 +408,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                             break;
                     }
                     try {
-                        SheetUtils.addValues(type, new String[]{date, args[1], category, link});
+                        success = SheetUtils.addValues(type, new String[]{date, args[1], category, link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -415,7 +416,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case ROLEPLAY:
                     try {
-                        SheetUtils.addValues(type, new String[]{date, args[2], args[1], link});
+                        success = SheetUtils.addValues(type, new String[]{date, args[2], args[1], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -425,7 +426,11 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     player.sendMessage(new TextComponentString(PREFIX + "Beim Eintragen der Aktivit\u00e4t ist ein Fehler unterlaufen."));
                     return;
             }
-            player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + "-" + TextFormatting.YELLOW + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
+            if (success) {
+                player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + "-" + TextFormatting.YELLOW + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
+            }
         } else {
             player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
         }

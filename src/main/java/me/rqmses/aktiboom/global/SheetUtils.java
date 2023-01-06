@@ -28,10 +28,10 @@ public class SheetUtils {
         }
     }
 
-    public static void addValues(ActivityType type, String[] args) throws IOException {
+    public static boolean addValues(ActivityType type, String[] args) throws IOException {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        for (int i = 0; i < type.getRange(); i++) {
+        for (int i = 0; i <= type.getRange(); i++) {
             if (Objects.equals(getValue(type, i, 0).toString(), "")) {
                 Object[] values = new Object[10];
                 switch (type) {
@@ -61,8 +61,9 @@ public class SheetUtils {
                         .setInsertDataOption("OVERWRITE")
                         .setIncludeValuesInResponse(true)
                         .execute();
-                return;
+                return true;
             }
         }
+        return false;
     }
 }
