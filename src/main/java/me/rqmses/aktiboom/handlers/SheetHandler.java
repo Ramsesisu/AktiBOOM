@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class SheetHandler {
     public static Sheets sheetsService;
@@ -26,9 +27,8 @@ public class SheetHandler {
 
     public static Credential authorize() throws IOException, GeneralSecurityException {
         InputStream in = SheetHandler.class.getResourceAsStream("/credentials.json");
-        assert in != null;
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-                GsonFactory.getDefaultInstance(), new InputStreamReader(in)
+                GsonFactory.getDefaultInstance(), new InputStreamReader(Objects.requireNonNull(in))
         );
 
         List<String> scopes = Collections.singletonList(SheetsScopes.SPREADSHEETS);

@@ -72,6 +72,30 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             if (args[0].equalsIgnoreCase("RolePlay")) {
                 targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekruierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
             }
+            if (args[0].equalsIgnoreCase("Auftragsauslieferung")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Bombenspot")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Drohung")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Geisel")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("RP-Event")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Spende")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Waffentransport")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Zuzahlung")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
         }
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("Gebietseinnahme")) {
@@ -89,10 +113,34 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             if (args[0].equalsIgnoreCase("Training")) {
                 targets = new ArrayList<>(LocationUtils.getLocs());
             }
+            if (args[0].equalsIgnoreCase("Equip")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
         }
         if (args.length == 4) {
             if (args[0].equalsIgnoreCase("Bombe")) {
                 targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("Ausraub")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Menschenhandel")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Autobombe")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Sprengg\u00fcrtel")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Gebietseinnahme")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Flugzeugentf\u00fchrung")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Geiselnahme")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
             }
         }
         if (args.length == 5) {
