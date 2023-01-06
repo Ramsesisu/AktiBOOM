@@ -26,7 +26,7 @@ public class ScreenHandler {
         }
     }
 
-    public static String handleScreenshotWithUpload(File file) throws IOException {
+    public static String handleScreenshotWithUpload(File file) {
         File screenshotFile = handleFile(file);
         return uploadScreenshot(screenshotFile);
     }

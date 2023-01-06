@@ -15,6 +15,7 @@ import java.util.List;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
+@SuppressWarnings("deprecation")
 public class UploadHandler {
 
     private static final String UPLOAD_API_URL = "https://api.imgur.com/3/image";

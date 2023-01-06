@@ -4,7 +4,6 @@ import me.rqmses.aktiboom.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
@@ -17,11 +16,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-import java.io.IOException;
-
 import static me.rqmses.aktiboom.AktiBoom.VERSION;
 import static me.rqmses.aktiboom.handlers.SheetHandler.checkConnection;
 
+@SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
 public class AktiBoomCommand extends CommandBase implements IClientCommand {
@@ -39,20 +37,16 @@ public class AktiBoomCommand extends CommandBase implements IClientCommand {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         player.sendMessage(new TextComponentString(TextFormatting.GOLD + "AktiBOOM " + TextFormatting.DARK_GRAY + "- " + TextFormatting.YELLOW + "Version " + VERSION + TextFormatting.DARK_GRAY + " - " + TextFormatting.DARK_RED + "Ramses"));
         player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "\u27A5 " + TextFormatting.RED + "Code", TextFormatting.DARK_AQUA + "GitHub", ClickEvent.Action.OPEN_URL, "https://github.com/Ramsesisu/AktiBOOM"));
         player.sendMessage(new TextComponentString(""));
-        try {
-            if (checkConnection()) {
-                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Verbunden"));
-            } else {
-                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.RED + "Getrennt"));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (checkConnection()) {
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Verbunden"));
+        } else {
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.RED + "Getrennt"));
         }
     }
 
