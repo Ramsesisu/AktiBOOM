@@ -2,8 +2,8 @@ package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.ActivityType;
 import me.rqmses.aktiboom.enums.EquipType;
-import me.rqmses.aktiboom.global.LocationUtils;
-import me.rqmses.aktiboom.global.SheetUtils;
+import me.rqmses.aktiboom.utils.LocationUtils;
+import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.handlers.ScreenHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;

@@ -1,7 +1,7 @@
 package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.ActivityType;
-import me.rqmses.aktiboom.global.SheetUtils;
+import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.handlers.UploadHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;

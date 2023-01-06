@@ -1,4 +1,4 @@
-package me.rqmses.aktiboom.global;
+package me.rqmses.aktiboom.utils;
 
 import com.google.api.services.sheets.v4.model.ValueRange;
 import me.rqmses.aktiboom.enums.ActivityType;

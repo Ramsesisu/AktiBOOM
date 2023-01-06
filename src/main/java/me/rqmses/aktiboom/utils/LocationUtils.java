@@ -1,4 +1,4 @@
-package me.rqmses.aktiboom.global;
+package me.rqmses.aktiboom.utils;
 
 import java.util.Arrays;
 import java.util.List;
