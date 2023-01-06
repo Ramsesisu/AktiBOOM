@@ -8,6 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileHandler {
+
+    /**
+     * @see <a href="https://github.com/rettichlp/UnicacityAddon-1.12.2/blob/develop/src/main/java/com/rettichlp/unicacityaddon/base/manager/FileManager.java">UnicacityAddon-1.12.2 by rettichlp</a>
+     */
+
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     public static File getMinecraftDir() {

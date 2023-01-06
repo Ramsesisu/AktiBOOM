@@ -12,6 +12,10 @@ import java.io.IOException;
 
 public class ScreenHandler {
 
+    /**
+     * @see <a href="https://github.com/rettichlp/UnicacityAddon-1.12.2/blob/develop/src/main/java/com/rettichlp/unicacityaddon/base/manager/FileManager.java">UnicacityAddon-1.12.2 by rettichlp</a>
+     */
+
     public static String handleFile() {
         File file;
         try {
