@@ -69,8 +69,4 @@ public class RPCommand extends CommandBase implements IClientCommand {
     public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
         return false;
     }
-
-    private String getId(String url) {
-        return url.replace("https://i.imgur.com/", "").replace(".jpg", "");
-    }
 }
