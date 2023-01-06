@@ -9,7 +9,6 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
@@ -54,7 +53,7 @@ public class RPCommand extends CommandBase implements IClientCommand {
                 return;
             }
             RPSessionCommand.imageHashes.add(hash);
-            player.sendStatusMessage(new TextComponentString(TextFormatting.YELLOW + "Screenshot gespeichert."), true);
+            player.sendMessage(new TextComponentString(PREFIX + "Screenshot gespeichert."));
         } else {
             player.sendMessage(new TextComponentString(PREFIX + "Du hast keine Sitzung gestartet."));
         }
