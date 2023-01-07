@@ -2,7 +2,6 @@ package me.rqmses.aktiboom.listeners;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -22,7 +21,6 @@ public class ChatListener {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         Timer timer = new Timer();
         if (event.getMessage().getUnformattedText().equalsIgnoreCase("Du hast eine Bombe gelegt.")) {
-            player.sendMessage(new TextComponentString(event.getMessage().getUnformattedText()));
             x = player.getPosition().getX();
             y = player.getPosition().getY();
             z = player.getPosition().getZ();
