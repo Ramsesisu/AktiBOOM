@@ -31,6 +31,12 @@ public class ChatListener {
                     player.sendChatMessage("/navi " + x + "/" + y + "/" + z);
                 }
             }, TimeUnit.SECONDS.toMillis(1));
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    planter = false;
+                }
+            }, TimeUnit.SECONDS.toMillis(3));
             return;
         }
         if (planter) {
