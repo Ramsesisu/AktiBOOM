@@ -11,11 +11,11 @@ public enum EquipType {
 
     private final String name;
 
-    public String getName() {
-        return this.name;
-    }
-
     EquipType(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

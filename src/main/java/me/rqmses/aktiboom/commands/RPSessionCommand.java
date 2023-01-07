@@ -1,8 +1,8 @@
 package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.ActivityType;
-import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.handlers.UploadHandler;
+import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -72,7 +72,6 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
-
         session = !session;
         if (session) {
             if (args.length < 1) {
@@ -132,7 +131,7 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
             boolean success;
 
             try {
-                success = SheetUtils.addValues(ActivityType.ROLEPLAY, new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), partner, category, link});
+                success = SheetUtils.addActivity(ActivityType.ROLEPLAY, new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), partner, category, link});
             } catch (IOException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
                 return;

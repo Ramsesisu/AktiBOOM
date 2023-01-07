@@ -43,7 +43,6 @@ public class RPCommand extends CommandBase implements IClientCommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
-
         if (session) {
             String hash;
             try {

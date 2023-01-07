@@ -302,7 +302,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             }
 
             String link = ScreenHandler.handleFile();
-            boolean success = false;
+            boolean success;
 
             switch (type) {
                 case FLUGZEUGENTFUEHRUNGEN:
@@ -316,7 +316,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         }
                     }
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], money, link, forum});
+                        success = SheetUtils.addActivity(type, new String[]{date, leading, args[1], args[2], money, link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -328,7 +328,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         forum = args[4];
                     }
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], args[3], link, forum});
+                        success = SheetUtils.addActivity(type, new String[]{date, leading, args[1], args[2], args[3], link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -342,7 +342,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         dead = args[4];
                     }
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, args[1], args[2], args[3], dead, link});
+                        success = SheetUtils.addActivity(type, new String[]{date, args[1], args[2], args[3], dead, link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -350,7 +350,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case MENSCHENHANDEL_AUSRAUB:
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, category, args[1], args[2], args[3], link});
+                        success = SheetUtils.addActivity(type, new String[]{date, category, args[1], args[2], args[3], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -358,7 +358,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case EQUIP:
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, price, equiptype.getName(), link});
+                        success = SheetUtils.addActivity(type, new String[]{date, price, equiptype.getName(), link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -370,7 +370,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         forum = args[3];
                     }
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, leading, args[1], args[2], link, forum});
+                        success = SheetUtils.addActivity(type, new String[]{date, leading, args[1], args[2], link, forum});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -408,7 +408,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                             break;
                     }
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, args[1], category, link});
+                        success = SheetUtils.addActivity(type, new String[]{date, args[1], category, link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;
@@ -416,7 +416,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     break;
                 case ROLEPLAY:
                     try {
-                        success = SheetUtils.addValues(type, new String[]{date, args[2], args[1], link});
+                        success = SheetUtils.addActivity(type, new String[]{date, args[2], args[1], link});
                     } catch (IOException e) {
                         player.sendMessage(errormsg);
                         return;

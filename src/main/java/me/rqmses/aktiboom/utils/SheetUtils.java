@@ -2,6 +2,9 @@ package me.rqmses.aktiboom.utils;
 
 import com.google.api.services.sheets.v4.model.ValueRange;
 import me.rqmses.aktiboom.enums.ActivityType;
+import me.rqmses.aktiboom.enums.CheckActivityType;
+import me.rqmses.aktiboom.enums.CheckEquipType;
+import me.rqmses.aktiboom.enums.InformationType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 
@@ -15,11 +18,11 @@ import static me.rqmses.aktiboom.handlers.SheetHandler.sheetsService;
 
 public class SheetUtils {
 
-    public static Object getValue(ActivityType type, int row, int line) throws IOException {
+    private static Object getValue(ActivityType type, int row, int line) throws IOException {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         ValueRange valueRange = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID, player.getName() + "!B" + type.getStart() + ":I" + (type.getStart() + type.getRange()))
+                .get(SPREADSHEET_ID, player.getName() + "!B" + type.getLine() + ":I" + (type.getLine() + type.getRange()))
                 .execute();
         try {
             return valueRange.getValues().get(row).get(line);
@@ -28,7 +31,65 @@ public class SheetUtils {
         }
     }
 
-    public static boolean addValues(ActivityType type, String[] args) throws IOException {
+    private static String getInfo(InformationType type, Integer line) throws IOException {
+        ValueRange valueRange = sheetsService.spreadsheets().values()
+                .get(SPREADSHEET_ID, type.getSheet() + "!" + type.getColumn() + line)
+                .execute();
+        try {
+            return valueRange.getValues().get(0).get(0).toString();
+        } catch (RuntimeException e) {
+            return "";
+        }
+    }
+
+    public static int getRank() {
+        for (int i = InformationType.NAME.getLine(); i <= (InformationType.NAME.getRange() + InformationType.NAME.getLine()); i++) {
+            try {
+                if (Objects.equals(getInfo(InformationType.NAME, i), Minecraft.getMinecraft().player.getName())) {
+                    return Integer.parseInt(getInfo(InformationType.RANK, i));
+                }
+            } catch (IOException e) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    public static String getAktis(CheckActivityType type, String column) {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        ValueRange valueRange;
+        try {
+            valueRange = sheetsService.spreadsheets().values()
+                    .get(SPREADSHEET_ID, player.getName() + "!" + column + type.getLine())
+                    .execute();
+        } catch (IOException e) {
+            return "0";
+        }
+        try {
+            return valueRange.getValues().get(0).get(0).toString();
+        } catch (RuntimeException e) {
+            return "0";
+        }
+    }
+
+    public static String getEquip(CheckEquipType type, String column) {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        ValueRange valueRange;
+        try {
+            valueRange = sheetsService.spreadsheets().values()
+                    .get(SPREADSHEET_ID, player.getName() + "!" + column + type.getLine())
+                    .execute();
+        } catch (IOException e) {
+            return "0";
+        }
+        try {
+            return valueRange.getValues().get(0).get(0).toString();
+        } catch (RuntimeException e) {
+            return "0";
+        }
+    }
+
+    public static boolean addActivity(ActivityType type, String[] args) throws IOException {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         for (int i = 0; i <= type.getRange(); i++) {
@@ -56,7 +117,31 @@ public class SheetUtils {
                         break;
                 }
                 sheetsService.spreadsheets().values()
-                        .append(SPREADSHEET_ID, player.getName()+"!B"+ (type.getStart() + i), new ValueRange().setValues(Collections.singletonList(Arrays.asList(values))))
+                        .append(SPREADSHEET_ID, player.getName()+"!B"+ (type.getLine() + i), new ValueRange().setValues(Collections.singletonList(Arrays.asList(values))))
+                        .setValueInputOption("USER_ENTERED")
+                        .setInsertDataOption("OVERWRITE")
+                        .setIncludeValuesInResponse(true)
+                        .execute();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean addSECDrugs(String[] args) throws IOException {
+        for (int i = 0; i <= 30; i++) {
+            String value;
+            ValueRange valueRange = sheetsService.spreadsheets().values()
+                    .get(SPREADSHEET_ID, "SEC-Drogen!C" + (4 + i))
+                    .execute();
+            try {
+                value = valueRange.getValues().get(0).get(0).toString();
+            } catch (RuntimeException e) {
+                value = "";
+            }
+            if (Objects.equals(value, "")) {
+                sheetsService.spreadsheets().values()
+                        .append(SPREADSHEET_ID, "SEC-Drogen!C" + (4 + i), new ValueRange().setValues(Collections.singletonList(Arrays.asList(new Object[]{args[0], args[1], args[2], args[3]}))))
                         .setValueInputOption("USER_ENTERED")
                         .setInsertDataOption("OVERWRITE")
                         .setIncludeValuesInResponse(true)
