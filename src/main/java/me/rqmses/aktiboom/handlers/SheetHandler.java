@@ -57,7 +57,7 @@ public class SheetHandler {
     public static boolean checkConnection() {
         try {
             sheetsService.spreadsheets().values()
-                    .get(SPREADSHEET_ID, Minecraft.getMinecraft().player.getName() + "!F21:H23")
+                    .get(SPREADSHEET_ID, Minecraft.getMinecraft().player.getName() + "!F21")
                     .execute();
         } catch (IOException e) {
             return false;

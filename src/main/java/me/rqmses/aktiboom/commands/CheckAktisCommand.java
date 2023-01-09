@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +48,13 @@ public class CheckAktisCommand extends CommandBase implements IClientCommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
+
+        String name;
+        if (args.length > 0) {
+            name = args[0];
+        } else {
+            name = player.getName();
+        }
 
         player.sendMessage(new TextComponentString(PREFIX + "Aktivit\u00e4ten von " + TextFormatting.DARK_GRAY + TextFormatting.GOLD + player.getName()));
         player.sendMessage(new TextComponentString(""));
@@ -103,7 +111,14 @@ public class CheckAktisCommand extends CommandBase implements IClientCommand {
         int minroleplay = 0;
         int minleading = 0;
 
-        switch (getRank()) {
+        int rank;
+        try {
+            rank = getRank(name);
+        } catch (IOException e) {
+            rank = 0;
+        }
+
+        switch (rank) {
             case 0:
                 minamount = 4;
                 minincome = 4000;

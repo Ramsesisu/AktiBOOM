@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,9 +47,24 @@ public class InfoCommand extends CommandBase implements IClientCommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
+
+        String name;
+        if (args.length > 0) {
+            name = args[0];
+        } else {
+            name = player.getName();
+        }
+
         player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.DARK_GRAY + TextFormatting.GOLD + player.getName()));
         player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Name: " + TextFormatting.YELLOW + player.getName()));
-        int rank = SheetUtils.getRank();
+
+        int rank;
+        try {
+            rank = SheetUtils.getRank(name);
+        } catch (IOException e) {
+            rank = 0;
+        }
+
         String rankname = "Rekrut";
         switch (rank) {
             case 1:

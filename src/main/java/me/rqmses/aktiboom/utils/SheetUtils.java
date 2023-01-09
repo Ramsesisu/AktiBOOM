@@ -4,7 +4,6 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 import me.rqmses.aktiboom.enums.ActivityType;
 import me.rqmses.aktiboom.enums.CheckActivityType;
 import me.rqmses.aktiboom.enums.CheckEquipType;
-import me.rqmses.aktiboom.enums.InformationType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 
@@ -31,28 +30,15 @@ public class SheetUtils {
         }
     }
 
-    private static String getInfo(InformationType type, Integer line) throws IOException {
+    public static int getRank(String name) throws IOException {
         ValueRange valueRange = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID, type.getSheet() + "!" + type.getColumn() + line)
+                .get(SPREADSHEET_ID, "\u00dcbersicht!B4:B27")
                 .execute();
-        try {
-            return valueRange.getValues().get(0).get(0).toString();
-        } catch (RuntimeException e) {
-            return "";
-        }
-    }
-
-    public static int getRank() {
-        for (int i = InformationType.NAME.getLine(); i <= (InformationType.NAME.getRange() + InformationType.NAME.getLine()); i++) {
-            try {
-                if (Objects.equals(getInfo(InformationType.NAME, i), Minecraft.getMinecraft().player.getName())) {
-                    return Integer.parseInt(getInfo(InformationType.RANK, i));
-                }
-            } catch (IOException e) {
-                return 0;
-            }
-        }
-        return 0;
+        int line = valueRange.getValues().indexOf(Collections.singletonList(name));
+        valueRange = sheetsService.spreadsheets().values()
+                .get(SPREADSHEET_ID, "\u00dcbersicht!A4:A27")
+                .execute();
+        return Integer.parseInt(valueRange.getValues().get(line).get(0).toString());
     }
 
     public static String getAktis(CheckActivityType type, String column) {

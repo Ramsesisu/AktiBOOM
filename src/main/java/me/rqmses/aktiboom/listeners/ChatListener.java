@@ -2,54 +2,22 @@ package me.rqmses.aktiboom.listeners;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
 public class ChatListener {
 
-    public static boolean planter = false;
-    public static int x = 0;
-    public static int y = 0;
-    public static int z = 0;
-
     @SubscribeEvent
-    public void onChat(ClientChatReceivedEvent event) {
+    public void onChat(ClientChatEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
-        Timer timer = new Timer();
-        if (event.getMessage().getUnformattedText().equalsIgnoreCase("Du hast eine Bombe gelegt.")) {
-            x = player.getPosition().getX();
-            y = player.getPosition().getY();
-            z = player.getPosition().getZ();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    planter = true;
-                    player.sendChatMessage("/navi " + x + "/" + y + "/" + z);
-                }
-            }, TimeUnit.SECONDS.toMillis(1));
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    planter = false;
-                }
-            }, TimeUnit.SECONDS.toMillis(3));
-            return;
-        }
-        if (planter) {
-            if (event.getMessage().getUnformattedText().contains("Du hast deine Route gel\u00f6scht.")) {
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        player.sendChatMessage("/navi " + x + "/" + y + "/" + z);
-                        planter = false;
-                    }
-                }, TimeUnit.SECONDS.toMillis(1));
+        if (player.inventory.armorInventory.get(2).getDisplayName().contains("Sprengg\u00fcrtel")) {
+            if (event.getOriginalMessage().contains("/use")) {
+                player.sendMessage(new TextComponentString(PREFIX + "Du darfst keine Drogen nehmen w\u00e4hrend du einen Sprengg\u00fcrtel tr\u00e4gst!"));
+                event.setCanceled(true);
             }
-            planter = false;
         }
     }
 }
