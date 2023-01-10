@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.IOException;
 import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
@@ -24,24 +25,24 @@ import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
-public class InfoCommand extends CommandBase implements IClientCommand {
+public class CheckDrohungCommand extends CommandBase implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "info";
+        return "checkdrohung";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/info ([Name])";
+        return "/checkdrohung [Name]";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("information", "informationen");
+        return Arrays.asList("checksprengg\u00fcrteldrohung", "checksprengidrohung", "checkthreat");
     }
 
     @Override
@@ -66,54 +67,23 @@ public class InfoCommand extends CommandBase implements IClientCommand {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        String name;
         if (args.length > 0) {
-            name = args[0];
+            String name = args[0];
+            try {
+                int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", name) + 4;
+                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G"+line+":K"+line).getValues().get(0);
+                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                    return;
+                }
+                player.sendMessage(new TextComponentString(PREFIX + "Sprengg\u00fcrteldrohung von " + TextFormatting.GOLD + name));
+                player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + " bis " + list.get(4) + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
+            } catch (IOException e) {
+                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+            }
         } else {
-            name = player.getName();
+            player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Spieler angeben!"));
         }
-
-        player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Name: " + TextFormatting.YELLOW + name));
-
-        int rank = SheetUtils.getRank(name);
-        String rankname = "Rekrut";
-        switch (rank) {
-            case -1:
-                rankname = "Nicht in der Fraktion";
-                break;
-            case 1:
-                rankname = "Feldwebel";
-                break;
-            case 2:
-                rankname = "Leutnant";
-                break;
-            case 3:
-                rankname = "Hauptmann";
-                break;
-            case 4:
-                rankname = "Major";
-                break;
-            case 5:
-                rankname = "General";
-                break;
-            case 6:
-                rankname = "Kommandant";
-                break;
-        }
-
-        String secrank = SheetUtils.getSECRank(name);
-        String secrankname = secrank;
-        if (secrank.startsWith("E-")) {
-            secrankname = "Executive";
-        } else if (secrank.startsWith("C-")) {
-            secrankname = "Commander";
-        } else if (secrank.startsWith("G-")) {
-            secrankname = "General";
-        }
-
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "SEC: " + TextFormatting.YELLOW + secrankname));
     }
 
     @Override

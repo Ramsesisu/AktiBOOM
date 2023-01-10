@@ -20,6 +20,6 @@ public class LocationUtils {
                 "Urantransport", "Deathmatch-Arena", "Gef\u00e4ngnis", "Hochseefischer", "Feuerwerksladen", "Angelschein", "Terroristen",
                 "S\u00e4gewerk", "200", "363", "531", "B\u00e4ckerei", "Shop", "Windrad-FBI", "UCM", "Altes-Gef\u00e4ngnis", "H\u00f6lle",
                 "Himmel", "Checkpoint-Gef\u00e4ngnis", "Anwaltskanzelei", "Musikladen", "Alcatraz", "36", "144", "171", "190", "Stadion", "433",
-                "382", "Metzgerei", "Las-Unicas", "CT-Shop", "Mileu", "Ballas", "SH", "KH", "Uran");
+                "382", "Metzgerei", "Las-Unicas", "CT-Shop", "Mileu", "Ballas", "SH", "KH", "Uran", "523");
     }
 }

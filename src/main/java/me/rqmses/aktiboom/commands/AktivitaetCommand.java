@@ -41,7 +41,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/aktivit\u00e4t [Kategorie] [weitere Argumente]";
+        return "/aktivit\u00e4t [Kategorie] ([weitere Argumente])";
     }
 
     @Override
@@ -60,9 +60,9 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
         }
 
         if (args.length == 1) {
-            targets = new ArrayList<>(Arrays.asList("Gebietseinnahme", "Flugzeugentf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
+            targets = new ArrayList<>(Arrays.asList("Gebietseinnahme", "Entf\u00fchrung", "Flugzeugentf\u00fchrung", "UBoot-Entf\u00fchrung", "UBahn-Entf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
                     "Menschenhandel", "Ausraub", "Autobombe", "Equip", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
-                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay"));
+                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay", "Schutzgeld"));
         }
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("Equip")) {
@@ -86,6 +86,9 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             if (args[0].equalsIgnoreCase("RP-Event")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
+            if (args[0].equalsIgnoreCase("Schutzgeld")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
             if (args[0].equalsIgnoreCase("Spende")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
@@ -100,7 +103,16 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             if (args[0].equalsIgnoreCase("Gebietseinnahme")) {
                 targets = new ArrayList<>(LocationUtils.getLocs());
             }
+            if (args[0].equalsIgnoreCase("Entf\u00fchrung")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
             if (args[0].equalsIgnoreCase("Flugzeugentf\u00fchrung")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("UBoot-Entf\u00fchrung")) {
+                targets = new ArrayList<>(LocationUtils.getLocs());
+            }
+            if (args[0].equalsIgnoreCase("UBahn-Entf\u00fchrung")) {
                 targets = new ArrayList<>(LocationUtils.getLocs());
             }
             if (args[0].equalsIgnoreCase("Geiselnahme")) {
@@ -135,7 +147,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             if (args[0].equalsIgnoreCase("Gebietseinnahme")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
-            if (args[0].equalsIgnoreCase("Flugzeugentf\u00fchrung")) {
+            if (args[0].equalsIgnoreCase("Entf\u00fchrung")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
             if (args[0].equalsIgnoreCase("Geiselnahme")) {
@@ -183,10 +195,13 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     argslenght = 2;
                     usage = "/aktivit\u00e4t Gebietseinahme [Leiter] [Ort] ([Einnahme]) ([Protokoll])";
                     break;
+                case "ubahn-entf\u00fchrung":
+                case "uboot-entf\u00fchrung":
                 case "flugzeugentf\u00fchrung":
-                    type = ActivityType.FLUGZEUGENTFUEHRUNGEN;
+                case "entf\u00fchrung":
+                    type = ActivityType.ENTFUEHRUNGEN;
                     argslenght = 2;
-                    usage = "/aktivit\u00e4t Flugzeugentf\u00fchrung [Leiter] [Ort] ([Einnahme]) ([Protokoll])";
+                    usage = "/aktivit\u00e4t Entf\u00fchrung [Leiter] [Ort] ([Einnahme]) ([Protokoll])";
                     break;
                 case "geiselnahme":
                     type = ActivityType.GEISELNAHMEN;
@@ -239,6 +254,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 case "drohung":
                 case "sprengidrohung":
                 case "schutzgeldforderung":
+                case "schutzgeld":
                 case "geisel":
                 case "auftragsauslieferung":
                     type = ActivityType.SONSTIGES;
@@ -305,7 +321,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             boolean success;
 
             switch (type) {
-                case FLUGZEUGENTFUEHRUNGEN:
+                case ENTFUEHRUNGEN:
                 case GEBIETSEINNAHMEN:
                 case GEISELNAHMEN:
                     if (args.length > 3) {
@@ -398,6 +414,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         case "drohung":
                         case "sprengidrohung":
                         case "schutzgeldforderung":
+                        case "schutzgeld":
                             category = "Sprengi-Drohung/ Schutzgeldforderung";
                             break;
                         case "geisel":

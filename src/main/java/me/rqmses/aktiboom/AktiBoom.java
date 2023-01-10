@@ -1,15 +1,17 @@
 package me.rqmses.aktiboom;
 
 import me.rqmses.aktiboom.commands.*;
-import me.rqmses.aktiboom.listeners.ChatListener;
-import me.rqmses.aktiboom.listeners.HotkeyListener;
+import me.rqmses.aktiboom.listeners.*;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
@@ -20,10 +22,12 @@ import java.security.GeneralSecurityException;
 import static me.rqmses.aktiboom.handlers.SheetHandler.getSheetsService;
 import static me.rqmses.aktiboom.handlers.SheetHandler.sheetsService;
 
+@SideOnly(Side.CLIENT)
 @Mod(
         modid = AktiBoom.MOD_ID,
         name = AktiBoom.MOD_NAME,
-        version = AktiBoom.VERSION
+        version = AktiBoom.VERSION,
+        clientSideOnly = true
 )
 public class AktiBoom {
 
@@ -32,6 +36,15 @@ public class AktiBoom {
     public static final String VERSION = "1.3";
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
+
+    public static boolean SEC = false;
+    public static String SECRANK = "Executive";
+    public static int RANK = 0;
+
+    @Mod.EventHandler
+    public void preinit(FMLPreInitializationEvent event) {
+        ConfigManager.sync(MOD_ID, Config.Type.INSTANCE);
+    }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws GeneralSecurityException, IOException {
@@ -48,7 +61,6 @@ public class AktiBoom {
         sheetsService = getSheetsService();
     }
 
-    @SideOnly(Side.CLIENT)
     public void CommandRegistration() {
         ClientCommandHandler.instance.registerCommand(new AktiBoomCommand());
         ClientCommandHandler.instance.registerCommand(new AktivitaetCommand());
@@ -60,11 +72,27 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new SECDrugsCommand());
         ClientCommandHandler.instance.registerCommand(new CheckSECDrugsCommand());
         ClientCommandHandler.instance.registerCommand(new BombeCommand());
+        ClientCommandHandler.instance.registerCommand(new AuftragsauslieferungCommand());
+        ClientCommandHandler.instance.registerCommand(new AuftraegeCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckAuftragCommand());
+        ClientCommandHandler.instance.registerCommand(new SprengguerteldrohungCommand());
+        ClientCommandHandler.instance.registerCommand(new DrohungenCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckDrohungCommand());
+        ClientCommandHandler.instance.registerCommand(new SchutzgeldCommand());
+        ClientCommandHandler.instance.registerCommand(new SchutzCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckSchutzCommand());
+        ClientCommandHandler.instance.registerCommand(new RefreshCommand());
+        ClientCommandHandler.instance.registerCommand(new SECChatCommand());
+        ClientCommandHandler.instance.registerCommand(new SECCommand());
+        ClientCommandHandler.instance.registerCommand(new StatistikCommand());
     }
 
     public void ListenerRegistration() {
         MinecraftForge.EVENT_BUS.register(new HotkeyListener());
         MinecraftForge.EVENT_BUS.register(new ChatListener());
+        MinecraftForge.EVENT_BUS.register(new ReceiveListener());
+        MinecraftForge.EVENT_BUS.register(new JoinListener());
+        MinecraftForge.EVENT_BUS.register(new NameFormatListener());
     }
 
     public static KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");

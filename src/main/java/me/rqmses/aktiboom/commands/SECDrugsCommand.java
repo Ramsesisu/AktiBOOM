@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
+import static me.rqmses.aktiboom.AktiBoom.SEC;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -63,6 +64,10 @@ public class SECDrugsCommand extends CommandBase implements IClientCommand {
 
         if (args.length < 2) {
             player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
+            return;
+        }
+        if (!SEC) {
+            player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Mitglied im SEC."));
             return;
         }
 
