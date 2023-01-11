@@ -6,8 +6,12 @@ import me.rqmses.aktiboom.commands.SchutzCommand;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.io.IOException;
+import java.util.List;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
 
@@ -37,5 +41,23 @@ public class JoinListener {
         SchutzCommand.syncList();
         AuftraegeCommand.syncList();
         DrohungenCommand.syncList();
+
+        try {
+            List<List<Object>> values = SheetUtils.getValueRange("SEC-Drogen", "H13:I21").getValues();
+            for (List<Object> value : values) {
+                String secrank = value.get(1).toString();
+                String secrankname = secrank;
+                if (secrank.startsWith("E-")) {
+                    secrankname = "Executive";
+                } else if (secrank.startsWith("C-")) {
+                    secrankname = "Commander";
+                } else if (secrank.startsWith("G-")) {
+                    secrankname = "General";
+                }
+                ReceiveListener.playerranks.put(value.get(0).toString(), secrankname);
+            }
+        } catch (IOException e) {
+            player.sendMessage(new TextComponentString(PREFIX + "Deine Daten konnten nicht geladen werden."));
+        }
     }
 }

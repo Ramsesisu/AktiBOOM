@@ -48,7 +48,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("add", "done", "rename");
+            targets = Arrays.asList("add", "remove", "rename");
         }
         if (args.length == 2) {
             for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
@@ -88,7 +88,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                     if (args.length > 3) {
                         try {
                             SheetUtils.addValues("Auftr\u00e4ge", "M4:O54", new String[] {args[1], args[2], args[3]});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat ein Schutzgeld auf " + args[1] + " gesetzt.");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat ein Schutzgeld von " + args[1] + " eingetragen.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Das Schutzgeld konnte nicht eingetragen werden."));
                         }

@@ -106,7 +106,7 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
                                 return;
                             }
                             SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an " + args[1] + " gel\u00f6scht.");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an " + args[1] + " gel\u00f6scht.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht gel\u00f6scht werden."));
                         }

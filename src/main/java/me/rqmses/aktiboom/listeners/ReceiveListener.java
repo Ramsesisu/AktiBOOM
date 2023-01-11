@@ -18,7 +18,7 @@ import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatprefix;
 
 public class ReceiveListener {
 
-    private static final HashMap<String, String> playerranks = new HashMap<>();
+    public static final HashMap<String, String> playerranks = new HashMap<>();
 
     @SubscribeEvent
     public void onMessage(ClientChatReceivedEvent event) {
@@ -57,7 +57,7 @@ public class ReceiveListener {
         if (message.contains(": %SECCHAT% :")) {
             if (SEC) {
                 String[] contents = message.split(":", 3);
-                String name = contents[0].split(" ")[1];
+                String name = contents[0].split(" ")[1].replace("[UC]", "");
                 String text = contents[2];
 
                 String secrankname;
