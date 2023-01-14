@@ -31,6 +31,10 @@ public class ConfigHandler {
     @Config.Comment("F\u00e4rbt die Nachricht des SEC-Chats in dem gegeben ColorCode.")
     public static String secchatmessage = "7";
 
+    @Config.Name("Auto-Refresh")
+    @Config.Comment("Aktualisiert die Mod-Daten automatisch. (Verursacht Lags)")
+    public static boolean autorefresh = false;
+
 
     @SubscribeEvent
     public static void onConfigChange(ConfigChangedEvent event) {

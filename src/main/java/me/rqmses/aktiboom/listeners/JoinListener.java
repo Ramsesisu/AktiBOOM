@@ -3,24 +3,37 @@ package me.rqmses.aktiboom.listeners;
 import me.rqmses.aktiboom.commands.AuftraegeCommand;
 import me.rqmses.aktiboom.commands.DrohungenCommand;
 import me.rqmses.aktiboom.commands.SchutzCommand;
+import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.utils.SheetUtils;
+import me.rqmses.aktiboom.utils.TimeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.IOException;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
 
 public class JoinListener {
 
+    public static List<List<Object>> kalender = new ArrayList<>();
+    public static HashMap<String, String> scheduler = new HashMap<>();
+
+    public static Timer timer = new Timer();
+
     @SubscribeEvent
     public void onJoin(EntityJoinWorldEvent event) {
-        if (event.getEntity() instanceof EntityPlayerSP) {
-            refresh();
+        if (!latest) {
+            if (event.getEntity() instanceof EntityPlayerSP) {
+                latest = true;
+                refresh();
+            }
         }
     }
 
@@ -57,7 +70,147 @@ public class JoinListener {
                 ReceiveListener.playerranks.put(value.get(0).toString(), secrankname);
             }
         } catch (IOException e) {
-            player.sendMessage(new TextComponentString(PREFIX + "Deine Daten konnten nicht geladen werden."));
+            player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));
+        }
+
+        try {
+            scheduler = new HashMap<>();
+
+            Calendar calendar = Calendar.getInstance();
+            int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+            String daycolumn;
+
+            switch (day) {
+                case Calendar.MONDAY:
+                    daycolumn = "C";
+                    break;
+                case Calendar.TUESDAY:
+                    daycolumn = "D";
+                    break;
+                case Calendar.WEDNESDAY:
+                    daycolumn = "E";
+                    break;
+                case Calendar.THURSDAY:
+                    daycolumn = "F";
+                    break;
+                case Calendar.FRIDAY:
+                    daycolumn = "G";
+                    break;
+                case Calendar.SATURDAY:
+                    daycolumn = "H";
+                    break;
+                case Calendar.SUNDAY:
+                    daycolumn = "I";
+                    break;
+                default:
+                    player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));
+                    return;
+            }
+
+            if (Integer.parseInt(new SimpleDateFormat("HH").format(new Date())) <= 2) {
+                daycolumn = String.valueOf((char) (daycolumn.charAt(0) - 1)).toUpperCase();
+            }
+
+            kalender = SheetUtils.getValueRange("Kalender", daycolumn + "4:" + daycolumn + "41").getValues();
+
+            for (List<Object> list : kalender) {
+                if (list.size() > 0) {
+                    String value = list.get(0).toString();
+                    if (!value.equalsIgnoreCase("----")) {
+                        String date = TimeUtils.lineToDate(kalender.indexOf(Collections.singletonList(value)));
+                        kalender.set(kalender.indexOf(Collections.singletonList(value)), Collections.singletonList(""));
+                        scheduler.put(date, value);
+                    }
+                }
+            }
+
+            for (String key : scheduler.keySet()) {
+                // 0 Minuten
+                calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " " + key));
+                if (Integer.parseInt(new SimpleDateFormat("HH").format(calendar.getTime())) <= 2 && Integer.parseInt(new SimpleDateFormat("HH").format(new Date())) > 2) {
+                    calendar.add(Calendar.HOUR, 24);
+                }
+                calendar.add(Calendar.MINUTE, -0);
+                if (calendar.getTime().after(new Date())) {
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (scheduler.get(key).split(" ").length == 0) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Es findet nun eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + " statt."));
+                            } else {
+                                player.sendMessage(new TextComponentString(PREFIX + "Es findet nun eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + ", geleitet von " + TextFormatting.GOLD + scheduler.get(key).split(" ")[1] + TextFormatting.YELLOW + ", statt."));
+                            }
+                        }
+                    }, calendar.getTime());
+                }
+                // 10 Minuten
+                calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " " + key));
+                if (Integer.parseInt(new SimpleDateFormat("HH").format(calendar.getTime())) <= 2 && Integer.parseInt(new SimpleDateFormat("HH").format(new Date())) > 2) {
+                    calendar.add(Calendar.HOUR, 24);
+                }
+                calendar.add(Calendar.MINUTE, -10);
+                if (calendar.getTime().after(new Date())) {
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (scheduler.get(key).split(" ").length == 0) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Um " + TextFormatting.GOLD + "" + TextFormatting.BOLD + key + " Uhr" + TextFormatting.YELLOW + " findet eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + " statt."));
+                            } else {
+                                player.sendMessage(new TextComponentString(PREFIX + "Um " + TextFormatting.GOLD + "" + TextFormatting.BOLD + key + " Uhr" + TextFormatting.YELLOW + " findet eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + ", geleitet von " + TextFormatting.GOLD + scheduler.get(key).split(" ")[1] + TextFormatting.YELLOW + ", statt."));
+                            }
+                        }
+                    }, calendar.getTime());
+                }
+                // 30 Minuten
+                calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " " + key));
+                if (Integer.parseInt(new SimpleDateFormat("HH").format(calendar.getTime())) <= 2 && Integer.parseInt(new SimpleDateFormat("HH").format(new Date())) > 2) {
+                    calendar.add(Calendar.HOUR, 24);
+                }
+                calendar.add(Calendar.MINUTE, -30);
+                if (calendar.getTime().after(new Date())) {
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (scheduler.get(key).split(" ").length == 0) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Um " + TextFormatting.GOLD + "" + TextFormatting.BOLD + key + " Uhr" + TextFormatting.YELLOW + " findet eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + " statt."));
+                            } else {
+                                player.sendMessage(new TextComponentString(PREFIX + "Um " + TextFormatting.GOLD + "" + TextFormatting.BOLD + key + " Uhr" + TextFormatting.YELLOW + " findet eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + ", geleitet von " + TextFormatting.GOLD + scheduler.get(key).split(" ")[1] + TextFormatting.YELLOW + ", statt."));
+                            }
+                        }
+                    }, calendar.getTime());
+                }
+                // 90 Minuten
+                calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " " + key));
+                if (Integer.parseInt(new SimpleDateFormat("HH").format(calendar.getTime())) <= 2 && Integer.parseInt(new SimpleDateFormat("HH").format(new Date())) > 2) {
+                    calendar.add(Calendar.HOUR, 24);
+                }
+                calendar.add(Calendar.MINUTE, -90);
+                if (calendar.getTime().after(new Date())) {
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (scheduler.get(key).split(" ").length == 0) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Um " + TextFormatting.GOLD + "" + TextFormatting.BOLD + key + " Uhr" + TextFormatting.YELLOW + " findet eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + " statt."));
+                            } else {
+                                player.sendMessage(new TextComponentString(PREFIX + "Um " + TextFormatting.GOLD + "" + TextFormatting.BOLD + key + " Uhr" + TextFormatting.YELLOW + " findet eine " + TextFormatting.GOLD + scheduler.get(key).split(" ")[0] + "-Aktivit\u00e4t" + TextFormatting.YELLOW + ", geleitet von " + TextFormatting.GOLD + scheduler.get(key).split(" ")[1] + TextFormatting.YELLOW + ", statt."));
+                            }
+                        }
+                    }, calendar.getTime());
+                }
+            }
+
+            if (ConfigHandler.autorefresh) {
+                calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " 23:59"));
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        refresh();
+                    }
+                }, calendar.getTime());
+            }
+        } catch (IOException | ParseException e) {
+            player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));
         }
     }
 }

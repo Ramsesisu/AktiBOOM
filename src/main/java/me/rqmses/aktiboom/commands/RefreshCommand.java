@@ -11,7 +11,10 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 
+import java.util.Timer;
+
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
+import static me.rqmses.aktiboom.listeners.JoinListener.timer;
 
 public class RefreshCommand extends CommandBase implements IClientCommand {
     @Override
@@ -28,9 +31,10 @@ public class RefreshCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        timer = new Timer();
         JoinListener.refresh();
 
-        Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Deine Daten wurden neu geladen."));
+        Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
     }
 
     @Override

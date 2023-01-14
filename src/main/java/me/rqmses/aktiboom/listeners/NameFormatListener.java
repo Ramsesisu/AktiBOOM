@@ -13,11 +13,11 @@ public class NameFormatListener {
     @SubscribeEvent
     public void onNameFormat(PlayerEvent.NameFormat event) {
         if (SchutzCommand.schutz.contains(event.getUsername())) {
-            event.setDisplayname(FormatUtils.getColor(ConfigHandler.schutzcolor) + event.getUsername());
+            event.setDisplayname(event.getDisplayname().replace(event.getUsername(), FormatUtils.getColor(ConfigHandler.schutzcolor) + event.getUsername()));
         } else if (AuftraegeCommand.auftraege.contains(event.getUsername())) {
-            event.setDisplayname(FormatUtils.getColor(ConfigHandler.auftragcolor) + event.getUsername());
+            event.setDisplayname(event.getDisplayname().replace(event.getUsername(), FormatUtils.getColor(ConfigHandler.auftragcolor) + event.getUsername()));
         } else if (DrohungenCommand.drohungen.contains(event.getUsername())) {
-            event.setDisplayname(FormatUtils.getColor(ConfigHandler.drohungcolor) + event.getUsername());
+            event.setDisplayname(event.getDisplayname().replace(event.getUsername(), FormatUtils.getColor(ConfigHandler.drohungcolor) + event.getUsername()));
         }
     }
 }

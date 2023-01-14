@@ -3,42 +3,42 @@ package me.rqmses.aktiboom.utils;
 import net.minecraft.util.text.TextFormatting;
 
 public class FormatUtils {
-    public static TextFormatting getColor(String colorcode) {
-        switch (colorcode.toLowerCase()) {
+    public static String getColor(String colorcode) {
+        switch (colorcode.replace("\u00a7", "").toLowerCase()) {
             case "0":
-                return TextFormatting.BLACK;
+                return TextFormatting.BLACK + "";
             case "1":
-                return TextFormatting.DARK_BLUE;
+                return TextFormatting.DARK_BLUE + "";
             case "2":
-                return TextFormatting.DARK_GREEN;
+                return TextFormatting.DARK_GREEN + "";
             case "3":
-                return TextFormatting.DARK_AQUA;
+                return TextFormatting.DARK_AQUA + "";
             case "4":
-                return TextFormatting.DARK_RED;
+                return TextFormatting.DARK_RED + "";
             case "5":
-                return TextFormatting.DARK_PURPLE;
+                return TextFormatting.DARK_PURPLE + "";
             case "6":
-                return TextFormatting.GOLD;
+                return TextFormatting.GOLD + "";
             case "7":
-                return TextFormatting.GRAY;
+                return TextFormatting.GRAY + "";
             case "8":
-                return TextFormatting.DARK_GRAY;
+                return TextFormatting.DARK_GRAY + "";
             case "9":
-                return TextFormatting.BLUE;
+                return TextFormatting.BLUE + "";
             case "a":
-                return TextFormatting.GREEN;
+                return TextFormatting.GREEN + "";
             case "b":
-                return TextFormatting.AQUA;
+                return TextFormatting.AQUA + "";
             case "c":
-                return TextFormatting.RED;
+                return TextFormatting.RED + "";
             case "d":
-                return TextFormatting.LIGHT_PURPLE;
+                return TextFormatting.LIGHT_PURPLE + "";
             case "e":
-                return TextFormatting.YELLOW;
+                return TextFormatting.YELLOW + "";
             case "f":
-                return TextFormatting.WHITE;
+                return TextFormatting.WHITE + "";
             default:
-                return TextFormatting.RESET;
+                return "";
         }
     }
 }

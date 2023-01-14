@@ -33,13 +33,14 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.3";
+    public static final String VERSION = "1.4";
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
 
     public static boolean SEC = false;
     public static String SECRANK = "Executive";
     public static int RANK = 0;
+    public static boolean latest = false;
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
@@ -85,6 +86,8 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new SECChatCommand());
         ClientCommandHandler.instance.registerCommand(new SECCommand());
         ClientCommandHandler.instance.registerCommand(new StatistikCommand());
+        ClientCommandHandler.instance.registerCommand(new KalenderCommand());
+        ClientCommandHandler.instance.registerCommand(new BeweiseCommand());
     }
 
     public void ListenerRegistration() {
