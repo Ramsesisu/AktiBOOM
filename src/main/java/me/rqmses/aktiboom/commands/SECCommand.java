@@ -85,6 +85,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
                                 return;
                             }
                             SheetUtils.clearValues("SEC-Drogen", "H" + line + ":I" + line);
+                            SheetUtils.sortRange("SEC-Drogen", "H13:H20");
                             player.sendChatMessage("/f %INFO% :" + args[1] + " wurde von " + player.getName() + " aus dem SEC geworfen.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht im SEC."));

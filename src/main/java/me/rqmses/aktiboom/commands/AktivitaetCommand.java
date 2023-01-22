@@ -62,7 +62,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
         if (args.length == 1) {
             targets = new ArrayList<>(Arrays.asList("Gebietseinnahme", "Entf\u00fchrung", "Flugzeugentf\u00fchrung", "UBoot-Entf\u00fchrung", "UBahn-Entf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
                     "Menschenhandel", "Ausraub", "Autobombe", "Equip", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
-                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay", "Schutzgeld"));
+                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay", "Schutzgeld", "Tuning"));
         }
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("Equip")) {
@@ -96,6 +96,9 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
             if (args[0].equalsIgnoreCase("Zuzahlung")) {
+                targets = new ArrayList<>(Collections.singletonList("0"));
+            }
+            if (args[0].equalsIgnoreCase("Tuning")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
         }
@@ -249,6 +252,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 case "bombenspot":
                 case "spot":
                 case "rp-event":
+                case "tuning":
                 case "event":
                 case "spende":
                 case "drohung":
@@ -423,6 +427,9 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         case "auftragsauslieferung":
                             category = "Auftragsauslieferung";
                             break;
+                        case "tuning":
+                            category = "Tuning";
+                            break;
                     }
                     try {
                         success = SheetUtils.addActivity(type, new String[]{date, args[1], category, link});
@@ -444,7 +451,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     return;
             }
             if (success) {
-                player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + "-" + TextFormatting.YELLOW + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
+                player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + "-" + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
             }

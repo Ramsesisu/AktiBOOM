@@ -10,6 +10,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static me.rqmses.aktiboom.handlers.SheetHandler.SPREADSHEET_ID;
 import static me.rqmses.aktiboom.handlers.SheetHandler.sheetsService;
@@ -83,6 +84,43 @@ public class SheetUtils {
             return getValueRange(InformationType.SECNAMES.getSheet(), InformationType.SECNAMES.getRange()).getValues().contains(Collections.singletonList(name));
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    public static void sortRange(String sheet, String range) throws IOException {
+        ValueRange response = sheetsService.spreadsheets().values().get(SPREADSHEET_ID, sheet + "!" + range).execute();
+        List<List<Object>> values = response.getValues();
+
+        int firstEmptyRow = 0;
+        for (List<Object> row : values) {
+            boolean isEmpty = true;
+            for (Object cell : row) {
+                if (cell != null) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+            if (isEmpty) {
+                break;
+            }
+            firstEmptyRow++;
+        }
+
+        for (int i = firstEmptyRow; i < values.size()-1; i++) {
+            values.set(i,values.get(i+1));
+        }
+
+        values.remove(values.size()-1);
+        ValueRange body = new ValueRange().setValues(values);
+        sheetsService.spreadsheets().values()
+                .update(SPREADSHEET_ID, sheet + "!" + range, body)
+                .setValueInputOption("RAW")
+                .execute();
+
+        if (!(firstEmptyRow > values.size())) {
+            sheetsService.spreadsheets().values()
+                    .clear(SPREADSHEET_ID, sheet + "!" + range.split(":")[0].replaceAll("\\d", "") + (Integer.parseInt(range.split(":")[0].replaceAll("\\D", "")) + values.size()) + ":" + range.split(":")[1].replaceAll("\\d", "") + (Integer.parseInt(range.split(":")[0].replaceAll("\\D", "")) + values.size()), new ClearValuesRequest())
+                    .execute();
         }
     }
 

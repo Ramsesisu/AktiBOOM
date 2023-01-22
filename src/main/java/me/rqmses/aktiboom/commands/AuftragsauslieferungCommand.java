@@ -38,7 +38,7 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("lieferung", "delivery", "auftrag");
+        return Arrays.asList("lieferung", "delivery", "auftrag", "auslieferung");
     }
 
     @Override
@@ -55,7 +55,9 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
             }
         }
         if (args.length == 4) {
-            targets = Arrays.asList("2000", "2500", "3000");
+            if (args[0].equalsIgnoreCase("add")) {
+                targets = Arrays.asList("2000", "2500", "3000");
+            }
         }
         for (String target : targets) {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
@@ -93,6 +95,7 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
                                 return;
                             }
                             SheetUtils.clearValues("Auftr\u00e4ge", "B" + line + ":E" + line);
+                            SheetUtils.sortRange("Auftr\u00e4ge", "B4:E54");
                             player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsaustrag von " + args[1] + " beendet.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht gel\u00f6scht werden."));

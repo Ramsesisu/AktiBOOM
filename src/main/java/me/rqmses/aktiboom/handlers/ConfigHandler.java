@@ -23,6 +23,10 @@ public class ConfigHandler {
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
     public static String schutzcolor = "";
 
+    @Config.Name("Autobomben-Nametag")
+    @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
+    public static String tuningcolor = "";
+
     @Config.Name("SECChat-Farbe-Prefix")
     @Config.Comment("F\u00e4rbt den Prefix des SEC-Chats in dem gegeben ColorCode.")
     public static String secchatprefix = "c";
@@ -34,6 +38,10 @@ public class ConfigHandler {
     @Config.Name("Auto-Refresh")
     @Config.Comment("Aktualisiert die Mod-Daten automatisch. (Verursacht Lags)")
     public static boolean autorefresh = false;
+
+    @Config.Name("Auto-Spielbrett")
+    @Config.Comment("\u00d6ffnet das Spielfeld automatisch, wenn man an der Reihe ist")
+    public static boolean autoboard = true;
 
 
     @SubscribeEvent

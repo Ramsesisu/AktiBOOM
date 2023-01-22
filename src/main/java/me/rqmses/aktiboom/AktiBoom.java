@@ -29,11 +29,15 @@ import static me.rqmses.aktiboom.handlers.SheetHandler.sheetsService;
         version = AktiBoom.VERSION,
         clientSideOnly = true
 )
+
 public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.4";
+    public static final String VERSION = "1.6";
+    @Mod.Instance(MOD_ID)
+    public static AktiBoom INSTANCE;
+
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
 
@@ -88,14 +92,19 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new StatistikCommand());
         ClientCommandHandler.instance.registerCommand(new KalenderCommand());
         ClientCommandHandler.instance.registerCommand(new BeweiseCommand());
+        ClientCommandHandler.instance.registerCommand(new AutobombeCommand());
+        ClientCommandHandler.instance.registerCommand(new TuningsCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckTuningCommand());
+        ClientCommandHandler.instance.registerCommand(new GameCommand());
     }
 
     public void ListenerRegistration() {
         MinecraftForge.EVENT_BUS.register(new HotkeyListener());
         MinecraftForge.EVENT_BUS.register(new ChatListener());
-        MinecraftForge.EVENT_BUS.register(new ReceiveListener());
+        MinecraftForge.EVENT_BUS.register(new ChatReceiveListener());
         MinecraftForge.EVENT_BUS.register(new JoinListener());
         MinecraftForge.EVENT_BUS.register(new NameFormatListener());
+        MinecraftForge.EVENT_BUS.register(new ClientTickListener());
     }
 
     public static KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");

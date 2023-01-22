@@ -3,6 +3,7 @@ package me.rqmses.aktiboom.listeners;
 import me.rqmses.aktiboom.commands.AuftraegeCommand;
 import me.rqmses.aktiboom.commands.DrohungenCommand;
 import me.rqmses.aktiboom.commands.SchutzCommand;
+import me.rqmses.aktiboom.commands.TuningsCommand;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.utils.TimeUtils;
@@ -54,6 +55,7 @@ public class JoinListener {
         SchutzCommand.syncList();
         AuftraegeCommand.syncList();
         DrohungenCommand.syncList();
+        TuningsCommand.syncList();
 
         try {
             List<List<Object>> values = SheetUtils.getValueRange("SEC-Drogen", "H13:I21").getValues();
@@ -67,7 +69,7 @@ public class JoinListener {
                 } else if (secrank.startsWith("G-")) {
                     secrankname = "General";
                 }
-                ReceiveListener.playerranks.put(value.get(0).toString(), secrankname);
+                ChatReceiveListener.playerranks.put(value.get(0).toString(), secrankname);
             }
         } catch (IOException e) {
             player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));

@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.IClientCommand;
-import org.apache.commons.lang3.time.DateUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,24 +21,24 @@ import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
-public class SprengguerteldrohungCommand extends CommandBase implements IClientCommand {
+public class AutobombeCommand extends CommandBase implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "sprengg\u00fcrteldrohung";
+        return "autobombe";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/sprengg\u00fcrteldrohung add/done/rename [Name] ([Kosten/Neuer Name]) ([Frist])";
+        return "/autobombe add/done/rename [Name] ([Auftraggeber/Neuer Name]) ([Preis])";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("sprengidrohung", "drohung", "threat");
+        return Arrays.asList("specialtuning", "tuning", "carbomb");
     }
 
     @Override
@@ -50,24 +49,14 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
         if (args.length == 1) {
             targets = Arrays.asList("add", "done", "rename");
         }
-        if (args.length == 2) {
+        if (args.length == 2 || args.length == 3) {
             for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
                 targets.add(String.valueOf(playerInfo.getGameProfile().getName()));
             }
         }
-        if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("add")) {
-                targets = Arrays.asList("2500");
-            }
-            if (args[0].equalsIgnoreCase("rename")) {
-                for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
-                    targets.add(String.valueOf(playerInfo.getGameProfile().getName()));
-                }
-            }
-        }
         if (args.length == 4) {
             if (args[0].equalsIgnoreCase("add")) {
-                targets = Arrays.asList(new SimpleDateFormat("dd.MM.yy").format(DateUtils.addDays(new Date(), 3)));
+                targets = Arrays.asList("3750");
             }
         }
         for (String target : targets) {
@@ -85,52 +74,56 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
         if (args.length > 0) {
             switch (args[0].toLowerCase()) {
                 case "add":
-                    if (args.length > 3) {
+                    if (args.length > 2) {
+                        String price = "3750";
+                        if (args.length > 3) {
+                            price = args[3];
+                        }
                         try {
-                            SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[] {new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], args[3]});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an " + args[1] + " eingetragen.");
+                            SheetUtils.addValues("Auftr\u00e4ge", "Q4:T54", new String[] {new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], price});
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Autobombe f\u00fcr " + args[1] + " eingetragen.");
                         } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht eingetragen werden."));
+                            player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht eingetragen werden."));
                         }
                     } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung add [Name] [Preis] [Frist]"));
+                        player.sendMessage(new TextComponentString(PREFIX + "/autobombe add [Name] [Auftraggeber] ([Preis])"));
                     }
                     break;
                 case "done":
                     if (args.length > 1) {
                         try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G"+line+":K"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", args[1]) + 4;
+                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q"+line+":T"+line).getValues().get(0);
+                            if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Autobombe."));
                                 return;
                             }
-                            SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
-                            SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an " + args[1] + " gel\u00f6scht.");
+                            SheetUtils.clearValues("Auftr\u00e4ge", "Q" + line + ":T" + line);
+                            SheetUtils.sortRange("Auftr\u00e4ge", "Q4:T54");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Autobombe f\u00fcr " + args[1] + " platziert.");
                         } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht gel\u00f6scht werden."));
+                            player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht gel\u00f6scht werden."));
                         }
                     } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung done [Name]"));
+                        player.sendMessage(new TextComponentString(PREFIX + "/autobombe done [Name]"));
                     }
                     break;
                 case "rename":
                     if (args.length > 2) {
                         try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G"+line+":K"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", args[1]) + 4;
+                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q"+line+":T"+line).getValues().get(0);
+                            if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Autobombe."));
                                 return;
                             }
-                            SheetUtils.setValues("Auftr\u00e4ge", "H" + line, new String[]{args[2]});
+                            SheetUtils.setValues("Auftr\u00e4ge", "R" + line, new String[]{args[2]});
                             player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
                         }
                     } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung rename [Name] [Neuer Name]"));
+                        player.sendMessage(new TextComponentString(PREFIX + "/autobombe rename [Name] [Neuer Name]"));
                     }
                     break;
             }

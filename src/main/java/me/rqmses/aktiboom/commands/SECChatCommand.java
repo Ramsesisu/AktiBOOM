@@ -10,7 +10,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
-
 import java.util.Arrays;
 import java.util.List;
 
