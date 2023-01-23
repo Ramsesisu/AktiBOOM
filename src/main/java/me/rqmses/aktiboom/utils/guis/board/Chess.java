@@ -32,12 +32,62 @@ public interface Chess {
         return new ItemStack(Item.getItemById(0));
     }
 
+    default ItemStack getExitTile() {
+        return new ItemStack(Item.getItemById(35),1,14).setStackDisplayName(TextFormatting.RED + "" + TextFormatting.BOLD + "Beenden");
+    }
+
+    default ItemStack getIronPoints() {
+        int ironpoints = 0;
+        for (int i = 0; i < ChessContainer.inventory.getSizeInventory(); i++) {
+            if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(i).getItem().getRegistryName()).toString().contains("iron")) {
+                ironpoints = ironpoints + ChessContainer.inventory.getStackInSlot(i).getCount();
+            }
+        }
+        int diamondpoints = 0;
+        for (int i = 0; i < ChessContainer.inventory.getSizeInventory(); i++) {
+            if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(i).getItem().getRegistryName()).toString().contains("diamond")) {
+                diamondpoints = diamondpoints + ChessContainer.inventory.getStackInSlot(i).getCount();
+            }
+        }
+        int points = ironpoints - diamondpoints;
+        String stringpoints;
+        if (points >= 0) {
+            stringpoints = TextFormatting.GREEN + "" + TextFormatting.BOLD + points;
+        } else {
+            stringpoints = TextFormatting.RED + "" + TextFormatting.BOLD + points;
+        }
+        return new ItemStack(Item.getItemById(323),1).setStackDisplayName(TextFormatting.WHITE + "Punkte: " + stringpoints);
+    }
+
+    default ItemStack getDiamondPoints() {
+        int ironpoints = 0;
+        for (int i = 0; i < ChessContainer.inventory.getSizeInventory(); i++) {
+            if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(i).getItem().getRegistryName()).toString().contains("iron")) {
+                ironpoints = ironpoints + ChessContainer.inventory.getStackInSlot(i).getCount();
+            }
+        }
+        int diamondpoints = 0;
+        for (int i = 0; i < ChessContainer.inventory.getSizeInventory(); i++) {
+            if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(i).getItem().getRegistryName()).toString().contains("diamond")) {
+                diamondpoints = diamondpoints + ChessContainer.inventory.getStackInSlot(i).getCount();
+            }
+        }
+        int points = diamondpoints - ironpoints;
+        String stringpoints;
+        if (points >= 0) {
+            stringpoints = TextFormatting.GREEN + "" + TextFormatting.BOLD + points;
+        } else {
+            stringpoints = TextFormatting.RED + "" + TextFormatting.BOLD + points;
+        }
+        return new ItemStack(Item.getItemById(323),1).setStackDisplayName(TextFormatting.WHITE + "Punkte: " + stringpoints);
+    }
+
     default ItemStack getWhitePawn() {
         return new ItemStack(Item.getItemById(309),1).setStackDisplayName(TextFormatting.WHITE + "" + TextFormatting.BOLD + "Bauer");
     }
 
     default ItemStack getBlackPawn() {
-        return new ItemStack(Item.getItemById(313),1).setStackDisplayName(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Bauer");
+        return new ItemStack(Item.getItemById(313),1).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "Bauer");
     }
 
     default ItemStack getWhiteKnight() {
@@ -45,7 +95,7 @@ public interface Chess {
     }
 
     default ItemStack getBlackKnight() {
-        return new ItemStack(Item.getItemById(279),3).setStackDisplayName(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Springer");
+        return new ItemStack(Item.getItemById(279),3).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "Springer");
     }
 
     default ItemStack getWhiteBishop() {
@@ -53,7 +103,7 @@ public interface Chess {
     }
 
     default ItemStack getBlackBishop() {
-        return new ItemStack(Item.getItemById(277),3).setStackDisplayName(TextFormatting.GRAY + "" + TextFormatting.BOLD + "L\u00e4ufer");
+        return new ItemStack(Item.getItemById(277),3).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "L\u00e4ufer");
     }
 
     default ItemStack getWhiteRook() {
@@ -61,7 +111,7 @@ public interface Chess {
     }
 
     default ItemStack getBlackRook() {
-        return new ItemStack(Item.getItemById(312),5).setStackDisplayName(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Turm");
+        return new ItemStack(Item.getItemById(312),5).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "Turm");
     }
 
     default ItemStack getWhiteQueen() {
@@ -69,7 +119,7 @@ public interface Chess {
     }
 
     default ItemStack getBlackQueen() {
-        return new ItemStack(Item.getItemById(311),9).setStackDisplayName(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Dame");
+        return new ItemStack(Item.getItemById(311),9).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "Dame");
     }
 
     default ItemStack getWhiteKing() {
@@ -77,459 +127,897 @@ public interface Chess {
     }
 
     default ItemStack getBlackKing() {
-        return new ItemStack(Item.getItemById(310),64).setStackDisplayName(TextFormatting.GRAY + "" + TextFormatting.BOLD + "K\u00f6nig");
+        return new ItemStack(Item.getItemById(310),64).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "K\u00f6nig");
     }
 
-    default void handleMoves(String piece, int index) {
-        ChessContainer.moves = new ArrayList<>();
-        ChessContainer.tempmoves = new ArrayList<>();
+    static List<Integer> getMoves(String piece, int index) {
+        List<Integer> moves = new ArrayList<>();
+
         switch (Character.toUpperCase(piece.charAt(0))) {
             case 'P':
-                ChessContainer.moves = pawnMoves(index, piece.charAt(1));
+                moves = pawnMoves(index, piece.charAt(1));
                 break;
             case 'N':
-                ChessContainer.moves = knightMoves(index);
+                moves = knightMoves(index);
                 break;
             case 'B':
-                ChessContainer.moves = bishopMoves(index);
+                moves = bishopMoves(index);
                 break;
             case 'R':
-                ChessContainer.moves = rookMoves(index);
+                moves = rookMoves(index);
                 break;
             case 'Q':
-                ChessContainer.moves = queenMoves(index);
+                moves = queenMoves(index);
                 break;
             case 'K':
-                ChessContainer.moves = kingMoves(index);
+                moves = kingMoves(index);
                 break;
-            default:
         }
+        return moves;
     }
 
-    default List<Integer> pawnMoves(int pos, char color) {
+    static List<Integer> getAllMoves() {
+        List<Integer> moves = new ArrayList<>();
+
+        int index = 0;
+        for (String tile : GameUtils.board) {
+            char color;
+            if (ChessContainer.color.equals("iron")) {
+                color = 'w';
+            } else {
+                color = 'b';
+            }
+            if (Objects.equals(tile.charAt(1), color)) {
+                moves.addAll(getMoves(tile, index));
+            }
+            index++;
+        }
+
+        return moves;
+    }
+
+    static List<Integer> pawnMoves(int pos, char color) {
+        List<Integer> tempmoves = new ArrayList<>();
         ChessContainer.enpassant = new ArrayList<>();
+
         if (Objects.equals(Character.toLowerCase(color), 'w')) {
             if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A')) {
-                ChessContainer.tempmoves.add(pos - 9);
+                tempmoves.addAll(getSingle(pos - 9));
             }
             if (pos > 53) {
-                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A')) {
-                    ChessContainer.tempmoves.add(pos - 18);
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 18).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos - 18));
                 }
             }
             if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos - 8).charAt(0), 'A')) {
-                ChessContainer.tempmoves.add(pos - 8);
+                tempmoves.addAll(getSingle(pos - 8));
             }
             if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos - 10).charAt(0), 'A')) {
-                ChessContainer.tempmoves.add(pos - 10);
+                tempmoves.addAll(getSingle(pos - 10));
             }
 
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'p')) {
-                if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
-                    ChessContainer.tempmoves.add(pos - 10);
-                    ChessContainer.enpassant.add(pos - 10);
+            if (Objects.equals(Character.toUpperCase(ChessContainer.selectedfield.charAt(0)), 'P')) {
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'p')) {
+                    if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                        tempmoves.addAll(getSingle(pos - 10));
+                        ChessContainer.enpassant.addAll(getSingle(pos - 10));
+                    }
                 }
-            }
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'p')) {
-                if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
-                    ChessContainer.tempmoves.add(pos - 8);
-                    ChessContainer.enpassant.add(pos - 8);
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'p')) {
+                    if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                        tempmoves.addAll(getSingle(pos - 8));
+                        ChessContainer.enpassant.addAll(getSingle(pos - 8));
+                    }
                 }
             }
         } else {
             if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A')) {
-                ChessContainer.tempmoves.add(pos + 9);
+                tempmoves.addAll(getSingle(pos + 9));
             }
             if (pos < 18) {
-                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A')) {
-                    ChessContainer.tempmoves.add(pos + 18);
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 18).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos + 18));
                 }
             }
             if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos + 8).charAt(0), 'A')) {
-                ChessContainer.tempmoves.add(pos + 8);
+                tempmoves.addAll(getSingle(pos + 8));
             }
             if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos + 10).charAt(0), 'A')) {
-                ChessContainer.tempmoves.add(pos + 10);
+                tempmoves.addAll(getSingle(pos + 10));
             }
 
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'p')) {
-                if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
-                    ChessContainer.tempmoves.add(pos + 8);
-                    ChessContainer.enpassant.add(pos + 8);
+            if (Objects.equals(Character.toUpperCase(ChessContainer.selectedfield.charAt(0)), 'P')) {
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'p')) {
+                    if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                        tempmoves.addAll(getSingle(pos + 8));
+                        ChessContainer.enpassant.addAll(getSingle(pos + 8));
+                    }
+                }
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'p')) {
+                    if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                        tempmoves.addAll(getSingle(pos + 10));
+                        ChessContainer.enpassant.addAll(getSingle(pos + 10));
+                    }
                 }
             }
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'p')) {
-                if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
-                    ChessContainer.tempmoves.add(pos + 10);
-                    ChessContainer.enpassant.add(pos + 10);
+        }
+        return tempmoves;
+    }
+
+    static List<Integer> knightMoves(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        tempmoves.addAll(getSingle(pos - 19));
+        tempmoves.addAll(getSingle(pos - 17));
+        tempmoves.addAll(getSingle(pos + 17));
+        tempmoves.addAll(getSingle(pos + 19));
+        if ((pos + 1) % 9 != 1) {
+            tempmoves.addAll(getSingle(pos + 7));
+            tempmoves.addAll(getSingle(pos - 11));
+        }
+        if ((pos + 1) % 9 != 8) {
+            tempmoves.addAll(getSingle(pos - 7));
+            tempmoves.addAll(getSingle(pos + 11));
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> bishopMoves(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        tempmoves.addAll(getDiagonalRD(pos));
+        tempmoves.addAll(getDiagonalLD(pos));
+        tempmoves.addAll(getDiagonalLU(pos));
+        tempmoves.addAll(getDiagonalRU(pos));
+
+        return tempmoves;
+    }
+
+    static List<Integer> rookMoves(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        tempmoves.addAll(getStraightR(pos));
+        tempmoves.addAll(getStraightL(pos));
+        tempmoves.addAll(getStraightU(pos));
+        tempmoves.addAll(getStraightD(pos));
+
+        return tempmoves;
+    }
+
+    static List<Integer> queenMoves(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        tempmoves.addAll(getStraightR(pos));
+        tempmoves.addAll(getStraightL(pos));
+        tempmoves.addAll(getStraightU(pos));
+        tempmoves.addAll(getStraightD(pos));
+        tempmoves.addAll(getDiagonalRD(pos));
+        tempmoves.addAll(getDiagonalLD(pos));
+        tempmoves.addAll(getDiagonalLU(pos));
+        tempmoves.addAll(getDiagonalRU(pos));
+
+        return tempmoves;
+    }
+
+    static List<Integer> kingMoves(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        ChessContainer.rochade = new ArrayList<>();
+
+        tempmoves.addAll(getSingle(pos - 1));
+        tempmoves.addAll(getSingle(pos + 1));
+        tempmoves.addAll(getSingle(pos - 9));
+        tempmoves.addAll(getSingle(pos + 9));
+        tempmoves.addAll(getSingle(pos - 10));
+        tempmoves.addAll(getSingle(pos + 10));
+        tempmoves.addAll(getSingle(pos - 8));
+        tempmoves.addAll(getSingle(pos + 8));
+
+        if (Objects.equals(Character.toUpperCase(ChessContainer.selectedfield.charAt(0)), 'K')) {
+            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos).charAt(0), 'K')) {
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 2).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 3).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 4).charAt(0), 'R')) {
+                    if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 4).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                        tempmoves.addAll(getSingle(pos - 2));
+                        ChessContainer.rochade.add(pos - 2);
+                    }
+                }
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 2).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 3).charAt(0), 'R')) {
+                    if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 3).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                        tempmoves.addAll(getSingle(pos + 2));
+                        ChessContainer.rochade.add(pos + 2);
+                    }
                 }
             }
         }
-        return ChessContainer.tempmoves;
+
+        List<Integer> illegalmoves = new ArrayList<>();
+        for (int move : tempmoves) {
+            if (checkCheck(move, pos)) {
+                illegalmoves.add(move);
+            }
+        }
+        tempmoves.removeAll(illegalmoves);
+
+        return tempmoves;
     }
 
-    default List<Integer> knightMoves(int pos) {
-        ChessContainer.tempmoves.add(pos - 19);
-        ChessContainer.tempmoves.add(pos - 17);
-        ChessContainer.tempmoves.add(pos - 11);
-        ChessContainer.tempmoves.add(pos - 7);
-        ChessContainer.tempmoves.add(pos + 7);
-        ChessContainer.tempmoves.add(pos + 11);
-        ChessContainer.tempmoves.add(pos + 17);
-        ChessContainer.tempmoves.add(pos + 19);
-        return ChessContainer.tempmoves;
-    }
+    static boolean checkCheck(int pos, int kingpos) {
+        List<String> tiles = Arrays.asList(GameUtils.board);
 
-    default List<Integer> bishopMoves(int pos) {
-        getDiagonalRD(pos);
-        getDiagonalLD(pos);
-        getDiagonalLU(pos);
-        getDiagonalRU(pos);
-        return ChessContainer.tempmoves;
-    }
+        String field = GameUtils.board[kingpos];
+        GameUtils.board[kingpos] = "Ac";
 
-    default List<Integer> rookMoves(int pos) {
-        getStraightR(pos);
-        getStraightL(pos);
-        getStraightU(pos);
-        getStraightD(pos);
-        return ChessContainer.tempmoves;
-    }
+        char color;
+        if (ChessContainer.color.equals("iron")) {
+            color = 'w';
+        } else {
+            color = 'b';
+        }
 
-    default List<Integer> queenMoves(int pos) {
-        getStraightR(pos);
-        getStraightL(pos);
-        getStraightU(pos);
-        getStraightD(pos);
-        getDiagonalRD(pos);
-        getDiagonalLD(pos);
-        getDiagonalLU(pos);
-        getDiagonalRU(pos);
-        return ChessContainer.tempmoves;
-    }
-
-    default List<Integer> kingMoves(int pos) {
-        ChessContainer.tempmoves.add(pos - 1);
-        ChessContainer.tempmoves.add(pos + 1);
-        ChessContainer.tempmoves.add(pos - 9);
-        ChessContainer.tempmoves.add(pos + 9);
-        ChessContainer.tempmoves.add(pos - 10);
-        ChessContainer.tempmoves.add(pos + 10);
-        ChessContainer.tempmoves.add(pos - 8);
-        ChessContainer.tempmoves.add(pos + 8);
-
-        return ChessContainer.tempmoves;
-    }
-
-    static void getDiagonalRD(int pos) {
-        try {
-            setField(pos + 10);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 20);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 30);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 40);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 50);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 60);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 70);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getDiagonalLD(int pos) {
-        try {
-            setField(pos + 8);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 16);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 24);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 32);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 40);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 48);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 56);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getDiagonalLU(int pos) {
-        try {
-            setField(pos - 10);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 20);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 30);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 40);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 50);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 60);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 70);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getDiagonalRU(int pos) {
-        try {
-            setField(pos - 8);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 16);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 24);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 32);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 40);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 48);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 56);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getStraightL(int pos) {
-        try {
-            setField(pos - 1);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 2);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 3);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 4);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 5);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 6);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 7);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getStraightR(int pos) {
-        try {
-            setField(pos + 1);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 2);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 3);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 4);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 5);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 6);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 7);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getStraightD(int pos) {
-        try {
-            setField(pos + 9);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 18);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 27);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 36);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 45);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 54);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos + 63);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void getStraightU(int pos) {
-        try {
-            setField(pos - 9);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 18);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 27);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 36);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 45);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 54);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
-        try {
-            setField(pos - 63);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
-
-    static void setField(int index) throws ArrayIndexOutOfBoundsException {
-        if (index >= 0 && index < GameUtils.board.length) {
-            if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(0), 'T')) {
-                ChessContainer.tempmoves.add(index);
-                if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(0), 'A')) {
-                    throw new ArrayIndexOutOfBoundsException();
+        for (int move : getStraightU(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
                 }
-            } else {
-                throw new ArrayIndexOutOfBoundsException();
+            }
+        }
+        for (int move : getStraightD(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+        for (int move : getStraightL(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+        for (int move : getStraightR(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+
+        for (int move : getDiagonalLU(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+        for (int move : getDiagonalLD(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+        for (int move : getDiagonalRD(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+        for (int move : getDiagonalRU(pos)) {
+            if (move >= 0 && move < tiles.size()) {
+                char c = Character.toUpperCase(tiles.get(move).charAt(0));
+                if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+
+        int move;
+
+        move = pos + 1;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos - 1;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos + 8;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos + 9;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos + 10;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos - 8;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos - 9;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos - 10;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+
+        move = pos - 19;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos - 17;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos + 17;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        move = pos + 19;
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    GameUtils.board[kingpos] = field;
+                    return true;
+                }
+            }
+        }
+        if ((pos + 1) % 9 != 1) {
+            move = pos + 7;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+            move = pos - 11;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+        if ((pos + 1) % 9 != 8) {
+            move = pos - 7;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+            move = pos + 11;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+        }
+
+        if (ChessContainer.color.equals("iron")) {
+            move = pos - 8;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+            move = pos - 10;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
             }
         } else {
-            throw new ArrayIndexOutOfBoundsException();
+            move = pos + 8;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
+            move = pos + 10;
+            if (move >= 0 && move < tiles.size()) {
+                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
+                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                        GameUtils.board[kingpos] = field;
+                        return true;
+                    }
+                }
+            }
         }
+
+        return false;
+    }
+
+    static List<Integer> getSingle(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getField(pos));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getDiagonalRD(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos + 10));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 20));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 30));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 40));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 50));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 60));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 70));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getDiagonalLD(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos + 8));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 16));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 24));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 32));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 40));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 48));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 56));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getDiagonalLU(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos - 10));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 20));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 30));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 40));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 50));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 60));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 70));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getDiagonalRU(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos - 8));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 16));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 24));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 32));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 40));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 48));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 56));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getStraightL(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos - 1));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 2));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 3));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 4));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 5));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 6));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 7));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getStraightR(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos + 1));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 2));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 3));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 4));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 5));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 6));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 7));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getStraightD(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos + 9));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 18));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 27));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 36));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 45));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 54));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos + 63));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static List<Integer> getStraightU(int pos) {
+        List<Integer> tempmoves = new ArrayList<>();
+
+        try {
+            tempmoves.add(getFieldInRow(pos - 9));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 18));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 27));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 36));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 45));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 54));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return tempmoves;
+        }
+        try {
+            tempmoves.add(getFieldInRow(pos - 63));
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        return tempmoves;
+    }
+
+    static int getFieldInRow(int index) throws ArrayIndexOutOfBoundsException {
+        if (!ChessContainer.end) {
+            if (index >= 0 && index < GameUtils.board.length) {
+                if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(0), 'T')) {
+                    char color;
+                    if (ChessContainer.color.equals("iron")) {
+                        color = 'w';
+                    } else {
+                        color = 'b';
+                    }
+                    if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(1), color)) {
+                        if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(0), 'A')) {
+                            ChessContainer.end = true;
+                        }
+                        return index;
+                    }
+                }
+            }
+        } else {
+            ChessContainer.end = false;
+        }
+        throw new ArrayIndexOutOfBoundsException();
+    }
+
+    static int getField(int index) throws ArrayIndexOutOfBoundsException {
+        if (index >= 0 && index < GameUtils.board.length) {
+            if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(0), 'T')) {
+                char color;
+                if (ChessContainer.color.equals("iron")) {
+                    color = 'w';
+                } else {
+                    color = 'b';
+                }
+                if (!Objects.equals(Arrays.asList(GameUtils.board).get(index).charAt(1), color)) {
+                    return index;
+                }
+            }
+        }
+        throw new ArrayIndexOutOfBoundsException();
     }
 }
 

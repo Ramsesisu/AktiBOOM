@@ -4,6 +4,7 @@ import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.listeners.ClientTickListener;
 import me.rqmses.aktiboom.utils.guis.GameGui;
 import me.rqmses.aktiboom.utils.guis.containers.ChessContainer;
+import me.rqmses.aktiboom.utils.guis.containers.TicTacToeContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.inventory.Container;
@@ -24,6 +25,7 @@ public class GameUtils {
     public static String stringboard =  "";
     public static String[] board = new String[0];
     public static String category = "";
+    public static boolean win = false;
 
     public static void display() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
@@ -33,6 +35,10 @@ public class GameUtils {
                 case "schach":
                     GameUtils.board = convertBoard(stringboard);
                     showBoard(new ChessContainer());
+                    break;
+                case "tictactoe":
+                    GameUtils.board = convertBoard(stringboard);
+                    showBoard(new TicTacToeContainer());
                     break;
             }
         } else {
@@ -52,6 +58,7 @@ public class GameUtils {
     private static String[] convertBoard(String stringboard) {
         switch (category) {
             case "schach":
+            case "tictactoe":
                 return stringboard.split("!");
         }
         return new String[0];
@@ -71,8 +78,10 @@ public class GameUtils {
         if (playerturn.contains(player.getName())) {
             player.sendMessage(new TextComponentString(PREFIX + "Du bist nun an der Reihe."));
 
-            if (ConfigHandler.autoboard) {
-                display();
+            if (!(Minecraft.getMinecraft().currentScreen instanceof GameGui)) {
+                if (ConfigHandler.autoboard) {
+                    display();
+                }
             }
         } else {
             player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + playerturn + TextFormatting.YELLOW + " ist nun an der Reihe."));

@@ -48,7 +48,7 @@ public class GameCommand extends CommandBase implements IClientCommand {
             if (GameUtils.party) {
                 targets = Collections.singletonList("end");
             } else {
-                targets = Arrays.asList("Schach");
+                targets = Arrays.asList("Schach", "TicTacToe");
             }
         }
         if (args.length > 1) {
@@ -73,7 +73,6 @@ public class GameCommand extends CommandBase implements IClientCommand {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("end")) {
                 player.sendChatMessage(": %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
-                GameUtils.party = false;
                 return;
             }
             if (args.length > 1) {
@@ -81,6 +80,9 @@ public class GameCommand extends CommandBase implements IClientCommand {
                 switch (args[0].toLowerCase()) {
                     case "schach":
                         category = "Schach";
+                        break;
+                    case "tictactoe":
+                        category = "TicTacToe";
                         break;
                     default:
                         player.sendMessage(new TextComponentString(PREFIX + "Das Spiel " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde nicht gefunden!"));
@@ -94,7 +96,7 @@ public class GameCommand extends CommandBase implements IClientCommand {
 
                 player.sendChatMessage(": %PARTY% : " + category + " : " + players);
             } else {
-                player.sendMessage(new TextComponentString(PREFIX + "/game [Spiel] [Mitspieler-1] ([Mitspieler-2]) ..."));
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
             }
         } else {
             if (GameUtils.party) {

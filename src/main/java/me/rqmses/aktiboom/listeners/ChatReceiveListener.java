@@ -69,39 +69,49 @@ public class ChatReceiveListener {
         if (message.contains(": %PARTY% :")) {
             event.setCanceled(true);
             String[] contents = message.split(":", 4);
+            String players = contents[3];
             if (!GameUtils.party) {
-                String players = contents[3];
                 if (Arrays.asList(players.split(" ")).contains(player.getName())) {
                     GameUtils.players = new ArrayList<>(Arrays.asList(players.split(" ")));
                     GameUtils.players.removeAll(Collections.singleton(""));
                     switch (contents[2].toLowerCase().replaceAll(" ", "")) {
                         case "schach":
                             GameUtils.category = contents[2].replaceAll(" ", "").toLowerCase();
-                            GameUtils.stringboard = "Rb!Nb!Bb!Qb!Kb!Bb!Nb!Rb!Tb!" +
-                                                    "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tb!" +
-                                                    "Ab!Ab!Ab!Ab!Ab!Ab!Ab!Ab!Tb!" +
-                                                    "Ab!Ab!Ab!Ab!Ab!Ab!Ab!Ab!Tb!" +
-                                                    "Aw!Aw!Aw!Aw!Aw!Aw!Aw!Aw!Tb!" +
-                                                    "Aw!Aw!Aw!Aw!Aw!Aw!Aw!Aw!Tb!" +
-                                                    "Pw!Pw!Pw!Pw!Pw!Pw!Pw!Pw!Tb!" +
-                                                    "Rw!Nw!Bw!Kw!Qw!Bw!Nw!Rw!Tb";
-                            break;
-                        case "end":
                             GameUtils.turn = -1;
-                            GameUtils.party = false;
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Party wurde beendet."));
+                            GameUtils.stringboard = "Rb!Nb!Bb!Qb!Kb!Bb!Nb!Rb!Tc!" +
+                                                    "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Pw!Pw!Pw!Pw!Pw!Pw!Pw!Pw!Tc!" +
+                                                    "Rw!Nw!Bw!Qw!Kw!Bw!Nw!Rw!Tc";
+                            break;
+                        case "tictactoe":
+                            GameUtils.category = contents[2].replaceAll(" ", "").toLowerCase();
+                            GameUtils.turn = -1;
+                            GameUtils.win = false;
+                            GameUtils.stringboard = "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
+                                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
+                                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!";
+                            break;
                         default:
                             return;
                     }
                     GameUtils.party = true;
                     player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + GameUtils.players.get(0) + TextFormatting.YELLOW + " hat eine " + TextFormatting.GOLD + contents[2].replaceAll(" ", "") + TextFormatting.YELLOW + "-Party gestartet."));
+                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "      \u27A5 " + TextFormatting.YELLOW + "Gib /game ein, um das Spielbrett zu \u00f6ffnen."));
                     GameUtils.handleTurn();
                 }
             } else {
-                if (GameUtils.players.contains(contents[3].replaceAll(" ", ""))) {
+                if (Arrays.asList(players.split(" ")).contains(player.getName())) {
                     if (contents[2].replaceAll(" ", "").equalsIgnoreCase("end")) {
                         GameUtils.party = false;
-                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[3].replaceAll(" ", "") + TextFormatting.YELLOW + " hat die Party beendet."));
+                        if (Minecraft.getMinecraft().currentScreen instanceof GameGui) {
+                            player.closeScreen();
+                        }
+                        // contents[0].split(" ")[1]
+                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + Arrays.toString(contents[0].split(" ")) + TextFormatting.YELLOW + " hat die Party beendet."));
                         return;
                     }
                 }

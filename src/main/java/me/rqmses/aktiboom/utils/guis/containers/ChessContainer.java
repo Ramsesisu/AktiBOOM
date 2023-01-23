@@ -26,6 +26,7 @@ public class ChessContainer extends Container implements Chess {
     public ChessContainer() {
         ItemStack itemStack;
         int index = 0;
+
         for (String tile : GameUtils.board) {
             boolean w = Objects.equals(tile.charAt(1), 'w');
             switch (Character.toUpperCase(tile.charAt(0))) {
@@ -80,7 +81,7 @@ public class ChessContainer extends Container implements Chess {
                     if (moves.contains(index)) {
                         itemStack = getMoveTile();
                     }
-                    if (enpassant.contains(index)) {
+                    if (enpassant.contains(index) || rochade.contains(index)) {
                         itemStack = getSpecialTile();
                     }
             }
@@ -97,6 +98,15 @@ public class ChessContainer extends Container implements Chess {
                 int y = row * 18 + 84;
                 if (col == 8) {
                     inventory.setInventorySlotContents(index, getClearTile());
+                    if (row == 0) {
+                        inventory.setInventorySlotContents(index, getDiamondPoints());
+                    }
+                    if (row == 7) {
+                        inventory.setInventorySlotContents(index, getIronPoints());
+                    }
+                    if (row == 3) {
+                        inventory.setInventorySlotContents(index, getExitTile());
+                    }
                 }
                 index++;
                 addSlotToContainer(new Slot(inventory, col + row * 9, x, y));
@@ -110,12 +120,12 @@ public class ChessContainer extends Container implements Chess {
     }
 
     public static int selectedindex = -1;
-    public static String selectedfield = "Aw";
-
-    public static List<Integer> tempmoves = new ArrayList<>();
+    public static String selectedfield = "Ac";
     public static List<Integer> moves = new ArrayList<>();
     public static String color = "";
     public static List<Integer> enpassant = new ArrayList<>();
+    public static List<Integer> rochade = new ArrayList<>();
+    public static boolean end = false;
 
     @Nonnull
     @Override
@@ -132,57 +142,15 @@ public class ChessContainer extends Container implements Chess {
                 if (slotId >= 0) {
                     if (selectedindex >= 0) {
                         if (selectedindex == slotId) {
-                            // 0. Mal
-                            selectedindex = -1;
-                            moves = new ArrayList<>();
+                            moveZero();
                         } else if (Objects.requireNonNull(inventory.getStackInSlot(slotId).getItem().getRegistryName()).toString().contains(color)) {
-                            // 1. Mal
-                            selectedfield = Arrays.asList(GameUtils.board).get(slotId);
-                            selectedindex = slotId;
-                            handleMoves(selectedfield, selectedindex);
+                            moveOne(slotId);
                         } else {
-                            // 2. Mal
-                            if (moves.contains(slotId)) {
-                                if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'K')) {
-                                    List<String> board = Arrays.asList(GameUtils.board);
-                                    moves = new ArrayList<>();
-                                    if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
-                                        if (slotId == (selectedindex + 18) || slotId == (selectedindex - 18)) {
-                                            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("2er Bauer"));
-                                            selectedfield = selectedfield.replace('P', 'p');
-                                        }
-                                        if (enpassant.contains(slotId)) {
-                                            if (color.equals("iron")) {
-                                                board.set(slotId - 9, "Aw");
-                                            } else {
-                                                board.set(slotId + 9, "Aw");
-                                            }
-                                            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("En Passant"));
-                                        }
-                                    }
-                                    board.set(selectedindex, "Aw");
-                                    board.set(slotId, selectedfield);
-                                    if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
-                                        if (slotId < 9) {
-                                            board.set(slotId, "Qw");
-                                        }
-                                        if (slotId > 63) {
-                                            board.set(slotId, "Qb");
-                                        }
-                                    }
-                                    playerSP.sendChatMessage(": %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
-                                    selectedindex = -1;
-                                } else {
-                                    playerSP.sendMessage(new TextComponentString(PREFIX + "Du kannst den K\u00f6nig nicht schlagen!"));
-                                }
-                            }
+                            moveTwo(slotId);
                         }
                     } else {
-                        // 1. Mal
                         if (Objects.requireNonNull(inventory.getStackInSlot(slotId).getItem().getRegistryName()).toString().contains(color)) {
-                            selectedfield = Arrays.asList(GameUtils.board).get(slotId);
-                            selectedindex = slotId;
-                            handleMoves(selectedfield, selectedindex);
+                            moveOne(slotId);
                         } else {
                             if (!inventory.getStackInSlot(slotId).getItem().equals(getWhiteTile().getItem())) {
                                 String formatting;
@@ -200,8 +168,94 @@ public class ChessContainer extends Container implements Chess {
                 playerSP.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + GameUtils.playerturn + TextFormatting.YELLOW + " ist an der Reihe!"));
             }
             GameUtils.display();
+        } else {
+            if (slotId == 35) {
+                playerSP.sendChatMessage(": %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
+            }
         }
 
         return new ItemStack(Item.getItemById(0));
+    }
+
+    private static void moveZero() {
+        selectedindex = -1;
+        moves = new ArrayList<>();
+    }
+
+    private static void moveOne(int slotId) {
+        selectedfield = Arrays.asList(GameUtils.board).get(slotId);
+        selectedindex = slotId;
+        ChessContainer.moves = Chess.getMoves(selectedfield, selectedindex);
+    }
+
+    private static void moveTwo(int slotId) {
+        EntityPlayerSP playerSP = Minecraft.getMinecraft().player;
+
+        if (moves.contains(slotId)) {
+            if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'K')) {
+                List<String> board = Arrays.asList(GameUtils.board);
+                int index = 0;
+
+                if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'A')) {
+                    playerSP.sendMessage(new TextComponentString(PREFIX + inventory.getStackInSlot(selectedindex).getDisplayName() + TextFormatting.YELLOW + " schl\u00e4gt " + inventory.getStackInSlot(slotId).getDisplayName() + TextFormatting.YELLOW + "."));
+                }
+
+                for (String tile : board) {
+                    if (Objects.equals(tile.charAt(0), 'p')) {
+                        board.set(index, tile.replace('p', 'P'));
+                    }
+                    index++;
+                }
+
+                if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
+                    if (slotId == (selectedindex + 18) || slotId == (selectedindex - 18)) {
+                        selectedfield = selectedfield.replace('P', 'p');
+                    }
+                    if (enpassant.contains(slotId)) {
+                        if (color.equals("iron")) {
+                            board.set(slotId + 9, "Ac");
+                        } else {
+                            board.set(slotId - 9, "Ac");
+                        }
+                    }
+                }
+                if (Objects.equals(selectedfield.charAt(0), 'K')) {
+                    selectedfield = selectedfield.replace('K', 'k');
+                    if (rochade.contains(slotId)) {
+                        if (slotId < selectedindex) {
+                            board.set(slotId + 1, board.get(slotId - 2).replace('R', 'r'));
+                            board.set(slotId - 2, "Ac");
+                        } else {
+                            board.set(slotId - 1, board.get(slotId + 1).replace('R', 'r'));
+                            board.set(slotId + 1, "Ac");
+                        }
+                    }
+                }
+                if (Objects.equals(selectedfield.charAt(0), 'R')) {
+                    selectedfield = selectedfield.replace('R', 'r');
+                }
+
+                enpassant = new ArrayList<>();
+                rochade = new ArrayList<>();
+
+                board.set(selectedindex, "Ac");
+                board.set(slotId, selectedfield);
+
+                if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
+                    if (slotId < 9) {
+                        board.set(slotId, "Qw");
+                    }
+                    if (slotId > 62) {
+                        board.set(slotId, "Qb");
+                    }
+                }
+
+                playerSP.sendChatMessage(": %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
+                moves = new ArrayList<>();
+                selectedindex = -1;
+            } else {
+                playerSP.sendMessage(new TextComponentString(PREFIX + "Du kannst den K\u00f6nig nicht schlagen!"));
+            }
+        }
     }
 }
