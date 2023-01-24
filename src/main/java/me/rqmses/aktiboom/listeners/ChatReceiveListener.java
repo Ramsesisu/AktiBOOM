@@ -5,6 +5,7 @@ import me.rqmses.aktiboom.utils.FormatUtils;
 import me.rqmses.aktiboom.utils.GameUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.utils.guis.GameGui;
+import me.rqmses.aktiboom.utils.guis.containers.ChessContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.text.TextComponentString;
@@ -78,6 +79,10 @@ public class ChatReceiveListener {
                         case "schach":
                             GameUtils.category = contents[2].replaceAll(" ", "").toLowerCase();
                             GameUtils.turn = -1;
+                            ChessContainer.mate = false;
+                            ChessContainer.draw = false;
+                            ChessContainer.moves = new ArrayList<>();
+                            ChessContainer.selectedindex = -1;
                             GameUtils.stringboard = "Rb!Nb!Bb!Qb!Kb!Bb!Nb!Rb!Tc!" +
                                                     "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tc!" +
                                                     "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +

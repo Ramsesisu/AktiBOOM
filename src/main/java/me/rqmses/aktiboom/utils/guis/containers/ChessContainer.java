@@ -26,6 +26,11 @@ public class ChessContainer extends Container implements Chess {
     public ChessContainer() {
         ItemStack itemStack;
         int index = 0;
+        if ((GameUtils.turn % 2) == 0) {
+            color = "iron";
+        } else {
+            color = "diamond";
+        }
 
         for (String tile : GameUtils.board) {
             boolean w = Objects.equals(tile.charAt(1), 'w');
@@ -67,8 +72,22 @@ public class ChessContainer extends Container implements Chess {
                     break;
                 case 'K':
                     if (w) {
+                        if (color.equals("iron")) {
+                            kingpos = index;
+                            if (checkMate(index)) {
+                                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.WHITE + "" + TextFormatting.BOLD + "Iron" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                                mate = true;
+                            }
+                        }
                         itemStack = getWhiteKing();
                     } else {
+                        if (color.equals("diamond")) {
+                            kingpos = index;
+                            if (checkMate(index)) {
+                                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.AQUA + "" + TextFormatting.BOLD + "Diamond" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                                mate = true;
+                            }
+                        }
                         itemStack = getBlackKing();
                     }
                     break;
@@ -81,8 +100,15 @@ public class ChessContainer extends Container implements Chess {
                     if (moves.contains(index)) {
                         itemStack = getMoveTile();
                     }
-                    if (enpassant.contains(index) || rochade.contains(index)) {
-                        itemStack = getSpecialTile();
+                    if (enpassant.contains(index)) {
+                        if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
+                            itemStack = getSpecialTile();
+                        }
+                    }
+                    if (rochade.contains(index)) {
+                        if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'K')) {
+                            itemStack = getSpecialTile();
+                        }
                     }
             }
             if (selectedindex == index) {
@@ -112,6 +138,20 @@ public class ChessContainer extends Container implements Chess {
                 addSlotToContainer(new Slot(inventory, col + row * 9, x, y));
             }
         }
+
+        if (getAllMoves().size() == 0) {
+            if (!checkMate(kingpos)) {
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Kein Zug mehr m\u00d6glich, Patt."));
+                draw = true;
+            } else {
+                if (color.equals("iron")) {
+                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.WHITE + "" + TextFormatting.BOLD + "Iron" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                } else {
+                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.AQUA + "" + TextFormatting.BOLD + "Diamond" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                }
+                mate = true;
+            }
+        }
     }
 
     @Override
@@ -125,7 +165,10 @@ public class ChessContainer extends Container implements Chess {
     public static String color = "";
     public static List<Integer> enpassant = new ArrayList<>();
     public static List<Integer> rochade = new ArrayList<>();
+    public static int kingpos = 67;
     public static boolean end = false;
+    public static boolean mate = false;
+    public static boolean draw = false;
 
     @Nonnull
     @Override
@@ -133,11 +176,6 @@ public class ChessContainer extends Container implements Chess {
         EntityPlayerSP playerSP = Minecraft.getMinecraft().player;
 
         if (((slotId + 1) % 9) != 0) {
-            if ((GameUtils.turn % 2) == 0) {
-                color = "iron";
-            } else {
-                color = "diamond";
-            }
             if (GameUtils.playerturn.contains(playerSP.getName())) {
                 if (slotId >= 0) {
                     if (selectedindex >= 0) {
@@ -159,7 +197,7 @@ public class ChessContainer extends Container implements Chess {
                                 } else {
                                     formatting = TextFormatting.AQUA + "" + TextFormatting.BOLD;
                                 }
-                                playerSP.sendMessage(new TextComponentString(PREFIX + "Du bist " + formatting + color + TextFormatting.YELLOW + "!"));
+                                playerSP.sendMessage(new TextComponentString(PREFIX + "Du bist " + formatting + color.replaceFirst(String.valueOf(color.charAt(0)), String.valueOf(Character.toUpperCase(color.charAt(0)))) + TextFormatting.YELLOW + "!"));
                             }
                         }
                     }
@@ -191,71 +229,79 @@ public class ChessContainer extends Container implements Chess {
     private static void moveTwo(int slotId) {
         EntityPlayerSP playerSP = Minecraft.getMinecraft().player;
 
-        if (moves.contains(slotId)) {
-            if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'K')) {
-                List<String> board = Arrays.asList(GameUtils.board);
-                int index = 0;
+        if (!mate) {
+            if (!draw) {
+                if (moves.contains(slotId)) {
+                    if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'K')) {
+                        List<String> board = Arrays.asList(GameUtils.board);
+                        int index = 0;
 
-                if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'A')) {
-                    playerSP.sendMessage(new TextComponentString(PREFIX + inventory.getStackInSlot(selectedindex).getDisplayName() + TextFormatting.YELLOW + " schl\u00e4gt " + inventory.getStackInSlot(slotId).getDisplayName() + TextFormatting.YELLOW + "."));
-                }
-
-                for (String tile : board) {
-                    if (Objects.equals(tile.charAt(0), 'p')) {
-                        board.set(index, tile.replace('p', 'P'));
-                    }
-                    index++;
-                }
-
-                if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
-                    if (slotId == (selectedindex + 18) || slotId == (selectedindex - 18)) {
-                        selectedfield = selectedfield.replace('P', 'p');
-                    }
-                    if (enpassant.contains(slotId)) {
-                        if (color.equals("iron")) {
-                            board.set(slotId + 9, "Ac");
-                        } else {
-                            board.set(slotId - 9, "Ac");
+                        if (!Objects.equals(Character.toUpperCase(Arrays.asList(GameUtils.board).get(slotId).charAt(0)), 'A')) {
+                            playerSP.sendMessage(new TextComponentString(PREFIX + inventory.getStackInSlot(selectedindex).getDisplayName() + TextFormatting.YELLOW + " schl\u00e4gt " + inventory.getStackInSlot(slotId).getDisplayName() + TextFormatting.YELLOW + "."));
                         }
-                    }
-                }
-                if (Objects.equals(selectedfield.charAt(0), 'K')) {
-                    selectedfield = selectedfield.replace('K', 'k');
-                    if (rochade.contains(slotId)) {
-                        if (slotId < selectedindex) {
-                            board.set(slotId + 1, board.get(slotId - 2).replace('R', 'r'));
-                            board.set(slotId - 2, "Ac");
-                        } else {
-                            board.set(slotId - 1, board.get(slotId + 1).replace('R', 'r'));
-                            board.set(slotId + 1, "Ac");
+
+                        for (String tile : board) {
+                            if (Objects.equals(tile.charAt(0), 'p')) {
+                                board.set(index, tile.replace('p', 'P'));
+                            }
+                            index++;
                         }
+
+                        if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
+                            if (slotId == (selectedindex + 18) || slotId == (selectedindex - 18)) {
+                                selectedfield = selectedfield.replace('P', 'p');
+                            }
+                            if (enpassant.contains(slotId)) {
+                                if (color.equals("iron")) {
+                                    board.set(slotId + 9, "Ac");
+                                } else {
+                                    board.set(slotId - 9, "Ac");
+                                }
+                            }
+                        }
+                        if (Objects.equals(selectedfield.charAt(0), 'K')) {
+                            selectedfield = selectedfield.replace('K', 'k');
+                            if (rochade.contains(slotId)) {
+                                if (slotId < selectedindex) {
+                                    board.set(slotId + 1, board.get(slotId - 2).replace('R', 'r'));
+                                    board.set(slotId - 2, "Ac");
+                                } else {
+                                    board.set(slotId - 1, board.get(slotId + 1).replace('R', 'r'));
+                                    board.set(slotId + 1, "Ac");
+                                }
+                            }
+                        }
+                        if (Objects.equals(selectedfield.charAt(0), 'R')) {
+                            selectedfield = selectedfield.replace('R', 'r');
+                        }
+
+                        enpassant = new ArrayList<>();
+                        rochade = new ArrayList<>();
+
+                        board.set(selectedindex, "Ac");
+                        board.set(slotId, selectedfield);
+
+                        if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
+                            if (slotId < 9) {
+                                board.set(slotId, "Qw");
+                            }
+                            if (slotId > 62) {
+                                board.set(slotId, "Qb");
+                            }
+                        }
+
+                        playerSP.sendChatMessage(": %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
+                        moves = new ArrayList<>();
+                        selectedindex = -1;
+                    } else {
+                        playerSP.sendMessage(new TextComponentString(PREFIX + "Du kannst den K\u00f6nig nicht schlagen!"));
                     }
                 }
-                if (Objects.equals(selectedfield.charAt(0), 'R')) {
-                    selectedfield = selectedfield.replace('R', 'r');
-                }
-
-                enpassant = new ArrayList<>();
-                rochade = new ArrayList<>();
-
-                board.set(selectedindex, "Ac");
-                board.set(slotId, selectedfield);
-
-                if (Objects.equals(Character.toUpperCase(selectedfield.charAt(0)), 'P')) {
-                    if (slotId < 9) {
-                        board.set(slotId, "Qw");
-                    }
-                    if (slotId > 62) {
-                        board.set(slotId, "Qb");
-                    }
-                }
-
-                playerSP.sendChatMessage(": %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
-                moves = new ArrayList<>();
-                selectedindex = -1;
-            } else {
-                playerSP.sendMessage(new TextComponentString(PREFIX + "Du kannst den K\u00f6nig nicht schlagen!"));
+            }else {
+                playerSP.sendMessage(new TextComponentString(PREFIX + "Kein Zug mehr m\u00f6glich, Patt."));
             }
+        } else {
+            playerSP.sendMessage(new TextComponentString(PREFIX + "Du bist Schach-Matt!"));
         }
     }
 }

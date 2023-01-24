@@ -153,10 +153,32 @@ public interface Chess {
                 moves = kingMoves(index);
                 break;
         }
+
+        List<Integer> illegalmoves = new ArrayList<>();
+        for (int move : moves) {
+            String checkfield = GameUtils.board[move];
+            String field = GameUtils.board[index];
+
+            if (ChessContainer.color.equals("iron")) {
+                GameUtils.board[move] = "Pw";
+            } else {
+                GameUtils.board[move] = "Pb";
+            }
+            GameUtils.board[index] = "Ac";
+
+            if (getCheck(ChessContainer.kingpos, ChessContainer.kingpos).size() != 0) {
+                illegalmoves.add(move);
+            }
+
+            GameUtils.board[move] = checkfield;
+            GameUtils.board[index] = field;
+        }
+        moves.removeAll(illegalmoves);
+
         return moves;
     }
 
-    static List<Integer> getAllMoves() {
+    default List<Integer> getAllMoves() {
         List<Integer> moves = new ArrayList<>();
 
         int index = 0;
@@ -333,7 +355,7 @@ public interface Chess {
 
         List<Integer> illegalmoves = new ArrayList<>();
         for (int move : tempmoves) {
-            if (checkCheck(move, pos)) {
+            if (getCheck(move, pos).size() > 0) {
                 illegalmoves.add(move);
             }
         }
@@ -342,8 +364,47 @@ public interface Chess {
         return tempmoves;
     }
 
-    static boolean checkCheck(int pos, int kingpos) {
+    default boolean checkMate(int kingpos) {
+        if (kingMoves(kingpos).size() == 0) {
+            List<Integer> threats = getCheck(kingpos, kingpos);
+            if (threats.size() > 0) {
+                List<Integer> possiblemoves = new ArrayList<>();
+                for (int pos : getAllMoves()) {
+                    if (threats.contains(pos)) {
+                        possiblemoves.add(pos);
+                        break;
+                    }
+                }
+                threats.removeAll(possiblemoves);
+
+                // Hier Bugs
+                if (threats.size() != 0) {
+                    for (int pos : getAllMoves()) {
+                        String field = GameUtils.board[pos];
+
+                        if (ChessContainer.color.equals("iron")) {
+                            GameUtils.board[pos] = "Pw";
+                        } else {
+                            GameUtils.board[pos] = "Pb";
+                        }
+
+                        GameUtils.board[pos] = field;
+
+                        if (getCheck(kingpos, kingpos).size() == 0) {
+                            return true;
+                        }
+                    }
+                }
+                // Hier Bugs
+            }
+        }
+
+        return false;
+    }
+
+    static List<Integer> getCheck(int pos, int kingpos) {
         List<String> tiles = Arrays.asList(GameUtils.board);
+        List<Integer> threats = new ArrayList<>();
 
         String field = GameUtils.board[kingpos];
         GameUtils.board[kingpos] = "Ac";
@@ -360,8 +421,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -371,8 +431,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -382,8 +441,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -393,8 +451,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'R') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -405,8 +462,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -416,8 +472,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -427,8 +482,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -438,8 +492,7 @@ public interface Chess {
                 char c = Character.toUpperCase(tiles.get(move).charAt(0));
                 if (Objects.equals(c, 'B') || Objects.equals(c, 'Q')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -451,8 +504,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -460,8 +512,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -469,8 +520,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -478,8 +528,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -487,8 +536,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -496,8 +544,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -505,8 +552,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -514,8 +560,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'K')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -524,8 +569,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -533,8 +577,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -542,8 +585,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -551,8 +593,7 @@ public interface Chess {
         if (move >= 0 && move < tiles.size()) {
             if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                 if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                    GameUtils.board[kingpos] = field;
-                    return true;
+                    threats.add(move);
                 }
             }
         }
@@ -561,8 +602,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -570,8 +610,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -581,8 +620,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -590,8 +628,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'N')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -602,8 +639,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -611,8 +647,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -621,8 +656,7 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
@@ -630,14 +664,14 @@ public interface Chess {
             if (move >= 0 && move < tiles.size()) {
                 if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
                     if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        GameUtils.board[kingpos] = field;
-                        return true;
+                        threats.add(move);
                     }
                 }
             }
         }
 
-        return false;
+        GameUtils.board[kingpos] = field;
+        return threats;
     }
 
     static List<Integer> getSingle(int pos) {
