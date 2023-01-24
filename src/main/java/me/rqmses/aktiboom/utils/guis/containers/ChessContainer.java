@@ -74,19 +74,11 @@ public class ChessContainer extends Container implements Chess {
                     if (w) {
                         if (color.equals("iron")) {
                             kingpos = index;
-                            if (checkMate(index)) {
-                                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.WHITE + "" + TextFormatting.BOLD + "Iron" + TextFormatting.YELLOW + " ist Schach-Matt."));
-                                mate = true;
-                            }
                         }
                         itemStack = getWhiteKing();
                     } else {
                         if (color.equals("diamond")) {
                             kingpos = index;
-                            if (checkMate(index)) {
-                                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.AQUA + "" + TextFormatting.BOLD + "Diamond" + TextFormatting.YELLOW + " ist Schach-Matt."));
-                                mate = true;
-                            }
                         }
                         itemStack = getBlackKing();
                     }
@@ -139,17 +131,21 @@ public class ChessContainer extends Container implements Chess {
             }
         }
 
-        if (getAllMoves().size() == 0) {
-            if (getCheck(kingpos, kingpos).size() == 0) {
-                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Kein Zug mehr m\u00d6glich, Patt."));
-                draw = true;
-            } else {
-                if (color.equals("iron")) {
-                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.WHITE + "" + TextFormatting.BOLD + "Iron" + TextFormatting.YELLOW + " ist Schach-Matt."));
+        if (!mate && !draw) {
+            if (getAllMoves().size() == 0) {
+                if (getCheck(kingpos, kingpos).size() == 0) {
+                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Kein Zug mehr m\u00d6glich, Patt."));
+                    draw = true;
                 } else {
-                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.AQUA + "" + TextFormatting.BOLD + "Diamond" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                    if (kingMoves(kingpos).size() == 0) {
+                        if (color.equals("iron")) {
+                            Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.WHITE + "" + TextFormatting.BOLD + "Iron" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                        } else {
+                            Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + TextFormatting.AQUA + "" + TextFormatting.BOLD + "Diamond" + TextFormatting.YELLOW + " ist Schach-Matt."));
+                        }
+                        mate = true;
+                    }
                 }
-                mate = true;
             }
         }
     }
@@ -298,10 +294,10 @@ public class ChessContainer extends Container implements Chess {
                     }
                 }
             }else {
-                playerSP.sendMessage(new TextComponentString(PREFIX + "Kein Zug mehr m\u00f6glich, Patt."));
+                playerSP.sendMessage(new TextComponentString(PREFIX + "Du bist patt."));
             }
         } else {
-            playerSP.sendMessage(new TextComponentString(PREFIX + "Du bist Schach-Matt!"));
+            playerSP.sendMessage(new TextComponentString(PREFIX + "Du bist schachmatt!"));
         }
     }
 }

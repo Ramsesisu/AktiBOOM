@@ -151,7 +151,7 @@ public interface Chess {
                 break;
             case 'K':
                 moves = kingMoves(index);
-                break;
+                return moves;
         }
 
         List<Integer> illegalmoves = new ArrayList<>();
@@ -203,28 +203,38 @@ public interface Chess {
         ChessContainer.enpassant = new ArrayList<>();
 
         if (Objects.equals(Character.toLowerCase(color), 'w')) {
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A')) {
-                tempmoves.addAll(getSingle(pos - 9));
-            }
-            if (pos > 53) {
-                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 18).charAt(0), 'A')) {
-                    tempmoves.addAll(getSingle(pos - 18));
+            if (pos - 9 >= 0 && pos - 9 < GameUtils.board.length) {
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos - 9));
                 }
             }
-            if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos - 8).charAt(0), 'A')) {
-                tempmoves.addAll(getSingle(pos - 8));
+            if (pos > 53) {
+                if (pos - 18 >= 0 && pos - 18 < GameUtils.board.length) {
+                    if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 18).charAt(0), 'A')) {
+                        tempmoves.addAll(getSingle(pos - 18));
+                    }
+                }
             }
-            if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos - 10).charAt(0), 'A')) {
-                tempmoves.addAll(getSingle(pos - 10));
+            if (pos - 8 >= 0 && pos - 8 < GameUtils.board.length) {
+                if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos - 8).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos - 8));
+                }
+            }
+            if (pos - 10 >= 0 && pos - 10 < GameUtils.board.length) {
+                if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos - 10).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos - 10));
+                }
             }
 
-            if (Objects.equals(Character.toUpperCase(ChessContainer.selectedfield.charAt(0)), 'P')) {
+            if (pos - 10 >= 0 && pos - 10 < GameUtils.board.length) {
                 if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'p')) {
                     if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
                         tempmoves.addAll(getSingle(pos - 10));
                         ChessContainer.enpassant.addAll(getSingle(pos - 10));
                     }
                 }
+            }
+            if (pos - 8 >= 0 && pos - 8 < GameUtils.board.length) {
                 if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'p')) {
                     if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
                         tempmoves.addAll(getSingle(pos - 8));
@@ -233,28 +243,38 @@ public interface Chess {
                 }
             }
         } else {
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A')) {
-                tempmoves.addAll(getSingle(pos + 9));
-            }
-            if (pos < 18) {
-                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 18).charAt(0), 'A')) {
-                    tempmoves.addAll(getSingle(pos + 18));
+            if (pos + 9 >= 0 && pos + 9 < GameUtils.board.length) {
+                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos + 9));
                 }
             }
-            if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos + 8).charAt(0), 'A')) {
-                tempmoves.addAll(getSingle(pos + 8));
+            if (pos + 18 >= 0 && pos + 18 < GameUtils.board.length) {
+                if (pos < 18) {
+                    if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 18).charAt(0), 'A')) {
+                        tempmoves.addAll(getSingle(pos + 18));
+                    }
+                }
             }
-            if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos + 10).charAt(0), 'A')) {
-                tempmoves.addAll(getSingle(pos + 10));
+            if (pos + 8 >= 0 && pos + 8 < GameUtils.board.length) {
+                if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos + 8).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos + 8));
+                }
+            }
+            if (pos + 10 >= 0 && pos + 10 < GameUtils.board.length) {
+                if (!Objects.equals(Arrays.asList(GameUtils.board).get(pos + 10).charAt(0), 'A')) {
+                    tempmoves.addAll(getSingle(pos + 10));
+                }
             }
 
-            if (Objects.equals(Character.toUpperCase(ChessContainer.selectedfield.charAt(0)), 'P')) {
+            if (pos + 8 >= 0 && pos + 8 < GameUtils.board.length) {
                 if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'p')) {
                     if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
                         tempmoves.addAll(getSingle(pos + 8));
                         ChessContainer.enpassant.addAll(getSingle(pos + 8));
                     }
                 }
+            }
+            if (pos + 10 >= 0 && pos + 10 < GameUtils.board.length) {
                 if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'p')) {
                     if (!Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 1).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
                         tempmoves.addAll(getSingle(pos + 10));
@@ -336,19 +356,17 @@ public interface Chess {
         tempmoves.addAll(getSingle(pos - 8));
         tempmoves.addAll(getSingle(pos + 8));
 
-        if (Objects.equals(Character.toUpperCase(ChessContainer.selectedfield.charAt(0)), 'K')) {
-            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos).charAt(0), 'K')) {
-                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 2).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 3).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 4).charAt(0), 'R')) {
-                    if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 4).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
-                        tempmoves.addAll(getSingle(pos - 2));
-                        ChessContainer.rochade.add(pos - 2);
-                    }
+        if (Objects.equals(Arrays.asList(GameUtils.board).get(pos).charAt(0), 'K')) {
+            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 1).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 2).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 3).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 4).charAt(0), 'R')) {
+                if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos - 4).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                    tempmoves.addAll(getSingle(pos - 2));
+                    ChessContainer.rochade.add(pos - 2);
                 }
-                if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 2).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 3).charAt(0), 'R')) {
-                    if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 3).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
-                        tempmoves.addAll(getSingle(pos + 2));
-                        ChessContainer.rochade.add(pos + 2);
-                    }
+            }
+            if (Objects.equals(Arrays.asList(GameUtils.board).get(pos + 1).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 2).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos + 3).charAt(0), 'R')) {
+                if (Objects.requireNonNull(ChessContainer.inventory.getStackInSlot(pos + 3).getItem().getRegistryName()).toString().contains(ChessContainer.color)) {
+                    tempmoves.addAll(getSingle(pos + 2));
+                    ChessContainer.rochade.add(pos + 2);
                 }
             }
         }
@@ -362,42 +380,6 @@ public interface Chess {
         tempmoves.removeAll(illegalmoves);
 
         return tempmoves;
-    }
-
-    default boolean checkMate(int kingpos) {
-        if (kingMoves(kingpos).size() == 0) {
-            List<Integer> threats = getCheck(kingpos, kingpos);
-            if (threats.size() > 0) {
-                List<Integer> possiblemoves = new ArrayList<>();
-                for (int pos : getAllMoves()) {
-                    if (threats.contains(pos)) {
-                        possiblemoves.add(pos);
-                        break;
-                    }
-                }
-                threats.removeAll(possiblemoves);
-
-                if (threats.size() != 0) {
-                    for (int pos : getAllMoves()) {
-                        String field = GameUtils.board[pos];
-
-                        if (ChessContainer.color.equals("iron")) {
-                            GameUtils.board[pos] = "Pw";
-                        } else {
-                            GameUtils.board[pos] = "Pb";
-                        }
-
-                        GameUtils.board[pos] = field;
-
-                        if (getCheck(kingpos, kingpos).size() == 0) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     default List<Integer> getCheck(int pos, int kingpos) {
