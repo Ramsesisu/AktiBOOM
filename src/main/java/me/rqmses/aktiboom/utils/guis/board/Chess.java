@@ -130,7 +130,7 @@ public interface Chess {
         return new ItemStack(Item.getItemById(310),64).setStackDisplayName(TextFormatting.AQUA + "" + TextFormatting.BOLD + "K\u00f6nig");
     }
 
-    static List<Integer> getMoves(String piece, int index) {
+    default List<Integer> getMoves(String piece, int index) {
         List<Integer> moves = new ArrayList<>();
 
         switch (Character.toUpperCase(piece.charAt(0))) {
@@ -322,7 +322,7 @@ public interface Chess {
         return tempmoves;
     }
 
-    static List<Integer> kingMoves(int pos) {
+    default List<Integer> kingMoves(int pos) {
         List<Integer> tempmoves = new ArrayList<>();
 
         ChessContainer.rochade = new ArrayList<>();
@@ -400,7 +400,7 @@ public interface Chess {
         return false;
     }
 
-    static List<Integer> getCheck(int pos, int kingpos) {
+    default List<Integer> getCheck(int pos, int kingpos) {
         List<String> tiles = Arrays.asList(GameUtils.board);
         List<Integer> threats = new ArrayList<>();
 

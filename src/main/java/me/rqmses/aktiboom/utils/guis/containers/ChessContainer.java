@@ -140,7 +140,7 @@ public class ChessContainer extends Container implements Chess {
         }
 
         if (getAllMoves().size() == 0) {
-            if (!checkMate(kingpos)) {
+            if (getCheck(kingpos, kingpos).size() == 0) {
                 Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Kein Zug mehr m\u00d6glich, Patt."));
                 draw = true;
             } else {
@@ -215,18 +215,18 @@ public class ChessContainer extends Container implements Chess {
         return new ItemStack(Item.getItemById(0));
     }
 
-    private static void moveZero() {
+    private void moveZero() {
         selectedindex = -1;
         moves = new ArrayList<>();
     }
 
-    private static void moveOne(int slotId) {
+    private void moveOne(int slotId) {
         selectedfield = Arrays.asList(GameUtils.board).get(slotId);
         selectedindex = slotId;
-        ChessContainer.moves = Chess.getMoves(selectedfield, selectedindex);
+        ChessContainer.moves = getMoves(selectedfield, selectedindex);
     }
 
-    private static void moveTwo(int slotId) {
+    private void moveTwo(int slotId) {
         EntityPlayerSP playerSP = Minecraft.getMinecraft().player;
 
         if (!mate) {
