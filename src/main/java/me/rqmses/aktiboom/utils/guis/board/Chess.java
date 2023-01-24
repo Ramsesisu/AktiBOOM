@@ -377,7 +377,6 @@ public interface Chess {
                 }
                 threats.removeAll(possiblemoves);
 
-                // Hier Bugs
                 if (threats.size() != 0) {
                     for (int pos : getAllMoves()) {
                         String field = GameUtils.board[pos];
@@ -395,7 +394,6 @@ public interface Chess {
                         }
                     }
                 }
-                // Hier Bugs
             }
         }
 
