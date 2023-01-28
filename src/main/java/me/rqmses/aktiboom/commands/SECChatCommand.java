@@ -3,19 +3,19 @@ package me.rqmses.aktiboom.commands;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 import static me.rqmses.aktiboom.AktiBoom.SEC;
 
+@SuppressWarnings("ALL")
 public class SECChatCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
@@ -32,11 +32,11 @@ public class SECChatCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("sf");
+        return Collections.singletonList("sf");
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         if (args.length > 0) {
             if (SEC) {

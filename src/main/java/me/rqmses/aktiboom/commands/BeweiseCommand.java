@@ -4,7 +4,6 @@ import me.rqmses.aktiboom.utils.TextUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +21,7 @@ import java.util.List;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
+@SuppressWarnings("ALL")
 public class BeweiseCommand extends CommandBase implements IClientCommand {
 
     @Override
@@ -59,7 +59,7 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (args.length > 0) {

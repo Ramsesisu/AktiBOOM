@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class TicTacToeContainer extends Container implements TicTacToe {
 
     public static final IInventory inventory = new ContainerHorseChest("Schach", 27);

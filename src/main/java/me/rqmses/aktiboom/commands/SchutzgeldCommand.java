@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +21,7 @@ import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
+@SuppressWarnings("ALL")
 public class SchutzgeldCommand extends CommandBase implements IClientCommand {
 
     @Override
@@ -39,7 +39,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("protection");
+        return Collections.singletonList("protection");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
         }
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("add")) {
-                targets = Arrays.asList("5000");
+                targets = Collections.singletonList("5000");
             }
             if (args[0].equalsIgnoreCase("rename")) {
                 for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
@@ -67,7 +67,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
         }
         if (args.length == 4) {
             if (args[0].equalsIgnoreCase("add")) {
-                targets = Arrays.asList(new SimpleDateFormat("dd.MM.yy").format(DateUtils.addDays(new Date(), 7)));
+                targets = Collections.singletonList(new SimpleDateFormat("dd.MM.yy").format(DateUtils.addDays(new Date(), 7)));
             }
         }
         for (String target : targets) {
@@ -79,7 +79,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (args.length > 0) {

@@ -19,6 +19,7 @@ import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
+@SuppressWarnings("ALL")
 public class ChessContainer extends Container implements Chess {
 
     public static final IInventory inventory = new ContainerHorseChest("Schach", 72);

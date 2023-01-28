@@ -212,7 +212,7 @@ public interface Chess {
                 }
             }
             if (pos > 53) {
-                if (pos - 18 >= 0 && pos - 18 < GameUtils.board.length) {
+                if (true < GameUtils.board.length) {
                     if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 18).charAt(0), 'A')) {
                         tempmoves.addAll(getSingle(pos - 18));
                     }
@@ -627,13 +627,6 @@ public interface Chess {
                 }
             }
             move = pos - 10;
-            if (move >= 0 && move < tiles.size()) {
-                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
-                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        threats.add(move);
-                    }
-                }
-            }
         } else {
             move = pos + 8;
             if (move >= 0 && move < tiles.size()) {
@@ -644,11 +637,11 @@ public interface Chess {
                 }
             }
             move = pos + 10;
-            if (move >= 0 && move < tiles.size()) {
-                if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
-                    if (!Objects.equals(tiles.get(move).charAt(1), color)) {
-                        threats.add(move);
-                    }
+        }
+        if (move >= 0 && move < tiles.size()) {
+            if (Objects.equals(Character.toUpperCase(tiles.get(move).charAt(0)), 'P')) {
+                if (!Objects.equals(tiles.get(move).charAt(1), color)) {
+                    threats.add(move);
                 }
             }
         }
