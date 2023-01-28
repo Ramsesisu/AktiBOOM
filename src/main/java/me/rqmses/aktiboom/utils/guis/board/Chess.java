@@ -212,7 +212,7 @@ public interface Chess {
                 }
             }
             if (pos > 53) {
-                if (true < GameUtils.board.length) {
+                if (pos - 18 < GameUtils.board.length) {
                     if (Objects.equals(Arrays.asList(GameUtils.board).get(pos - 9).charAt(0), 'A') && Objects.equals(Arrays.asList(GameUtils.board).get(pos - 18).charAt(0), 'A')) {
                         tempmoves.addAll(getSingle(pos - 18));
                     }
