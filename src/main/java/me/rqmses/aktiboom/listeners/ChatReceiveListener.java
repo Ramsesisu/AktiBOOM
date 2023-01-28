@@ -115,8 +115,7 @@ public class ChatReceiveListener {
                         if (Minecraft.getMinecraft().currentScreen instanceof GameGui) {
                             player.closeScreen();
                         }
-                        // contents[0].split(" ")[1]
-                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + Arrays.toString(contents[0].split(" ")) + TextFormatting.YELLOW + " hat die Party beendet."));
+                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat die Party beendet."));
                         return;
                     }
                 }

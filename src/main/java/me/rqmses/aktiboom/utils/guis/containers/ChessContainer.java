@@ -125,6 +125,16 @@ public class ChessContainer extends Container implements Chess {
                     if (row == 3) {
                         inventory.setInventorySlotContents(index, getExitTile());
                     }
+                    if (row == 1) {
+                        if (color.equals("diamond")) {
+                            inventory.setInventorySlotContents(index, getTurnTile());
+                        }
+                    }
+                    if (row == 6) {
+                        if (color.equals("iron")) {
+                            inventory.setInventorySlotContents(index, getTurnTile());
+                        }
+                    }
                 }
                 index++;
                 addSlotToContainer(new Slot(inventory, col + row * 9, x, y));
@@ -204,7 +214,7 @@ public class ChessContainer extends Container implements Chess {
             GameUtils.display();
         } else {
             if (slotId == 35) {
-                playerSP.sendChatMessage(": %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
+                playerSP.sendChatMessage("/f %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
             }
         }
 
@@ -286,7 +296,7 @@ public class ChessContainer extends Container implements Chess {
                             }
                         }
 
-                        playerSP.sendChatMessage(": %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
+                        playerSP.sendChatMessage("/f %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
                         moves = new ArrayList<>();
                         selectedindex = -1;
                     } else {

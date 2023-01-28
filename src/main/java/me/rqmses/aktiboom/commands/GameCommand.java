@@ -72,7 +72,7 @@ public class GameCommand extends CommandBase implements IClientCommand {
 
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("end")) {
-                player.sendChatMessage(": %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
+                player.sendChatMessage("/f %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
                 return;
             }
             if (args.length > 1) {
@@ -94,7 +94,7 @@ public class GameCommand extends CommandBase implements IClientCommand {
                     players.append(" ").append(arg);
                 }
 
-                player.sendChatMessage(": %PARTY% : " + category + " : " + players);
+                player.sendChatMessage("/f %PARTY% : " + category + " : " + players);
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
             }

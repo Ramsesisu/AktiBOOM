@@ -83,12 +83,12 @@ public class TicTacToeContainer extends Container implements TicTacToe {
                     } else {
                         board.set(slotId, "Ag");
                     }
-                    playerSP.sendChatMessage(": %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
+                    playerSP.sendChatMessage("/f %GAME% : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", "") + " :" + board.toString().replace("[", "").replace("]", "").replace(", ", "!"));
                 }
             }
         } else {
             if (slotId == 16) {
-                playerSP.sendChatMessage(": %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
+                playerSP.sendChatMessage("/f %PARTY% : end : " + GameUtils.players.toString().replace("[", "").replace("]", "").replace(",", ""));
             }
         }
 

@@ -31,6 +31,9 @@ public interface Chess {
     default ItemStack getClearTile() {
         return new ItemStack(Item.getItemById(0));
     }
+    default ItemStack getTurnTile() {
+        return new ItemStack(Item.getItemById(35),1,5).setStackDisplayName(TextFormatting.GREEN + "" + TextFormatting.BOLD + "An der Reihe");
+    }
 
     default ItemStack getExitTile() {
         return new ItemStack(Item.getItemById(35),1,14).setStackDisplayName(TextFormatting.RED + "" + TextFormatting.BOLD + "Beenden");

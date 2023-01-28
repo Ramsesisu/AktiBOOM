@@ -48,7 +48,7 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("144", "127", "196", "189", "185", "340", "36", "Luigis", "433");
+            targets = Arrays.asList("144", "127", "196", "189", "185", "340", "36", "Luigis", "433", "133", "347", "Triaden-HQ", "50");
         }
         Collections.sort(targets);
         for (String target : targets) {
@@ -102,6 +102,22 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
                 case "luigis":
                     player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + args[0] + ":"));
                     player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/bEtA4FkxEFU", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/bEtA4FkxEFU"));
+                    break;
+                case "133":
+                    player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + args[0] + ":"));
+                    player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/BFYNcSU", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/BFYNcSU"));
+                    break;
+                case "347":
+                    player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + args[0] + ":"));
+                    player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/OQ1Zk1O", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/OQ1Zk1O"));
+                    break;
+                case "triaden-hq":
+                    player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + args[0] + ":"));
+                    player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/AmOZpsk", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/AmOZpsk"));
+                    break;
+                case "50":
+                    player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + args[0] + ":"));
+                    player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/gEOemNy", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/gEOemNy"));
                     break;
                 default:
                     player.sendMessage(new TextComponentString(PREFIX + "Der Spot hat keine verf\u00fcgbaren Beweise."));
