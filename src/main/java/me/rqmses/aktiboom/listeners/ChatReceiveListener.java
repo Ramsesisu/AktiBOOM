@@ -1,6 +1,5 @@
 package me.rqmses.aktiboom.listeners;
 
-import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.utils.FormatUtils;
 import me.rqmses.aktiboom.utils.GameUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
@@ -20,7 +19,8 @@ import java.util.HashMap;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 import static me.rqmses.aktiboom.AktiBoom.SEC;
-import static me.rqmses.aktiboom.handlers.ConfigHandler.*;
+import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatmessage;
+import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatprefix;
 
 public class ChatReceiveListener {
 
@@ -59,13 +59,21 @@ public class ChatReceiveListener {
         }
         if (message.contains(": %INFO% :")) {
             String[] contents = message.split(":", 3);
-            String text = contents[2];
+            String text = contents[2].replaceAll("&e", "" + TextFormatting.YELLOW + "").replaceAll("&6", "" + TextFormatting.GOLD + "").replaceAll("&7", "" + TextFormatting.GRAY + "").replaceAll("&l", "" + TextFormatting.BOLD + "");
 
             event.setMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + text));
 
+            /*
             if (ConfigHandler.autorefresh) {
                 JoinListener.refresh();
             }
+             */
+        }
+        if (message.contains(": %NAVI% :")) {
+            event.setCanceled(true);
+            String[] contents = message.split(":", 3);
+            String navi = contents[2];
+            player.sendChatMessage("/navi " + navi);
         }
         if (message.contains(": %PARTY% :")) {
             event.setCanceled(true);

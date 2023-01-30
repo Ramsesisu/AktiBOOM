@@ -88,7 +88,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                     if (args.length > 3) {
                         try {
                             SheetUtils.addValues("Auftr\u00e4ge", "M4:O54", new String[] {args[1], args[2], args[3]});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat ein Schutzgeld von " + args[1] + " eingetragen.");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat ein Schutzgeld von &6&l" + args[1] + "&e eingetragen.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Das Schutzgeld konnte nicht eingetragen werden."));
                         }
@@ -107,7 +107,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                             }
                             SheetUtils.clearValues("Auftr\u00e4ge", "M" + line + ":O" + line);
                             SheetUtils.sortRange("Auftr\u00e4ge", "M4:O54");
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat das Schutzgeld von " + args[1] + " gel\u00f6scht.");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat das Schutzgeld von &6&l" + args[1] + "&e gel\u00f6scht.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Das Schutzgeld konnte nicht gel\u00f6scht werden."));
                         }

@@ -13,35 +13,35 @@ public class ConfigHandler {
 
     @Config.Name("Auftragsauslieferungen-Nametag")
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
-    public static final String auftragcolor = "";
+    public static String auftragcolor = "";
 
     @Config.Name("Sprengg\u00fcrteldrohungen-Nametag")
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
-    public static final String drohungcolor = "";
+    public static String drohungcolor = "";
 
     @Config.Name("Schutzgelder-Nametag")
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
-    public static final String schutzcolor = "";
+    public static String schutzcolor = "";
 
     @Config.Name("Autobomben-Nametag")
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
-    public static final String tuningcolor = "";
+    public static String tuningcolor = "";
 
     @Config.Name("SECChat-Farbe-Prefix")
     @Config.Comment("F\u00e4rbt den Prefix des SEC-Chats in dem gegeben ColorCode.")
-    public static final String secchatprefix = "c";
+    public static String secchatprefix = "c";
 
     @Config.Name("SECChat-Farbe-Nachricht")
     @Config.Comment("F\u00e4rbt die Nachricht des SEC-Chats in dem gegeben ColorCode.")
-    public static final String secchatmessage = "7";
+    public static String secchatmessage = "7";
 
     @Config.Name("Auto-Refresh")
     @Config.Comment("Aktualisiert die Mod-Daten automatisch. (Verursacht Lags)")
-    public static final boolean autorefresh = false;
+    public static boolean autorefresh = false;
 
     @Config.Name("Auto-Spielbrett")
     @Config.Comment("\u00d6ffnet das Spielfeld automatisch, wenn man an der Reihe ist")
-    public static final boolean autoboard = true;
+    public static boolean autoboard = true;
 
 
     @SubscribeEvent

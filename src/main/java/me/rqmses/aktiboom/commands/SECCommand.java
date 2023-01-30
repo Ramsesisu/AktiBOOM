@@ -64,11 +64,12 @@ public class SECCommand extends CommandBase implements IClientCommand {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         if (args.length > 0) {
             if (args.length > 1) {
-                if (SheetUtils.getSECRank(player.getName()).startsWith("G-")) {
+                String rank = SheetUtils.getSECRank(player.getName());
+                if (rank.startsWith("C-") || rank.startsWith("G-")) {
                     if (args[0].equalsIgnoreCase("invite")) {
                         try {
                             SheetUtils.addValues("SEC-Drogen", "H13:I20", new String[]{args[1], "E-0" + SheetUtils.getRank(args[1])});
-                            player.sendChatMessage("/f %INFO% :" + args[1] + " wurde von " + player.getName() + " in das SEC invitet.");
+                            player.sendChatMessage("/f %INFO% :&6&l" + args[1] + "&e wurde von " + player.getName() + " in das SEC invitet.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
                         }
@@ -83,13 +84,13 @@ public class SECCommand extends CommandBase implements IClientCommand {
                             }
                             SheetUtils.clearValues("SEC-Drogen", "H" + line + ":I" + line);
                             SheetUtils.sortRange("SEC-Drogen", "H13:H20");
-                            player.sendChatMessage("/f %INFO% :" + args[1] + " wurde von " + player.getName() + " aus dem SEC geworfen.");
+                            player.sendChatMessage("/f %INFO% :&6&l" + args[1] + "&e wurde von " + player.getName() + " aus dem SEC geworfen.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht im SEC."));
                         }
                     }
                 } else {
-                    player.sendMessage(new TextComponentString(PREFIX + "Du bist kein SEC-General."));
+                    player.sendMessage(new TextComponentString(PREFIX + "Du bist kein SEC-Commander oder General."));
                 }
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));

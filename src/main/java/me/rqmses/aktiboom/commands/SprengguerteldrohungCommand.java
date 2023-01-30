@@ -88,7 +88,7 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
                     if (args.length > 3) {
                         try {
                             SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[] {new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], args[3]});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an " + args[1] + " eingetragen.");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e eingetragen.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht eingetragen werden."));
                         }
@@ -107,7 +107,7 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
                             }
                             SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
                             SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an " + args[1] + " gel\u00f6scht.");
+                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e gel\u00f6scht.");
                         } catch (IOException e) {
                             player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht gel\u00f6scht werden."));
                         }

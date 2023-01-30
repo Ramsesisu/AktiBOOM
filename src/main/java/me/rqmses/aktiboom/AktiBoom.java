@@ -2,6 +2,7 @@ package me.rqmses.aktiboom;
 
 import me.rqmses.aktiboom.commands.*;
 import me.rqmses.aktiboom.listeners.*;
+import me.rqmses.aktiboom.utils.LocationUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -47,6 +48,7 @@ public class AktiBoom {
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
         ConfigManager.sync(MOD_ID, Config.Type.INSTANCE);
+        LocationUtils.setLocs();
     }
 
     @Mod.EventHandler
@@ -94,6 +96,8 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new TuningsCommand());
         ClientCommandHandler.instance.registerCommand(new CheckTuningCommand());
         ClientCommandHandler.instance.registerCommand(new GameCommand());
+        ClientCommandHandler.instance.registerCommand(new TrainingsserverCommand());
+        ClientCommandHandler.instance.registerCommand(new NearestNaviCommand());
     }
 
     public void ListenerRegistration() {

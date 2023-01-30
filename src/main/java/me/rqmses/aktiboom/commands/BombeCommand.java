@@ -1,10 +1,12 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.utils.LocationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
@@ -50,10 +52,24 @@ public class BombeCommand extends CommandBase implements IClientCommand {
         y = player.getPosition().getY();
         z = player.getPosition().getZ();
 
+        String pos = x+"/"+y+"/"+z;
+
+        String nearestnavi = LocationUtils.getNearestNavi(player.getPosition());
+        BlockPos nearestpos = LocationUtils.uclocs.get(nearestnavi);
+        double distance = (double) Math.round(nearestpos.getDistance(x, y, z) * 10) / 10;
+        boolean max = distance > 100;
+
+        player.sendChatMessage("/f %INFO% :&6&l" + player.getName() + "&e hat eine Bombe bei " + pos + " gelegt.");
+        if (max) {
+            player.sendChatMessage("/f %INFO% :" + "Die Bombe ist zu weit vom n\u00e4chsten Navipunkt &6&l" + nearestnavi + "&7 (&l" + distance + "m&7) " + "&eentfernt.");
+        } else {
+            player.sendChatMessage("/f %INFO% :" + "Der n\u00e4chste Navipunkt zur Bombe ist: &6&l" + nearestnavi + "&7 (&l" + distance + "m&7)");
+        }
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                player.sendChatMessage("/navi " + x+"/"+y+"/"+z);
+                player.sendChatMessage("/f %NAVI% : " + pos);
             }
         }, TimeUnit.SECONDS.toMillis(3));
     }

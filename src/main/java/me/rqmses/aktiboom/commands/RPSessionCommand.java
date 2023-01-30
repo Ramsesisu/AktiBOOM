@@ -54,11 +54,15 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
         ArrayList<String> targets = new ArrayList<>();
         if (!session) {
             if (args.length == 1) {
-                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
+                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Drohung", "Schutzgeld", "Geisel-RP", "Verhandlung", "Tuning-RP"));
             } else if (args.length == 2) {
                 for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
                     targets.add(String.valueOf(playerInfo.getGameProfile().getName()));
                 }
+            }
+        } else {
+            if (args.length == 1) {
+                targets = new ArrayList<>(Collections.singletonList("end"));
             }
         }
         for (String target : targets) {
@@ -85,13 +89,20 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
                 player.sendMessage(new TextComponentString(PREFIX + "Die RolePlay-Sitzung wurde gestartet."));
             }
         } else {
+            if (args.length > 0) {
+                if (args[0].equalsIgnoreCase("end")) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Die RolePlay-Sitzung wurde beendet!"));
+                    imageHashes = new ArrayList<>();
+                    return;
+                }
+            }
             if (imageHashes.size() == 0) {
                 player.sendMessage(new TextComponentString(PREFIX + "Es wurden keine Screenshots get\u00e4tigt!"));
                 imageHashes = new ArrayList<>();
                 return;
             }
             String link;
-            String category = "";
+            String category = art;
             try {
                 link = "https://imgur.com/a/" + UploadHandler.uploadAlbumToID(imageHashes);
             } catch (IOException e) {
@@ -116,8 +127,9 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
                 case "rekrutierung":
                     category = "Rekrutierung";
                     break;
-                case "sprengg\u00fcrteldrohung":
-                    category = "Sprengg\u00fcrteldrohung";
+                case "drohung":
+                case "schutzgeld":
+                    category = "Drohung/Erpressung";
                     break;
                 case "geisel-rp":
                 case "geisel":
@@ -125,6 +137,10 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
                     break;
                 case "verhandlung":
                     category = "Verhandlung";
+                    break;
+                case "tuning-rp":
+                case "tuning":
+                    category = "Tuning-RP";
                     break;
             }
 

@@ -69,7 +69,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 targets = new ArrayList<>(Arrays.asList("MP5", "Pistole", "Kevlar", "Schwere-Kevlar", "RPG-7", "Nachzahlung"));
             }
             if (args[0].equalsIgnoreCase("RolePlay")) {
-                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Sprengg\u00fcrteldrohung", "Geisel-RP", "Verhandlung"));
+                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Drohung", "Schutzgeld", "Geisel-RP", "Verhandlung", "Tuning-RP"));
             }
             if (args[0].equalsIgnoreCase("Auftragsauslieferung")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
