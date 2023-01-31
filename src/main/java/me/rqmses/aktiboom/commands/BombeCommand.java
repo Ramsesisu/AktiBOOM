@@ -59,7 +59,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
             String nearestnavi = LocationUtils.getNearestNavi(player.getPosition());
             BlockPos nearestpos = LocationUtils.uclocs.get(nearestnavi);
             double distance = (double) Math.round(nearestpos.getDistance(x, y, z) * 10) / 10;
-            boolean max = distance > 100;
+            boolean max = distance > 60;
 
             if (Minecraft.getMinecraft().world.isAirBlock(new BlockPos(player.posX, player.posY, player.posZ))) {
                 player.sendChatMessage("/bombe");
