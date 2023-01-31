@@ -98,6 +98,7 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new GameCommand());
         ClientCommandHandler.instance.registerCommand(new TrainingsserverCommand());
         ClientCommandHandler.instance.registerCommand(new NearestNaviCommand());
+        ClientCommandHandler.instance.registerCommand(new BombenDistanzCommand());
     }
 
     public void ListenerRegistration() {
@@ -107,11 +108,14 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new JoinListener());
         MinecraftForge.EVENT_BUS.register(new NameFormatListener());
         MinecraftForge.EVENT_BUS.register(new ClientTickListener());
+        MinecraftForge.EVENT_BUS.register(new PlayerUpdateListener());
     }
 
     public static final KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");
+    public static final KeyBinding bombe = new KeyBinding("/bombe", Keyboard.KEY_NONE, "AktiBOOM");
 
     public void KeyBindRegistration() {
         ClientRegistry.registerKeyBinding(sprengguertel);
+        ClientRegistry.registerKeyBinding(bombe);
     }
 }

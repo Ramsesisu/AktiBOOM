@@ -1,14 +1,18 @@
 package me.rqmses.aktiboom.listeners;
 
+import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.utils.FormatUtils;
 import me.rqmses.aktiboom.utils.GameUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
+import me.rqmses.aktiboom.utils.TextUtils;
 import me.rqmses.aktiboom.utils.guis.GameGui;
 import me.rqmses.aktiboom.utils.guis.containers.ChessContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -30,6 +34,7 @@ public class ChatReceiveListener {
     public void onMessage(ClientChatReceivedEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         String message = event.getMessage().getUnformattedText();
+
         if (message.contains(": %SECCHAT% :")) {
             if (SEC) {
                 String[] contents = message.split(":", 3);
@@ -57,24 +62,33 @@ public class ChatReceiveListener {
                 event.setCanceled(true);
             }
         }
+
         if (message.contains(": %INFO% :")) {
             String[] contents = message.split(":", 3);
             String text = contents[2].replaceAll("&e", "" + TextFormatting.YELLOW + "").replaceAll("&6", "" + TextFormatting.GOLD + "").replaceAll("&7", "" + TextFormatting.GRAY + "").replaceAll("&l", "" + TextFormatting.BOLD + "");
 
             event.setMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + text));
 
-            /*
             if (ConfigHandler.autorefresh) {
-                JoinListener.refresh();
+                if (text.contains("Sprengg\u00fcrteldrohung") || text.contains("Auslieferungsaustrag") || text.contains("Schutzgeld") || text.contains("Autobombe")) {
+                    JoinListener.refresh();
+                }
             }
-             */
         }
+
         if (message.contains(": %NAVI% :")) {
             event.setCanceled(true);
             String[] contents = message.split(":", 3);
-            String navi = contents[2];
-            player.sendChatMessage("/navi " + navi);
+            String navi = contents[2].replace(" ", "");
+            if (ConfigHandler.autonavi) {
+                player.sendChatMessage("/navi " + navi);
+                player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
+                PlayerUpdateListener.showdistance = true;
+            }
+            String[] coords = navi.split("/");
+            PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
         }
+
         if (message.contains(": %PARTY% :")) {
             event.setCanceled(true);
             String[] contents = message.split(":", 4);
@@ -129,6 +143,7 @@ public class ChatReceiveListener {
                 }
             }
         }
+
         if (message.contains(": %GAME% :")) {
             event.setCanceled(true);
             String[] contents = message.split(":", 4);
@@ -142,6 +157,11 @@ public class ChatReceiveListener {
                     }
                 }
             }
+        }
+
+        if (message.contains("News: Die Bombe konnte ")) {
+            PlayerUpdateListener.showdistance = false;
+            PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
         }
     }
 }

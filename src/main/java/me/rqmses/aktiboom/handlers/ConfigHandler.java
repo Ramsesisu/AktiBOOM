@@ -43,6 +43,10 @@ public class ConfigHandler {
     @Config.Comment("\u00d6ffnet das Spielfeld automatisch, wenn man an der Reihe ist")
     public static boolean autoboard = true;
 
+    @Config.Name("Auto-Navi")
+    @Config.Comment("Startet in bestimmten Situationen automatisch ein Navi.")
+    public static boolean autonavi = true;
+
 
     @SubscribeEvent
     public static void onConfigChange(ConfigChangedEvent event) {
