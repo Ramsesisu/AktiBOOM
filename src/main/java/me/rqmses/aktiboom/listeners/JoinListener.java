@@ -5,6 +5,7 @@ import me.rqmses.aktiboom.commands.DrohungenCommand;
 import me.rqmses.aktiboom.commands.SchutzCommand;
 import me.rqmses.aktiboom.commands.TuningsCommand;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
+import me.rqmses.aktiboom.handlers.UpdateHandler;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.utils.TimeUtils;
 import net.minecraft.client.Minecraft;
@@ -41,6 +42,24 @@ public class JoinListener {
     public static void refresh() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
+        try {
+            String latest = UpdateHandler.getLatest();
+            if (latest.contains("Release") && !latest.endsWith(VERSION)) {
+                player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + latest + TextFormatting.YELLOW + " ist nun verf\u00fcgbar!"));
+
+                if (ConfigHandler.autoupdate) {
+                    try {
+                        UpdateHandler.update(latest);
+                        player.sendMessage(new TextComponentString(PREFIX + "Die neueste Version wurde erfolgreich heruntergeladen."));
+                    } catch (Exception e) {
+                        player.sendMessage(new TextComponentString(PREFIX + "Die neueste Version konnte nicht heruntergeladen werden!"));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            player.sendMessage(new TextComponentString(PREFIX + "Die neueste Version konnte nicht erfasst werden!"));
+        }
+
         SEC = SheetUtils.isSEC(player.getName());
         RANK = SheetUtils.getRank(player.getName());
         SECRANK = SheetUtils.getSECRank(player.getName());
@@ -72,7 +91,7 @@ public class JoinListener {
                 ChatReceiveListener.playerranks.put(value.get(0).toString(), secrankname);
             }
         } catch (IOException e) {
-            player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));
+            player.sendMessage(new TextComponentString(PREFIX + "Die SEC-R\u00e4nge konnten nicht geladen werden!."));
         }
 
         try {
@@ -106,7 +125,7 @@ public class JoinListener {
                     daycolumn = "I";
                     break;
                 default:
-                    player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));
+                    player.sendMessage(new TextComponentString(PREFIX + "Der Kalender konnte nicht vollst\u00e4ndig geladen werden!"));
                     return;
             }
 
@@ -212,7 +231,7 @@ public class JoinListener {
                 }, calendar.getTime());
             }
         } catch (IOException | ParseException e) {
-            player.sendMessage(new TextComponentString(PREFIX + "Teile der Daten konnten nicht geladen werden."));
+            player.sendMessage(new TextComponentString(PREFIX + "Der Kalender konnte nicht geladen werden!"));
         }
     }
 }

@@ -7,7 +7,7 @@ plugins {
 
 
 group = 'me.rqmses'
-version = '1.7'
+version = '1.7.2'
 
 java {
     archivesBaseName = 'AktiBOOM'
@@ -102,6 +102,8 @@ dependencies {
     shade 'com.google.apis:google-api-services-sheets:v4-rev20221216-2.0.0'
     implementation 'com.google.http-client:google-http-client-gson:1.42.3'
     shade 'com.google.http-client:google-http-client-gson:1.42.3'
+    implementation 'com.github.hazendaz.jsoup:jsoup:1.15.1'
+    shade 'com.github.hazendaz.jsoup:jsoup:1.15.1'
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

@@ -2,16 +2,15 @@
   {
     "modid": "aktiboom",
     "name": "AktiBOOM",
-    "description": "Mod zum Eintragen der Aktivit\u00e4ten der Terroristen-Fraktion UnicaCitys.",
-    "version": "1.7",
+    "description": "Mod zum Eintragen der Aktivit\u00e4ten der Terroristen-Fraktion UnicaCitys und Bereitstellung weiterer grundlegender Features.",
+    "version": "Release",
     "mcversion": "${mcversion}",
     "url": "https://github.com/Ramsesisu/AktiBOOM",
     "updateUrl": "https://github.com/Ramsesisu/AktiBOOM/releases",
     "authorList": [
       "Ramses"
     ],
-    "credits": "",
-    "logoFile": "",
+    "logoFile": "logo.png",
     "screenshots": [],
     "dependencies": []
   }

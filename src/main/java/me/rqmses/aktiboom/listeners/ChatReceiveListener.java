@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.listeners;
 
+import me.rqmses.aktiboom.commands.BombeCommand;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.utils.FormatUtils;
 import me.rqmses.aktiboom.utils.GameUtils;
@@ -21,8 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.SEC;
+import static me.rqmses.aktiboom.AktiBoom.*;
 import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatmessage;
 import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatprefix;
 
@@ -81,10 +81,12 @@ public class ChatReceiveListener {
             String[] contents = message.split(":", 3);
             String navi = contents[2].replace(" ", "");
             if (ConfigHandler.autonavi) {
-                player.sendChatMessage("/navi " + navi);
-                player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
-                PlayerUpdateListener.showdistance = true;
+                if (!AFK) {
+                    player.sendChatMessage("/navi " + navi);
+                }
             }
+            player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
+            PlayerUpdateListener.showdistance = true;
             String[] coords = navi.split("/");
             PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
         }
@@ -162,6 +164,15 @@ public class ChatReceiveListener {
         if (message.contains("News: Die Bombe konnte ")) {
             PlayerUpdateListener.showdistance = false;
             PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
+            BombeCommand.planter = false;
+        }
+
+        if (message.equals("Du bist nun im AFK-Modus.")) {
+            AFK = true;
+        }
+
+        if (message.equals("Du bist nun nicht mehr im AFK-Modus.")) {
+            AFK = false;
         }
     }
 }

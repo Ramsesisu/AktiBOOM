@@ -8,6 +8,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static me.rqmses.aktiboom.AktiBoom.AFK;
+
 public class PlayerUpdateListener {
 
     private static long lastTime = System.currentTimeMillis();
@@ -24,22 +26,26 @@ public class PlayerUpdateListener {
                 long currentTime = System.currentTimeMillis();
 
                 String color = TextFormatting.BLACK + "";
+
                 if (distance <= 25) {
-                    color = TextFormatting.DARK_GREEN + "";
+                        color = TextFormatting.DARK_GREEN + "";
                 } else if (distance <= 40) {
-                    color = TextFormatting.GREEN + "";
+                        color = TextFormatting.GREEN + "";
                 } else if (distance <= 55) {
-                    color = TextFormatting.YELLOW + "";
+                        color = TextFormatting.YELLOW + "";
                 } else if (distance <= 70) {
-                    color = TextFormatting.GOLD + "";
+                        color = TextFormatting.GOLD + "";
                 } else if (distance <= 85) {
-                    color = TextFormatting.RED + "";
+                        color = TextFormatting.RED + "";
                 } else if (distance <= 100) {
-                    color = TextFormatting.DARK_RED + "";
+                        color = TextFormatting.DARK_RED + "";
                 } else if (currentTime - lastTime >= 20000) {
                     lastTime = System.currentTimeMillis();
-                    player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Bomben-Radius verlassen!");
+                    if (!AFK) {
+                        player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Bomben-Radius verlassen!");
+                    }
                 }
+
                 player.sendStatusMessage(new TextComponentString( color + TextFormatting.BOLD + distance + "m"), true);
             }
         }

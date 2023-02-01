@@ -24,6 +24,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
     private static int x = 0;
     private static int y = 0;
     private static int z = 0;
+    public static boolean planter = false;
 
     @Override
     @Nonnull
@@ -69,6 +70,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                     public void run() {
                         if (Minecraft.getMinecraft().world.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock().toString().toLowerCase().contains("tnt")) {
                             player.sendChatMessage("/f %INFO% :&6&l" + player.getName() + "&e hat eine Bombe bei &6" + pos + "&e gelegt.");
+                            planter = true;
 
                             timer.schedule(new TimerTask() {
                                 @Override
