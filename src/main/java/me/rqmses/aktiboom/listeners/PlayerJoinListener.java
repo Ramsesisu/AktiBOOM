@@ -22,7 +22,7 @@ import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
 
-public class JoinListener {
+public class PlayerJoinListener {
 
     public static List<List<Object>> kalender = new ArrayList<>();
     public static HashMap<String, String> scheduler = new HashMap<>();

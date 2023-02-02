@@ -101,13 +101,17 @@ public class StatistikCommand extends CommandBase implements IClientCommand {
 
                 List<List<Object>> wins = SheetUtils.getValueRange("Win/Lose Statistik", "C7:C64").getValues();
                 player.sendMessage(new TextComponentString(TextFormatting.GREEN + "" + TextFormatting.ITALIC + "Gewonnen"));
-                for (List<Object> value : wins) {
-                    player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                if (wins.size() != 0) {
+                    for (List<Object> value : wins) {
+                        player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                    }
                 }
                 List<List<Object>> loses = SheetUtils.getValueRange("Win/Lose Statistik", "E7:E64").getValues();
                 player.sendMessage(new TextComponentString(TextFormatting.RED + "" + TextFormatting.ITALIC + "Verloren"));
-                for (List<Object> value : loses) {
-                    player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                if (loses.size() != 0) {
+                    for (List<Object> value : loses) {
+                        player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                    }
                 }
                 player.sendMessage(new TextComponentString(""));
 

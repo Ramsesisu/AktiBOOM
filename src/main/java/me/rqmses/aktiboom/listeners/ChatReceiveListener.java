@@ -10,6 +10,7 @@ import me.rqmses.aktiboom.utils.guis.GameGui;
 import me.rqmses.aktiboom.utils.guis.containers.ChessContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -71,7 +72,7 @@ public class ChatReceiveListener {
 
             if (ConfigHandler.autorefresh) {
                 if (text.contains("Sprengg\u00fcrteldrohung") || text.contains("Auslieferungsaustrag") || text.contains("Schutzgeld") || text.contains("Autobombe")) {
-                    JoinListener.refresh();
+                    PlayerJoinListener.refresh();
                 }
             }
         }
@@ -80,15 +81,19 @@ public class ChatReceiveListener {
             event.setCanceled(true);
             String[] contents = message.split(":", 3);
             String navi = contents[2].replace(" ", "");
-            if (ConfigHandler.autonavi) {
-                if (!AFK) {
-                    player.sendChatMessage("/navi " + navi);
-                }
-            }
             player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
-            PlayerUpdateListener.showdistance = true;
-            String[] coords = navi.split("/");
-            PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
+            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
+            if (netHandlerPlayClient == null) {return;}
+            if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
+                if (ConfigHandler.autonavi) {
+                    if (!AFK) {
+                        player.sendChatMessage("/navi " + navi);
+                    }
+                }
+                PlayerUpdateListener.showdistance = true;
+                String[] coords = navi.split("/");
+                PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
+            }
         }
 
         if (message.contains(": %PARTY% :")) {
@@ -161,7 +166,7 @@ public class ChatReceiveListener {
             }
         }
 
-        if (message.contains("News: Die Bombe konnte ")) {
+        if (message.startsWith("News: Die Bombe konnte ")) {
             PlayerUpdateListener.showdistance = false;
             PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
             BombeCommand.planter = false;

@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.listeners;
 
+import me.rqmses.aktiboom.commands.BombeCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.math.BlockPos;
@@ -19,11 +20,12 @@ public class PlayerUpdateListener {
     @SubscribeEvent
     public void onPlayerMove(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntity() instanceof EntityPlayerSP) {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
+            long currentTime = System.currentTimeMillis();
+
             if (showdistance) {
-                EntityPlayerSP player = Minecraft.getMinecraft().player;
                 BlockPos pos = player.getPosition();
                 double distance = (double) Math.round(pos.getDistance(bombpos.getX(), pos.getY(), bombpos.getZ()) * 10) / 10;
-                long currentTime = System.currentTimeMillis();
 
                 String color = TextFormatting.BLACK + "";
 
@@ -39,7 +41,7 @@ public class PlayerUpdateListener {
                         color = TextFormatting.RED + "";
                 } else if (distance <= 100) {
                         color = TextFormatting.DARK_RED + "";
-                } else if (currentTime - lastTime >= 20000) {
+                } else if (currentTime - lastTime >= 30000) {
                     lastTime = System.currentTimeMillis();
                     if (!AFK) {
                         player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Bomben-Radius verlassen!");
@@ -47,6 +49,15 @@ public class PlayerUpdateListener {
                 }
 
                 player.sendStatusMessage(new TextComponentString( color + TextFormatting.BOLD + distance + "m"), true);
+            }
+
+            if (BombeCommand.planter) {
+                if (player.getHealth() < 10) {
+                    if (currentTime - lastTime >= 15000) {
+                        lastTime = System.currentTimeMillis();
+                        player.sendChatMessage("/f %INFO% :Der Planter &6" + player.getName() + "&e stirbt!");
+                    }
+                }
             }
         }
     }
