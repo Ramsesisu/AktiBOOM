@@ -80,12 +80,17 @@ public class AddMemberCommand extends CommandBase implements IClientCommand {
                     }
 
                     List<String> leaderteam = new ArrayList<>();
+                    List<String> leaders = new ArrayList<>();
                     try {
                         List<List<Object>> memberlist = SheetUtils.getValueRange("\u00dcbersicht", "B4:B27").getValues();
 
                         for (List<Object> member : memberlist) {
-                            if (SheetUtils.getRank(member.get(0).toString()) >= 4) {
+                            int rank = SheetUtils.getRank(member.get(0).toString());
+                            if (rank == 4) {
                                 leaderteam.add(member.get(0).toString());
+                            }
+                            if (rank >= 5) {
+                                leaders.add(member.get(0).toString());
                             }
                         }
                     } catch (IOException e) {
@@ -93,9 +98,16 @@ public class AddMemberCommand extends CommandBase implements IClientCommand {
                     }
 
                     try {
-                        SheetUtils.addProtectedRange(SheetUtils.getSheetID(args[0]), 0, 0, 29, 12, new ArrayList<>());
-
                         List<String> permissions = new ArrayList<>();
+
+                        for (String leader : leaders) {
+                            String email = SheetUtils.getEmail(leader);
+                            if (!Objects.equals(email, "")) {
+                                permissions.add(email);
+                            }
+                        }
+                        SheetUtils.addProtectedRange(SheetUtils.getSheetID(args[0]), 0, 0, 29, 12, permissions);
+
                         permissions.add(args[1]);
 
                         for (String leader : leaderteam) {

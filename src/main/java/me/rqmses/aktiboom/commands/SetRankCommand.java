@@ -133,16 +133,22 @@ public class SetRankCommand extends CommandBase implements IClientCommand {
                             }
 
                             if (rank >= 5 && oldrank < 5) {
-                                SheetUtils.addEditor("Kopierblatt", "Kopierblatt", args[0]);
-                                SheetUtils.addEditor("Equiplog", "E-Mails", args[0]);
-                                SheetUtils.addEditor("Win/Lose Statistik", "Date", args[0]);
-                                SheetUtils.addEditor("Regeln + Anmerkungen", "Regeln", args[0]);
-                                SheetUtils.addEditor("\u00dcbersicht", "Mitglieder", args[0]);
+                                SheetUtils.addEditor("Kopierblatt", "Kopierblatt", email);
+                                SheetUtils.addEditor("Equiplog", "E-Mails", email);
+                                SheetUtils.addEditor("Win/Lose Statistik", "Date", email);
+                                SheetUtils.addEditor("Regeln + Anmerkungen", "Regeln", email);
+                                SheetUtils.addEditor("\u00dcbersicht", "Mitglieder", email);
+                                for (String member : memberlist) {
+                                    SheetUtils.addEditor(member, "Range", email);
+                                }
                             } else if (rank < 5 && oldrank > 5) {
-                                SheetUtils.removeEditor("Kopierblatt", "Kopierblatt", args[0]);
-                                SheetUtils.removeEditor("Equiplog", "E-Mails", args[0]);
-                                SheetUtils.removeEditor("Win/Lose Statistik", "Date", args[0]);
-                                SheetUtils.removeEditor("\u00dcbersicht", "Mitglieder", args[0]);
+                                SheetUtils.removeEditor("Kopierblatt", "Kopierblatt", email);
+                                SheetUtils.removeEditor("Equiplog", "E-Mails", email);
+                                SheetUtils.removeEditor("Win/Lose Statistik", "Date", email);
+                                SheetUtils.removeEditor("\u00dcbersicht", "Mitglieder", email);
+                                for (String member : memberlist) {
+                                    SheetUtils.removeEditor(member, "Range", email);
+                                }
                             }
 
                             player.sendMessage(new TextComponentString(PREFIX + "Der Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + "Rang-" + args[1] + TextFormatting.YELLOW + " aktualisiert."));
