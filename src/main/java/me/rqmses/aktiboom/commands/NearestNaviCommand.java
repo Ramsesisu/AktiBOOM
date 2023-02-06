@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
+@SuppressWarnings("NullableProblems")
 public class NearestNaviCommand extends CommandBase implements IClientCommand {
 
     @Override

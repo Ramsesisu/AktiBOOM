@@ -7,6 +7,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@SuppressWarnings("CanBeFinal")
 @Config(modid = AktiBoom.MOD_ID, name = AktiBoom.MOD_ID)
 @Mod.EventBusSubscriber
 public class ConfigHandler {
