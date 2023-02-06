@@ -60,30 +60,32 @@ public class SECDrugsCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (args.length < 2) {
-            player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
-            return;
-        }
-        if (!SEC) {
-            player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Mitglied im SEC."));
-            return;
-        }
+            if (args.length < 2) {
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
+                return;
+            }
+            if (!SEC) {
+                player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Mitglied im SEC."));
+                return;
+            }
 
-        boolean success;
-        try {
-            success = SheetUtils.addSECDrugs(new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), player.getName(), args[0], args[1]});
-        } catch (IOException e) {
-            player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
-            return;
-        }
+            boolean success;
+            try {
+                success = SheetUtils.addSECDrugs(new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), player.getName(), args[0], args[1]});
+            } catch (IOException e) {
+                player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                return;
+            }
 
-        if (success) {
-            player.sendMessage(new TextComponentString(PREFIX + "Die SEC-Drogen wurden erfolgreich eingetragen."));
-        } else {
-            player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
-        }
+            if (success) {
+                player.sendMessage(new TextComponentString(PREFIX + "Die SEC-Drogen wurden erfolgreich eingetragen."));
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
+            }
+        }).start();
     }
 
     @Override

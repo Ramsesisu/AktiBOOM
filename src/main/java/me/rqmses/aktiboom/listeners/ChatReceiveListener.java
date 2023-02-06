@@ -1,6 +1,8 @@
 package me.rqmses.aktiboom.listeners;
 
 import me.rqmses.aktiboom.commands.BombeCommand;
+import me.rqmses.aktiboom.commands.CheckModCommand;
+import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.utils.FormatUtils;
 import me.rqmses.aktiboom.utils.GameUtils;
@@ -18,10 +20,8 @@ import net.minecraft.util.text.event.ClickEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.io.IOException;
+import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
 import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatmessage;
@@ -42,23 +42,25 @@ public class ChatReceiveListener {
                 String name = contents[0].split(" ")[1].replace("[UC]", "");
                 String text = contents[2];
 
-                String secrankname;
+                final String[] secrankname = new String[1];
                 if (playerranks.containsKey(name)) {
-                    secrankname = playerranks.get(name);
+                    secrankname[0] = playerranks.get(name);
                 } else {
-                    String secrank = SheetUtils.getSECRank(name);
-                    secrankname = secrank;
-                    if (secrank.startsWith("E-")) {
-                        secrankname = "Executive";
-                    } else if (secrank.startsWith("C-")) {
-                        secrankname = "Commander";
-                    } else if (secrank.startsWith("G-")) {
-                        secrankname = "General";
-                    }
-                    playerranks.putIfAbsent(name, secrankname);
+                    new Thread(() -> {
+                        String secrank = SheetUtils.getSECRank(name);
+                        secrankname[0] = secrank;
+                        if (secrank.startsWith("E-")) {
+                            secrankname[0] = "Executive";
+                        } else if (secrank.startsWith("C-")) {
+                            secrankname[0] = "Commander";
+                        } else if (secrank.startsWith("G-")) {
+                            secrankname[0] = "General";
+                        }
+                    }).start();
+                    playerranks.putIfAbsent(name, secrankname[0]);
                 }
 
-                event.setMessage(new TextComponentString(FormatUtils.getColor(secchatprefix) + "" + TextFormatting.ITALIC + "SEC " + FormatUtils.getColor(secchatprefix) + secrankname + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(secchatmessage) + text));
+                event.setMessage(new TextComponentString(FormatUtils.getColor(secchatprefix) + "" + TextFormatting.ITALIC + "SEC " + FormatUtils.getColor(secchatprefix) + secrankname[0] + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(secchatmessage) + text));
             } else {
                 event.setCanceled(true);
             }
@@ -178,6 +180,43 @@ public class ChatReceiveListener {
 
         if (message.equals("Du bist nun nicht mehr im AFK-Modus.")) {
             AFK = false;
+        }
+
+        if (message.startsWith("[Fraktion] Du hast ") && message.endsWith(" aus der Fraktion geschmissen!")) {
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("[Fraktion] Du hast ", "").replace(" aus der Fraktion geschmissen!", "") + "&e aus der Fraktion uninvitet!");
+        }
+
+        if (message.equals("[Equip] Du hast dir eine RPG-7 equippt!")) {
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat sich eine &6&lRPG-7 &eequippt!");
+        }
+
+        if (message.equals("[Equip] Du hast dir ein Sprengg\u00fcrtel equippt!")) {
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat sich einen &6&lSprengg\u00fcrtel &eequippt!");
+        }
+
+        if (message.contains(": %CHECK% :")) {
+            event.setCanceled(true);
+            new Thread(() -> {
+                String[] contents = message.split(":");
+                if (contents[2].contains(player.getName())) {
+                    if (contents.length == 4) {
+                        try {
+                            if (SheetUtils.getValueRange(InformationType.CHECKMOD_PERMISSION.getSheet(), InformationType.CHECKMOD_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                                player.sendChatMessage("/f %CHECK% : " + contents[0].split(" ")[1] + " : " + contents[3].replace(" ", "") + " : " + VERSION);
+                            }
+                        } catch (IOException ignored) {
+                        }
+                    } else if (contents.length == 5) {
+                        if (contents[0].split(" ")[1].replace(" ", "").equals(CheckModCommand.checkplayer)) {
+                            if (contents[3].replace(" ", "").equals(CheckModCommand.code)) {
+                                CheckModCommand.check = true;
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Installiert"));
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Version: " + TextFormatting.YELLOW + contents[4].replace(" ", "")));
+                            }
+                        }
+                    }
+                }
+            }).start();
         }
     }
 }

@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -25,24 +26,22 @@ import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
-public class CheckTuningCommand extends CommandBase implements IClientCommand {
+public class CheckModCommand extends CommandBase implements IClientCommand {
+
+    public static String code = "";
+    public static String checkplayer = "";
+    public static boolean check = false;
 
     @Override
     @Nonnull
     public String getName() {
-        return "checktuning";
+        return "checkmod";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/checktuning [Name]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Arrays.asList("checkautobombe", "checkcarbomb", "checkspecialtuning");
+        return "/checkmod ([Name])";
     }
 
     @Override
@@ -69,21 +68,35 @@ public class CheckTuningCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 0) {
-                String name = args[0];
                 try {
-                    int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", name) + 4;
-                    List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q" + line + ":T" + line).getValues().get(0);
-                    if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
-                        player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Autobombenliste."));
-                        return;
+                    if (SheetUtils.getValueRange(InformationType.CHECKMOD_PERMISSION.getSheet(), InformationType.CHECKMOD_PERMISSION.getRange()).toString().contains(player.getName())) {
+                        checkplayer = args[0];
+                        player.sendMessage(new TextComponentString(PREFIX + "Mod-Infos von " + checkplayer + ":"));
+
+                        code = String.valueOf((10000 + (int) (Math.random() * ((99999 - 10000) + 1))));
+                        player.sendChatMessage("/f %CHECK% : " + checkplayer + " : " + code);
+
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (!CheckModCommand.check) {
+                                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.RED + "Nicht installiert"));
+                                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Version: " + TextFormatting.YELLOW + "< 1.7.4"));
+                                } else {
+                                    CheckModCommand.check = false;
+                                }
+                                CheckModCommand.checkplayer = "";
+                                CheckModCommand.code = "";
+                            }
+                        }, 3000);
+                    } else {
+                        player.sendMessage(new TextComponentString(PREFIX + "Du hast nicht die ben\u00f6tigten Rechte!"));
                     }
-                    player.sendMessage(new TextComponentString(PREFIX + "Autobombe f\u00fcr " + TextFormatting.GOLD + name));
-                    player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
                 } catch (IOException e) {
-                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Autobombenliste."));
+                    player.sendMessage(new TextComponentString(PREFIX + "Die CheckMod-Rechte konnten nicht erfasst werden!"));
                 }
             } else {
-                player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Spieler angeben!"));
+                player.sendMessage(new TextComponentString(PREFIX + "Gib einen Member an!"));
             }
         }).start();
     }

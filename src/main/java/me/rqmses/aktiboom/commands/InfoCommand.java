@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -64,56 +64,62 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        String name;
-        if (args.length > 0) {
-            name = args[0];
-        } else {
-            name = player.getName();
-        }
+            String name;
+            int rank;
+            String secrank;
+            if (args.length > 0) {
+                name = args[0];
+                rank = SheetUtils.getRank(args[0]);
+                secrank = SheetUtils.getSECRank(args[0]);
+            } else {
+                name = player.getName();
+                rank = RANK;
+                secrank = SECRANK;
+            }
 
-        player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Name: " + TextFormatting.YELLOW + name));
+            player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Name: " + TextFormatting.YELLOW + name));
 
-        int rank = SheetUtils.getRank(name);
-        String rankname = "Rekrut";
-        switch (rank) {
-            case -1:
-                rankname = "Nicht in der Fraktion";
-                break;
-            case 1:
-                rankname = "Feldwebel";
-                break;
-            case 2:
-                rankname = "Leutnant";
-                break;
-            case 3:
-                rankname = "Hauptmann";
-                break;
-            case 4:
-                rankname = "Major";
-                break;
-            case 5:
-                rankname = "General";
-                break;
-            case 6:
-                rankname = "Kommandant";
-                break;
-        }
+            String rankname = "Rekrut";
+            switch (rank) {
+                case -1:
+                    rankname = "Nicht in der Fraktion";
+                    break;
+                case 1:
+                    rankname = "Feldwebel";
+                    break;
+                case 2:
+                    rankname = "Leutnant";
+                    break;
+                case 3:
+                    rankname = "Hauptmann";
+                    break;
+                case 4:
+                    rankname = "Major";
+                    break;
+                case 5:
+                    rankname = "General";
+                    break;
+                case 6:
+                    rankname = "Kommandant";
+                    break;
+            }
 
-        String secrank = SheetUtils.getSECRank(name);
-        String secrankname = secrank;
-        if (secrank.startsWith("E-")) {
-            secrankname = "Executive";
-        } else if (secrank.startsWith("C-")) {
-            secrankname = "Commander";
-        } else if (secrank.startsWith("G-")) {
-            secrankname = "General";
-        }
+            String secrankname = secrank;
+            if (secrank.startsWith("E-")) {
+                secrankname = "Executive";
+            } else if (secrank.startsWith("C-")) {
+                secrankname = "Commander";
+            } else if (secrank.startsWith("G-")) {
+                secrankname = "General";
+            }
 
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "SEC: " + TextFormatting.YELLOW + secrankname));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "SEC: " + TextFormatting.YELLOW + secrankname));
+        }).start();
     }
 
     @Override

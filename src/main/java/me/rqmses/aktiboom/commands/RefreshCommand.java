@@ -30,10 +30,12 @@ public class RefreshCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        timer = new Timer();
-        PlayerJoinListener.refresh();
+        new Thread(() -> {
+            timer = new Timer();
+            PlayerJoinListener.refresh();
 
-        Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
+            Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
+        }).start();
     }
 
     @Override

@@ -65,25 +65,27 @@ public class CheckAuftragCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (args.length > 0) {
-            String name = args[0];
-            try {
-                int line = SheetUtils.searchLine("Auftr\u00e4ge", "C4:C54", name) + 4;
-                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "B"+line+":E"+line).getValues().get(0);
-                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+            if (args.length > 0) {
+                String name = args[0];
+                try {
+                    int line = SheetUtils.searchLine("Auftr\u00e4ge", "C4:C54", name) + 4;
+                    List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "B" + line + ":E" + line).getValues().get(0);
+                    if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                        player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
+                        return;
+                    }
+                    player.sendMessage(new TextComponentString(PREFIX + "Auslieferung von " + TextFormatting.GOLD + name));
+                    player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
+                } catch (IOException e) {
                     player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
-                    return;
                 }
-                player.sendMessage(new TextComponentString(PREFIX + "Auslieferung von " + TextFormatting.GOLD + name));
-                player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
-            } catch (IOException e) {
-                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Spieler angeben!"));
             }
-        } else {
-            player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Spieler angeben!"));
-        }
+        }).start();
     }
 
     @Override

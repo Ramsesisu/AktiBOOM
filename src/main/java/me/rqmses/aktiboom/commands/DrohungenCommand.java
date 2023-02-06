@@ -43,25 +43,27 @@ public class DrohungenCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        player.sendMessage(new TextComponentString(PREFIX + "Aktuelle Sprengg\u00fcrteldrohungen:"));
-        player.sendMessage(new TextComponentString(""));
+            player.sendMessage(new TextComponentString(PREFIX + "Aktuelle Sprengg\u00fcrteldrohungen:"));
+            player.sendMessage(new TextComponentString(""));
 
-        List<List<Object>> values;
-        try {
-            values = SheetUtils.getValueRange("Auftr\u00e4ge", "G4:K54").getValues();
-        } catch (IOException e) {
-            return;
-        }
+            List<List<Object>> values;
+            try {
+                values = SheetUtils.getValueRange("Auftr\u00e4ge", "G4:K54").getValues();
+            } catch (IOException e) {
+                return;
+            }
 
-        if (values == null) {
-            return;
-        }
+            if (values == null) {
+                return;
+            }
 
-        for (List<Object> list : values) {
-            player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + " bis " + list.get(4) + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
-        }
+            for (List<Object> list : values) {
+                player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + " bis " + list.get(4) + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
+            }
+        }).start();
     }
 
     @Override

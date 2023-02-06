@@ -80,63 +80,65 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (args.length > 0) {
-            switch (args[0].toLowerCase()) {
-                case "add":
-                    if (args.length > 3) {
-                        try {
-                            SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[] {new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], args[3]});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e eingetragen.");
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht eingetragen werden."));
-                        }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung add [Name] [Preis] [Frist]"));
-                    }
-                    break;
-                case "done":
-                    if (args.length > 1) {
-                        try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G"+line+":K"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
-                                return;
+            if (args.length > 0) {
+                switch (args[0].toLowerCase()) {
+                    case "add":
+                        if (args.length > 3) {
+                            try {
+                                SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], args[3]});
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e eingetragen.");
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht eingetragen werden."));
                             }
-                            SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
-                            SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e gel\u00f6scht.");
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht gel\u00f6scht werden."));
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung add [Name] [Preis] [Frist]"));
                         }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung done [Name]"));
-                    }
-                    break;
-                case "rename":
-                    if (args.length > 2) {
-                        try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G"+line+":K"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
-                                return;
+                        break;
+                    case "done":
+                        if (args.length > 1) {
+                            try {
+                                int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
+                                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G" + line + ":K" + line).getValues().get(0);
+                                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                                    return;
+                                }
+                                SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
+                                SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e gel\u00f6scht.");
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht gel\u00f6scht werden."));
                             }
-                            SheetUtils.setValues("Auftr\u00e4ge", "H" + line, new String[]{args[2]});
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung done [Name]"));
                         }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung rename [Name] [Neuer Name]"));
-                    }
-                    break;
+                        break;
+                    case "rename":
+                        if (args.length > 2) {
+                            try {
+                                int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
+                                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G" + line + ":K" + line).getValues().get(0);
+                                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                                    return;
+                                }
+                                SheetUtils.setValues("Auftr\u00e4ge", "H" + line, new String[]{args[2]});
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
+                            }
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung rename [Name] [Neuer Name]"));
+                        }
+                        break;
+                }
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
             }
-        } else {
-            player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
-        }
+        }).start();
     }
 
     @Override

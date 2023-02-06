@@ -17,43 +17,40 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.IOException;
 import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
+import static me.rqmses.aktiboom.AktiBoom.SECRANK;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
-public class CheckTuningCommand extends CommandBase implements IClientCommand {
+public class SetSECRankCommand extends CommandBase implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "checktuning";
+        return "setsecrank";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/checktuning [Name]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Arrays.asList("checkautobombe", "checkcarbomb", "checkspecialtuning");
+        return "/setsecrank [Name] [Rang]";
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         ArrayList<String> list = new ArrayList<>();
-        ArrayList<String> targets = new ArrayList<>();
+        List<String> targets = new ArrayList<>();
         if (args.length == 1) {
             for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
                 targets.add(String.valueOf(playerInfo.getGameProfile().getName()));
             }
+        }
+        if (args.length == 2) {
+            targets = Arrays.asList("Executive", "Commander", "General");
         }
         for (String target : targets) {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
@@ -68,22 +65,36 @@ public class CheckTuningCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            if (args.length > 0) {
-                String name = args[0];
-                try {
-                    int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", name) + 4;
-                    List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q" + line + ":T" + line).getValues().get(0);
-                    if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
-                        player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Autobombenliste."));
-                        return;
+            if (args.length > 1) {
+                if (SECRANK.startsWith("C") || SECRANK.startsWith("G")) {
+                    String rank = args[1];
+                    String oldrank = SheetUtils.getSECRank(args[0]);
+
+                    if (rank.startsWith("E") || rank.startsWith("C") || rank.startsWith("G")) {
+                        String secrank = oldrank.replaceFirst(String.valueOf(oldrank.charAt(0)), String.valueOf(rank.charAt(0)));
+                        if (!SheetUtils.setSECRank(args[0], secrank)) {
+                            player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " ist nicht in der Fraktion!"));
+                        } else {
+                            String email = SheetUtils.getEmail(args[0]);
+
+                            if (rank.startsWith("E") && !oldrank.startsWith("E")) {
+                                SheetUtils.removeEditor("SEC-Drogen", "SEC-Member", email);
+                            } else if ((rank.startsWith("C") || rank.startsWith("G")) && oldrank.startsWith("E")) {
+                                SheetUtils.addEditor("SEC-Drogen", "SEC-Member", email);
+                            }
+
+                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + secrank + TextFormatting.YELLOW + " aktualisiert."));
+                        }
+                    } else {
+                        player.sendMessage(new TextComponentString(PREFIX + "Gib einen g\u00fcltigen Rang an!"));
                     }
-                    player.sendMessage(new TextComponentString(PREFIX + "Autobombe f\u00fcr " + TextFormatting.GOLD + name));
-                    player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
-                } catch (IOException e) {
-                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Autobombenliste."));
+                } else {
+                    player.sendMessage(new TextComponentString(PREFIX + "Du bist kein SEC-Commander oder General!"));
                 }
+            } else if (args.length == 1) {
+                player.sendMessage(new TextComponentString(PREFIX + "Gib einen Rang an!"));
             } else {
-                player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Spieler angeben!"));
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
             }
         }).start();
     }

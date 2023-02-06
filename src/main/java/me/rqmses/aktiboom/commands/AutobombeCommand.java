@@ -69,67 +69,69 @@ public class AutobombeCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (args.length > 0) {
-            switch (args[0].toLowerCase()) {
-                case "add":
-                    if (args.length > 2) {
-                        String price = "3750";
-                        if (args.length > 3) {
-                            price = args[3];
-                        }
-                        try {
-                            SheetUtils.addValues("Auftr\u00e4ge", "Q4:T54", new String[] {new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], price});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Autobombe f\u00fcr &6&l" + args[1] + "&e eingetragen.");
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht eingetragen werden."));
-                        }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/autobombe add [Name] [Auftraggeber] ([Preis])"));
-                    }
-                    break;
-                case "done":
-                    if (args.length > 1) {
-                        try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q"+line+":T"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Autobombe."));
-                                return;
+            if (args.length > 0) {
+                switch (args[0].toLowerCase()) {
+                    case "add":
+                        if (args.length > 2) {
+                            String price = "3750";
+                            if (args.length > 3) {
+                                price = args[3];
                             }
-                            SheetUtils.clearValues("Auftr\u00e4ge", "Q" + line + ":T" + line);
-                            SheetUtils.sortRange("Auftr\u00e4ge", "Q4:T54");
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Autobombe f\u00fcr &6&l" + args[1] + "&e platziert.");
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht gel\u00f6scht werden."));
-                        }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/autobombe done [Name]"));
-                    }
-                    break;
-                case "rename":
-                    if (args.length > 2) {
-                        try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q"+line+":T"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Autobombe."));
-                                return;
+                            try {
+                                SheetUtils.addValues("Auftr\u00e4ge", "Q4:T54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], price});
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Autobombe f\u00fcr &6&l" + args[1] + "&e eingetragen.");
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht eingetragen werden."));
                             }
-                            SheetUtils.setValues("Auftr\u00e4ge", "R" + line, new String[]{args[2]});
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/autobombe add [Name] [Auftraggeber] ([Preis])"));
                         }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/autobombe rename [Name] [Neuer Name]"));
-                    }
-                    break;
+                        break;
+                    case "done":
+                        if (args.length > 1) {
+                            try {
+                                int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", args[1]) + 4;
+                                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q" + line + ":T" + line).getValues().get(0);
+                                if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Autobombe."));
+                                    return;
+                                }
+                                SheetUtils.clearValues("Auftr\u00e4ge", "Q" + line + ":T" + line);
+                                SheetUtils.sortRange("Auftr\u00e4ge", "Q4:T54");
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Autobombe f\u00fcr &6&l" + args[1] + "&e platziert.");
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht gel\u00f6scht werden."));
+                            }
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/autobombe done [Name]"));
+                        }
+                        break;
+                    case "rename":
+                        if (args.length > 2) {
+                            try {
+                                int line = SheetUtils.searchLine("Auftr\u00e4ge", "R4:R54", args[1]) + 4;
+                                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "Q" + line + ":T" + line).getValues().get(0);
+                                if (list.get(1).toString().equalsIgnoreCase("Opfer")) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Autobombe."));
+                                    return;
+                                }
+                                SheetUtils.setValues("Auftr\u00e4ge", "R" + line, new String[]{args[2]});
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
+                            }
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/autobombe rename [Name] [Neuer Name]"));
+                        }
+                        break;
+                }
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
             }
-        } else {
-            player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
-        }
+        }).start();
     }
 
     @Override

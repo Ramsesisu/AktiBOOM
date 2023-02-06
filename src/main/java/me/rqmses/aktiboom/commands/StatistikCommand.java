@@ -62,65 +62,71 @@ public class StatistikCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (args.length > 0) {
-            if (args.length > 1) {
-                if (RANK > 3) {
-                    if (args[0].equalsIgnoreCase("win")) {
-                        try {
-                            int line = SheetUtils.getValueRange("Win/Lose Statistik", "C7:D64").getValues().size();
-                            SheetUtils.setValues("Win/Lose Statistik", "C" + (line+7), new String[]{args[1] + " (" + new SimpleDateFormat("dd.MM").format(new Date()) + ")"});
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Sieg wurde erfolgreich eingetragen."));
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+            if (args.length > 0) {
+                if (args.length > 1) {
+                    if (RANK > 3) {
+                        if (args[0].equalsIgnoreCase("win")) {
+                            try {
+                                int line = SheetUtils.getValueRange("Win/Lose Statistik", "C7:D64").getValues().size();
+                                SheetUtils.setValues("Win/Lose Statistik", "C" + (line + 7), new String[]{args[1] + " (" + new SimpleDateFormat("dd.MM").format(new Date()) + ")"});
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Sieg wurde erfolgreich eingetragen."));
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                            }
+                            return;
                         }
-                        return;
-                    }
-                    if (args[0].equalsIgnoreCase("lose")) {
-                        try {
-                            int line = SheetUtils.getValueRange("Win/Lose Statistik", "E7:F64").getValues().size();
-                            SheetUtils.setValues("Win/Lose Statistik", "E" + (line+7), new String[]{args[1] + " (" + new SimpleDateFormat("dd.MM").format(new Date()) + ")"});
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Niederlage wurde erfolgreich eingetragen."));
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                        if (args[0].equalsIgnoreCase("lose")) {
+                            try {
+                                int line = SheetUtils.getValueRange("Win/Lose Statistik", "E7:F64").getValues().size();
+                                SheetUtils.setValues("Win/Lose Statistik", "E" + (line + 7), new String[]{args[1] + " (" + new SimpleDateFormat("dd.MM").format(new Date()) + ")"});
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Niederlage wurde erfolgreich eingetragen."));
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                            }
+                            return;
                         }
-                        return;
+                        player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
+                    } else {
+                        player.sendMessage(new TextComponentString(PREFIX + "Du musst Rang-4 sein um in die Statistik eintragen zu k\u00f6nnen!"));
                     }
-                    player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
                 } else {
-                    player.sendMessage(new TextComponentString(PREFIX + "Du musst Rang-4 sein um in die Statistik eintragen zu k\u00f6nnen!"));
+                    player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Ort angeben."));
                 }
             } else {
-                player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Ort angeben."));
-            }
-        } else {
-            try {
-                player.sendMessage(new TextComponentString(PREFIX + "Win/Lose-Statistik:"));
-                player.sendMessage(new TextComponentString(""));
+                try {
+                    player.sendMessage(new TextComponentString(PREFIX + "Win/Lose-Statistik:"));
+                    player.sendMessage(new TextComponentString(""));
 
-                List<List<Object>> wins = SheetUtils.getValueRange("Win/Lose Statistik", "C7:C64").getValues();
-                player.sendMessage(new TextComponentString(TextFormatting.GREEN + "" + TextFormatting.ITALIC + "Gewonnen"));
-                if (wins.size() != 0) {
-                    for (List<Object> value : wins) {
-                        player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                    List<List<Object>> wins = SheetUtils.getValueRange("Win/Lose Statistik", "C7:C64").getValues();
+                    player.sendMessage(new TextComponentString(TextFormatting.GREEN + "" + TextFormatting.ITALIC + "Gewonnen"));
+                    if (wins != null) {
+                        for (List<Object> value : wins) {
+                            player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                        }
+                    } else {
+                        player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + "-"));
                     }
-                }
-                List<List<Object>> loses = SheetUtils.getValueRange("Win/Lose Statistik", "E7:E64").getValues();
-                player.sendMessage(new TextComponentString(TextFormatting.RED + "" + TextFormatting.ITALIC + "Verloren"));
-                if (loses.size() != 0) {
-                    for (List<Object> value : loses) {
-                        player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                    List<List<Object>> loses = SheetUtils.getValueRange("Win/Lose Statistik", "E7:E64").getValues();
+                    player.sendMessage(new TextComponentString(TextFormatting.RED + "" + TextFormatting.ITALIC + "Verloren"));
+                    if (loses != null) {
+                        for (List<Object> value : loses) {
+                            player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + value.get(0).toString()));
+                        }
+                    } else {
+                        player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + "-"));
                     }
-                }
-                player.sendMessage(new TextComponentString(""));
+                    player.sendMessage(new TextComponentString(""));
 
-                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Gewonnen: " + TextFormatting.GREEN + SheetUtils.getValueRange("Win/Lose Statistik", "H12:I12").getValues().get(0).get(0)));
-                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Verloren: " + TextFormatting.RED + SheetUtils.getValueRange("Win/Lose Statistik", "J12:K12").getValues().get(0).get(0)));
-            } catch (IOException e) {
-                player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Gewonnen: " + TextFormatting.GREEN + SheetUtils.getValueRange("Win/Lose Statistik", "H12:I12").getValues().get(0).get(0)));
+                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Verloren: " + TextFormatting.RED + SheetUtils.getValueRange("Win/Lose Statistik", "J12:K12").getValues().get(0).get(0)));
+                } catch (IOException e) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                }
             }
-        }
+        }).start();
     }
 
     @Override

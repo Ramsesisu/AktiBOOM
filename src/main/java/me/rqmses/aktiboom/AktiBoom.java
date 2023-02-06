@@ -35,7 +35,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.7.3";
+    public static final String VERSION = "1.8";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -43,8 +43,8 @@ public class AktiBoom {
     public static boolean SEC = false;
     public static String SECRANK = "Executive";
     public static int RANK = 0;
-    public static boolean latest = false;
     public static boolean AFK = false;
+    public static String LATEST = VERSION;
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
@@ -100,6 +100,14 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new TrainingsserverCommand());
         ClientCommandHandler.instance.registerCommand(new NearestNaviCommand());
         ClientCommandHandler.instance.registerCommand(new BombenDistanzCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckModCommand());
+        ClientCommandHandler.instance.registerCommand(new AddMemberCommand());
+        ClientCommandHandler.instance.registerCommand(new RemoveMemberCommand());
+        ClientCommandHandler.instance.registerCommand(new ClearNachweisCommand());
+        ClientCommandHandler.instance.registerCommand(new SetRankCommand());
+        ClientCommandHandler.instance.registerCommand(new RenameMemberCommand());
+        ClientCommandHandler.instance.registerCommand(new SetSECRankCommand());
+        ClientCommandHandler.instance.registerCommand(new ContinueCommand());
     }
 
     public void ListenerRegistration() {

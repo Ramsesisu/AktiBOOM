@@ -75,90 +75,92 @@ public class RPSessionCommand extends CommandBase implements IClientCommand {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
-        session = !session;
-        if (session) {
-            if (args.length < 1) {
-                session = false;
-                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
-            } else {
-                art = args[0];
-                if (args.length > 1) {
-                    partner = args[1];
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
+            session = !session;
+            if (session) {
+                if (args.length < 1) {
+                    session = false;
+                    player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
+                } else {
+                    art = args[0];
+                    if (args.length > 1) {
+                        partner = args[1];
+                    }
+                    player.sendMessage(new TextComponentString(PREFIX + "Die RolePlay-Sitzung wurde gestartet."));
                 }
-                player.sendMessage(new TextComponentString(PREFIX + "Die RolePlay-Sitzung wurde gestartet."));
-            }
-        } else {
-            if (args.length > 0) {
-                if (args[0].equalsIgnoreCase("end")) {
-                    player.sendMessage(new TextComponentString(PREFIX + "Die RolePlay-Sitzung wurde beendet!"));
+            } else {
+                if (args.length > 0) {
+                    if (args[0].equalsIgnoreCase("end")) {
+                        player.sendMessage(new TextComponentString(PREFIX + "Die RolePlay-Sitzung wurde beendet!"));
+                        imageHashes = new ArrayList<>();
+                        return;
+                    }
+                }
+                if (imageHashes.size() == 0) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Es wurden keine Screenshots get\u00e4tigt!"));
                     imageHashes = new ArrayList<>();
                     return;
                 }
-            }
-            if (imageHashes.size() == 0) {
-                player.sendMessage(new TextComponentString(PREFIX + "Es wurden keine Screenshots get\u00e4tigt!"));
+                String link;
+                String category = art;
+                try {
+                    link = "https://imgur.com/a/" + UploadHandler.uploadAlbumToID(imageHashes);
+                } catch (IOException e) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Beim Speichern der Aufnahmen ist ein Fehler unterlaufen!"));
+                    session = !session;
+                    return;
+                }
                 imageHashes = new ArrayList<>();
-                return;
-            }
-            String link;
-            String category = art;
-            try {
-                link = "https://imgur.com/a/" + UploadHandler.uploadAlbumToID(imageHashes);
-            } catch (IOException e) {
-                player.sendMessage(new TextComponentString(PREFIX + "Beim Speichern der Aufnahmen ist ein Fehler unterlaufen!"));
-                session = !session;
-                return;
-            }
-            imageHashes = new ArrayList<>();
-            switch (art.toLowerCase()) {
-                case "ausraub":
-                    category = "Ausraub";
-                    break;
-                case "menschenhandel":
-                    category = "Menschenhandel";
-                    break;
-                case "auftragsauslieferung":
-                    category = "Auftragsauslieferung";
-                    break;
-                case "propaganda":
-                    category = "Propaganda";
-                    break;
-                case "rekrutierung":
-                    category = "Rekrutierung";
-                    break;
-                case "drohung":
-                case "schutzgeld":
-                    category = "Drohung/Erpressung";
-                    break;
-                case "geisel-rp":
-                case "geisel":
-                    category = "Geisel-RP";
-                    break;
-                case "verhandlung":
-                    category = "Verhandlung";
-                    break;
-                case "tuning-rp":
-                case "tuning":
-                    category = "Tuning-RP";
-                    break;
-            }
+                switch (art.toLowerCase()) {
+                    case "ausraub":
+                        category = "Ausraub";
+                        break;
+                    case "menschenhandel":
+                        category = "Menschenhandel";
+                        break;
+                    case "auftragsauslieferung":
+                        category = "Auftragsauslieferung";
+                        break;
+                    case "propaganda":
+                        category = "Propaganda";
+                        break;
+                    case "rekrutierung":
+                        category = "Rekrutierung";
+                        break;
+                    case "drohung":
+                    case "schutzgeld":
+                        category = "Drohung/Erpressung";
+                        break;
+                    case "geisel-rp":
+                    case "geisel":
+                        category = "Geisel-RP";
+                        break;
+                    case "verhandlung":
+                        category = "Verhandlung";
+                        break;
+                    case "tuning-rp":
+                    case "tuning":
+                        category = "Tuning-RP";
+                        break;
+                }
 
-            boolean success;
+                boolean success;
 
-            try {
-                success = SheetUtils.addActivity(ActivityType.ROLEPLAY, new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), partner, category, link});
-            } catch (IOException e) {
-                player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
-                return;
+                try {
+                    success = SheetUtils.addActivity(ActivityType.ROLEPLAY, new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), partner, category, link});
+                } catch (IOException e) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
+                    return;
+                }
+                partner = "";
+                if (success) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Die Aufnahmen der RolePlay-Sitzung wurden gespeichert."));
+                } else {
+                    player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
+                }
             }
-            partner = "";
-            if (success) {
-                player.sendMessage(new TextComponentString(PREFIX + "Die Aufnahmen der RolePlay-Sitzung wurden gespeichert."));
-            } else {
-                player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
-            }
-        }
+        }).start();
     }
 
     @Override

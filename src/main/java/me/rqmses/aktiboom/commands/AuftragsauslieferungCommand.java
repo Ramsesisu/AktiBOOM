@@ -69,63 +69,65 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (args.length > 0) {
-            switch (args[0].toLowerCase()) {
-                case "add":
-                    if (args.length > 3) {
-                        try {
-                            SheetUtils.addValues("Auftr\u00e4ge", "B4:E54", new String[] {new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], args[3]});
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsaustrag von &6&l" + args[1] + "&e hinzugef\u00fcgt.");
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht eingetragen werden."));
-                        }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung add [Name] [Auftraggeber] [Preis]"));
-                    }
-                    break;
-                case "done":
-                    if (args.length > 1) {
-                        try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "C4:C54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "B"+line+":E"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
-                                return;
+            if (args.length > 0) {
+                switch (args[0].toLowerCase()) {
+                    case "add":
+                        if (args.length > 3) {
+                            try {
+                                SheetUtils.addValues("Auftr\u00e4ge", "B4:E54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], args[3]});
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsaustrag von &6&l" + args[1] + "&e hinzugef\u00fcgt.");
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht eingetragen werden."));
                             }
-                            SheetUtils.clearValues("Auftr\u00e4ge", "B" + line + ":E" + line);
-                            SheetUtils.sortRange("Auftr\u00e4ge", "B4:E54");
-                            player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsaustrag von &6&l" + args[1] + "&e beendet.");
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht gel\u00f6scht werden."));
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung add [Name] [Auftraggeber] [Preis]"));
                         }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung done [Name]"));
-                    }
-                    break;
-                case "rename":
-                    if (args.length > 2) {
-                        try {
-                            int line = SheetUtils.searchLine("Auftr\u00e4ge", "C4:C54", args[1]) + 4;
-                            List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "B"+line+":E"+line).getValues().get(0);
-                            if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
-                                return;
+                        break;
+                    case "done":
+                        if (args.length > 1) {
+                            try {
+                                int line = SheetUtils.searchLine("Auftr\u00e4ge", "C4:C54", args[1]) + 4;
+                                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "B" + line + ":E" + line).getValues().get(0);
+                                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
+                                    return;
+                                }
+                                SheetUtils.clearValues("Auftr\u00e4ge", "B" + line + ":E" + line);
+                                SheetUtils.sortRange("Auftr\u00e4ge", "B4:E54");
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsaustrag von &6&l" + args[1] + "&e beendet.");
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht gel\u00f6scht werden."));
                             }
-                            SheetUtils.setValues("Auftr\u00e4ge", "C" + line, new String[]{args[2]});
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
-                        } catch (IOException e) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung done [Name]"));
                         }
-                    } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung rename [Name] [Neuer Name]"));
-                    }
-                    break;
+                        break;
+                    case "rename":
+                        if (args.length > 2) {
+                            try {
+                                int line = SheetUtils.searchLine("Auftr\u00e4ge", "C4:C54", args[1]) + 4;
+                                List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "B" + line + ":E" + line).getValues().get(0);
+                                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
+                                    return;
+                                }
+                                SheetUtils.setValues("Auftr\u00e4ge", "C" + line, new String[]{args[2]});
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Name von " + TextFormatting.GOLD + args[2] + TextFormatting.YELLOW + " wurde aktualisiert."));
+                            } catch (IOException e) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
+                            }
+                        } else {
+                            player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung rename [Name] [Neuer Name]"));
+                        }
+                        break;
+                }
+            } else {
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
             }
-        } else {
-            player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
-        }
+        }).start();
     }
 
     @Override

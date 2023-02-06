@@ -47,49 +47,51 @@ public class CheckSECDrugsCommand extends CommandBase implements IClientCommand 
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
-        ValueRange valueRange;
+        new Thread(() -> {
+            EntityPlayerSP player = Minecraft.getMinecraft().player;
+            ValueRange valueRange;
 
-        String tempkoks;
-        try {
-            valueRange = sheetsService.spreadsheets().values()
-                    .get(SPREADSHEET_ID, "SEC-Drogen!H5")
-                    .execute();
-            tempkoks = valueRange.getValues().get(0).get(0).toString();
-        } catch (IOException e) {
-            player.sendMessage(new TextComponentString(PREFIX + "Das Kokain des" + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + "konnte nicht erfasst werden."));
-            return;
-        }
-        String tempgras;
-        try {
-            valueRange = sheetsService.spreadsheets().values()
-                    .get(SPREADSHEET_ID, "SEC-Drogen!I5")
-                    .execute();
-            tempgras = valueRange.getValues().get(0).get(0).toString();
-        } catch (IOException e) {
-            player.sendMessage(new TextComponentString(PREFIX + "Das Gras des" + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + "konnte nicht erfasst werden."));
-            return;
-        }
+            String tempkoks;
+            try {
+                valueRange = sheetsService.spreadsheets().values()
+                        .get(SPREADSHEET_ID, "SEC-Drogen!H5")
+                        .execute();
+                tempkoks = valueRange.getValues().get(0).get(0).toString();
+            } catch (IOException e) {
+                player.sendMessage(new TextComponentString(PREFIX + "Das Kokain des" + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + "konnte nicht erfasst werden."));
+                return;
+            }
+            String tempgras;
+            try {
+                valueRange = sheetsService.spreadsheets().values()
+                        .get(SPREADSHEET_ID, "SEC-Drogen!I5")
+                        .execute();
+                tempgras = valueRange.getValues().get(0).get(0).toString();
+            } catch (IOException e) {
+                player.sendMessage(new TextComponentString(PREFIX + "Das Gras des" + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + "konnte nicht erfasst werden."));
+                return;
+            }
 
-        int koks = Integer.parseInt(tempkoks.replace(" ", "").split("/")[0]);
-        int gras = Integer.parseInt(tempgras.replace(" ", "").split("/")[0]);
+            int koks = Integer.parseInt(tempkoks.replace(" ", "").split("/")[0]);
+            int gras = Integer.parseInt(tempgras.replace(" ", "").split("/")[0]);
 
-        player.sendMessage(new TextComponentString(PREFIX + "Drogen des " + TextFormatting.GOLD + "SEC"));
-        player.sendMessage(new TextComponentString(""));
+            player.sendMessage(new TextComponentString(PREFIX + "Drogen des " + TextFormatting.GOLD + "SEC"));
+            player.sendMessage(new TextComponentString(""));
 
-        player.sendMessage(new TextComponentString( TextFormatting.GOLD + "Kokain: "));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Geholt: " + TextFormatting.YELLOW + "" + TextFormatting.BOLD + koks));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (250-koks)));
-        player.sendMessage(new TextComponentString( TextFormatting.GOLD + "Gras: "));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Geholt: " + TextFormatting.YELLOW + "" + TextFormatting.BOLD + gras));
-        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (250-gras)));
-        player.sendMessage(new TextComponentString(""));
+            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Kokain: "));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Geholt: " + TextFormatting.YELLOW + "" + TextFormatting.BOLD + koks));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (250 - koks)));
+            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Gras: "));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Geholt: " + TextFormatting.YELLOW + "" + TextFormatting.BOLD + gras));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (250 - gras)));
+            player.sendMessage(new TextComponentString(""));
 
-        if (koks < 250 || gras < 250) {
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Drogen \u00fcbrig: " + TextFormatting.GREEN + "" + TextFormatting.BOLD + "Ja"));
-        } else {
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Drogen \u00fcbrig: " + TextFormatting.RED + "" + TextFormatting.BOLD + "Nein"));
-        }
+            if (koks < 250 || gras < 250) {
+                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Drogen \u00fcbrig: " + TextFormatting.GREEN + "" + TextFormatting.BOLD + "Ja"));
+            } else {
+                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Drogen \u00fcbrig: " + TextFormatting.RED + "" + TextFormatting.BOLD + "Nein"));
+            }
+        }).start();
     }
 
     @Override

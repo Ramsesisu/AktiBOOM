@@ -2,9 +2,9 @@ package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.ActivityType;
 import me.rqmses.aktiboom.enums.EquipType;
+import me.rqmses.aktiboom.handlers.ScreenHandler;
 import me.rqmses.aktiboom.utils.LocationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
-import me.rqmses.aktiboom.handlers.ScreenHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -177,21 +177,21 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        ActivityType type;
-        EquipType equiptype = EquipType.KEVLAR;
-        String price = "0";
-        String leading = "FALSCH";
-        String dead;
-        String category = "";
-        String forum = "";
-        int argslenght;
-        String money = "";
-        String usage;
-        String date = new SimpleDateFormat("dd.MM.yy").format(new Date());
-
-        TextComponentString errormsg = new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden.");
-
         if (args.length > 0) {
+            ActivityType type;
+            EquipType equiptype = EquipType.KEVLAR;
+            String price = "0";
+            final String[] leading = {"FALSCH"};
+            final String[] dead = new String[1];
+            final String[] category = {""};
+            final String[] forum = {""};
+            int argslenght;
+            final String[] money = {""};
+            String usage;
+            String date = new SimpleDateFormat("dd.MM.yy").format(new Date());
+
+            TextComponentString errormsg = new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden.");
+
             switch (args[0].toLowerCase()) {
                 case "gebietseinnahme":
                     type = ActivityType.GEBIETSEINNAHMEN;
@@ -224,9 +224,9 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 case "menschenhandel":
                 case "ausraub":
                     if (args[0].equalsIgnoreCase("Ausraub")) {
-                        category = "Ausraub";
+                        category[0] = "Ausraub";
                     } else {
-                        category = "Menschenh.";
+                        category[0] = "Menschenh.";
                     }
                     type = ActivityType.MENSCHENHANDEL_AUSRAUB;
                     argslenght = 3;
@@ -322,139 +322,144 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             }
 
             String link = ScreenHandler.handleFile();
-            boolean success;
 
-            switch (type) {
-                case ENTFUEHRUNGEN:
-                case GEBIETSEINNAHMEN:
-                case GEISELNAHMEN:
-                    if (args.length > 3) {
-                        leading = "WAHR";
-                        money = args[3];
-                        if (args.length > 4) {
-                            forum = args[4];
+            String finalPrice = price;
+            EquipType finalEquiptype = equiptype;
+            new Thread(() -> {
+                boolean success;
+
+                switch (type) {
+                    case ENTFUEHRUNGEN:
+                    case GEBIETSEINNAHMEN:
+                    case GEISELNAHMEN:
+                        if (args.length > 3) {
+                            leading[0] = "WAHR";
+                            money[0] = args[3];
+                            if (args.length > 4) {
+                                forum[0] = args[4];
+                            }
                         }
-                    }
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, leading, args[1], args[2], money, link, forum});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, leading[0], args[1], args[2], money[0], link, forum[0]});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case BOMBEN:
+                        if (args.length > 4) {
+                            leading[0] = "WAHR";
+                            forum[0] = args[4];
+                        }
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, leading[0], args[1], args[2], args[3], link, forum[0]});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case SPRENGGUERTEL:
+                    case AUTOBOMBEN:
+                        if (args.length < 5) {
+                            dead[0] = "Ja";
+                        } else {
+                            dead[0] = args[4];
+                        }
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, args[1], args[2], args[3], dead[0], link});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case MENSCHENHANDEL_AUSRAUB:
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, category[0], args[1], args[2], args[3], link});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case EQUIP:
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, finalPrice, finalEquiptype.getName(), link});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case TRAININGS:
+                        if (args.length > 3) {
+                            leading[0] = "WAHR";
+                            forum[0] = args[3];
+                        }
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, leading[0], args[1], args[2], link, forum[0]});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case SONSTIGES:
+                        switch (args[0].toLowerCase()) {
+                            case "waffentransport":
+                                category[0] = "Waffentransport";
+                                break;
+                            case "zuzahlung":
+                                category[0] = "Zuzahlung";
+                                break;
+                            case "bombenspot":
+                            case "spot":
+                                category[0] = "Bombenspot";
+                                break;
+                            case "rp-event":
+                            case "event":
+                                category[0] = "RP-Event";
+                                break;
+                            case "spende":
+                                category[0] = "Spende";
+                                break;
+                            case "drohung":
+                            case "sprengidrohung":
+                            case "schutzgeldforderung":
+                            case "schutzgeld":
+                                category[0] = "Sprengi-Drohung/ Schutzgeldforderung";
+                                break;
+                            case "geisel":
+                                category[0] = "Geisel";
+                                break;
+                            case "auftragsauslieferung":
+                                category[0] = "Auftragsauslieferung";
+                                break;
+                            case "tuning":
+                                category[0] = "Tuning";
+                                break;
+                        }
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, args[1], category[0], link});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    case ROLEPLAY:
+                        try {
+                            success = SheetUtils.addActivity(type, new String[]{date, args[2], args[1], link});
+                        } catch (IOException e) {
+                            player.sendMessage(errormsg);
+                            return;
+                        }
+                        break;
+                    default:
+                        player.sendMessage(new TextComponentString(PREFIX + "Beim Eintragen der Aktivit\u00e4t ist ein Fehler unterlaufen."));
                         return;
-                    }
-                    break;
-                case BOMBEN:
-                    if (args.length > 4) {
-                        leading = "WAHR";
-                        forum = args[4];
-                    }
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, leading, args[1], args[2], args[3], link, forum});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                case SPRENGGUERTEL:
-                case AUTOBOMBEN:
-                    if (args.length < 5) {
-                        dead = "Ja";
-                    } else {
-                        dead = args[4];
-                    }
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, args[1], args[2], args[3], dead, link});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                case MENSCHENHANDEL_AUSRAUB:
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, category, args[1], args[2], args[3], link});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                case EQUIP:
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, price, equiptype.getName(), link});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                case TRAININGS:
-                    if (args.length > 3) {
-                        leading = "WAHR";
-                        forum = args[3];
-                    }
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, leading, args[1], args[2], link, forum});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                case SONSTIGES:
-                    switch (args[0].toLowerCase()) {
-                        case "waffentransport":
-                            category = "Waffentransport";
-                            break;
-                        case "zuzahlung":
-                            category = "Zuzahlung";
-                            break;
-                        case "bombenspot":
-                        case "spot":
-                            category = "Bombenspot";
-                            break;
-                        case "rp-event":
-                        case "event":
-                            category = "RP-Event";
-                            break;
-                        case "spende":
-                            category = "Spende";
-                            break;
-                        case "drohung":
-                        case "sprengidrohung":
-                        case "schutzgeldforderung":
-                        case "schutzgeld":
-                            category = "Sprengi-Drohung/ Schutzgeldforderung";
-                            break;
-                        case "geisel":
-                            category = "Geisel";
-                            break;
-                        case "auftragsauslieferung":
-                            category = "Auftragsauslieferung";
-                            break;
-                        case "tuning":
-                            category = "Tuning";
-                            break;
-                    }
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, args[1], category, link});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                case ROLEPLAY:
-                    try {
-                        success = SheetUtils.addActivity(type, new String[]{date, args[2], args[1], link});
-                    } catch (IOException e) {
-                        player.sendMessage(errormsg);
-                        return;
-                    }
-                    break;
-                default:
-                    player.sendMessage(new TextComponentString(PREFIX + "Beim Eintragen der Aktivit\u00e4t ist ein Fehler unterlaufen."));
-                    return;
-            }
-            if (success) {
-                player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + "-" + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
-            } else {
-                player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
-            }
+                }
+                if (success) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Die " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + "-" + "Aktivit\u00e4t wurde erfolgreich eingetragen."));
+                } else {
+                    player.sendMessage(new TextComponentString(PREFIX + "Die entsprechende Kategorie ist \u00fcberf\u00fcllt."));
+                }
+            }).start();
         } else {
             player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
         }

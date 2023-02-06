@@ -4,8 +4,11 @@ public enum InformationType {
 
     NAMES("\u00dcbersicht", "B4:B27"),
     RANKS("\u00dcbersicht", "A4:A27"),
+    EMAIL_NAMES("Equiplog", "C36:C60"),
+    EMAILS("Equiplog", "D36:D60"),
     SECNAMES("SEC-Drogen", "H13:H20"),
-    SECRANKS("SEC-Drogen", "I13:I20");
+    SECRANKS("SEC-Drogen", "I13:I20"),
+    CHECKMOD_PERMISSION("Mod-Rechte", "A2:A25");
 
     InformationType(String sheet, String range)
     {
