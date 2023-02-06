@@ -35,13 +35,13 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.8";
+    public static final String VERSION = "1.8.1";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
 
     public static boolean SEC = false;
-    public static String SECRANK = "Executive";
+    public static String SECRANK = "-";
     public static int RANK = 0;
     public static boolean AFK = false;
     public static String LATEST = VERSION;

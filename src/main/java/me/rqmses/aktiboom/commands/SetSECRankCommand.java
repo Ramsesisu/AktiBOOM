@@ -71,7 +71,7 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
                     String oldrank = SheetUtils.getSECRank(args[0]);
 
                     if (rank.startsWith("E") || rank.startsWith("C") || rank.startsWith("G")) {
-                        String secrank = oldrank.replaceFirst(String.valueOf(oldrank.charAt(0)), String.valueOf(rank.charAt(0)));
+                        String secrank = rank.charAt(0) + "-0" + SheetUtils.getRank(args[0]);
                         if (!SheetUtils.setSECRank(args[0], secrank)) {
                             player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " ist nicht in der Fraktion!"));
                         } else {

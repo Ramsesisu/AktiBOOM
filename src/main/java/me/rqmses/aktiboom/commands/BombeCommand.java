@@ -1,10 +1,12 @@
 package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.utils.LocationUtils;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -25,6 +27,9 @@ public class BombeCommand extends CommandBase implements IClientCommand {
     private static int x = 0;
     private static int y = 0;
     private static int z = 0;
+    private static double xd = 0D;
+    private static double yd = 0D;
+    private static double zd = 0D;
     public static boolean planter = false;
 
     @Override
@@ -57,6 +62,10 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                 y = player.getPosition().getY();
                 z = player.getPosition().getZ();
 
+                xd = player.posX;
+                yd = player.posY;
+                zd = player.posZ;
+
                 String pos = x + "/" + y + "/" + z;
 
                 String nearestnavi = LocationUtils.getNearestNavi(player.getPosition());
@@ -64,13 +73,14 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                 double distance = (double) Math.round(nearestpos.getDistance(x, y, z) * 10) / 10;
                 boolean max = distance > 60;
 
-                if (Minecraft.getMinecraft().world.isAirBlock(new BlockPos(player.posX, player.posY, player.posZ))) {
+                Block block = Minecraft.getMinecraft().world.getBlockState(new BlockPos(xd, yd, zd)).getBlock();
+                if (Minecraft.getMinecraft().world.isAirBlock(new BlockPos(xd, yd, zd)) || block == Blocks.WATER || block == Blocks.FLOWING_WATER || block == Blocks.LAVA || block == Blocks.FLOWING_LAVA) {
                     player.sendChatMessage("/bombe");
 
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (Minecraft.getMinecraft().world.getBlockState(new BlockPos(player.posX, player.posY, player.posZ)).getBlock().toString().toLowerCase().contains("tnt")) {
+                            if (Minecraft.getMinecraft().world.getBlockState(new BlockPos(xd, yd, zd)).getBlock().toString().toLowerCase().contains("tnt")) {
                                 player.sendChatMessage("/f %INFO% :&6&l" + player.getName() + "&e hat eine Bombe bei &6" + pos + "&e gelegt.");
                                 planter = true;
 
@@ -84,10 +94,10 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                                             player.sendChatMessage("/f %INFO% :" + "Der n\u00e4chste Navipunkt zur Bombe ist: &6&l" + nearestnavi + "&7 (&l" + distance + "m&7)");
                                         }
                                     }
-                                }, 2500);
+                                }, 2750);
                             }
                         }
-                    }, 500);
+                    }, 250);
                 } else {
                     player.sendMessage(new TextComponentString(PREFIX + "Platzier die Bombe da, wo kein Block ist!"));
                 }

@@ -66,7 +66,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (args.length > 0) {
                 if (args.length > 1) {
-                    if (SECRANK.startsWith("C-") || SECRANK.startsWith("G-")) {
+                    if (SECRANK.startsWith("C") || SECRANK.startsWith("G")) {
                         SheetUtils.tobecontinued = false;
                         SheetUtils.returnvalues = 0;
 
