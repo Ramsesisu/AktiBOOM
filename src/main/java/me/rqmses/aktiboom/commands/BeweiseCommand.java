@@ -48,7 +48,7 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("144", "127", "196", "189", "185", "340", "36", "Luigis", "433", "133", "347", "Triaden-HQ", "50", "Brauerei");
+            targets = Arrays.asList("144", "127", "196", "189", "185", "340", "36", "Luigis", "433", "113", "347", "Triaden-HQ", "50", "Brauerei", "137");
         }
         Collections.sort(targets);
         for (String target : targets) {
@@ -64,55 +64,63 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 0) {
-                player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + ":"));
+                List<String> links = new ArrayList<>();
                 switch (args[0].toLowerCase()) {
                     case "144":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/54bCKmA", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/54bCKmA"));
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/800QWx1JwU0", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/800QWx1JwU0"));
+                        links.add("https://imgur.com/a/54bCKmA");
+                        links.add("https://youtu.be/800QWx1JwU0");
                         break;
                     case "127":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/00AHtOq", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/00AHtOq"));
+                        links.add("https://imgur.com/a/00AHtOq");
                         break;
                     case "196":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/vWDDDCm", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/vWDDDCm"));
+                        links.add("https://imgur.com/a/vWDDDCm");
                         break;
                     case "189":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/W5oRm7P", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/W5oRm7P"));
+                        links.add("https://imgur.com/a/W5oRm7P");
                         break;
                     case "185":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/054rDBR", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/054rDBR"));
+                        links.add("https://imgur.com/a/054rDBR");
                         break;
                     case "340":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/YKdB6qL", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/YKdB6qL"));
+                        links.add("https://imgur.com/a/YKdB6qL");
                         break;
                     case "433":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/bzYSzDCtUlo", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/bzYSzDCtUlo"));
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/9bA10WxhyAE", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/9bA10WxhyAE"));
+                        links.add("https://youtu.be/bzYSzDCtUlo");
+                        links.add("https://youtu.be/9bA10WxhyAE");
                         break;
                     case "36":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/8GcwIEPJkAo", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/8GcwIEPJkAo"));
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/We7YHiL70CM", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/We7YHiL70CM"));
+                        links.add("https://youtu.be/8GcwIEPJkAo");
+                        links.add("https://youtu.be/We7YHiL70CM");
                         break;
                     case "luigis":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/bEtA4FkxEFU", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/bEtA4FkxEFU"));
+                        links.add("https://youtu.be/bEtA4FkxEFU");
                         break;
-                    case "133":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/BFYNcSU", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/BFYNcSU"));
+                    case "113":
+                        links.add("https://imgur.com/a/BFYNcSU");
                         break;
                     case "347":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/OQ1Zk1O", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/OQ1Zk1O"));
+                        links.add("https://imgur.com/a/OQ1Zk1O");
                         break;
                     case "triaden-hq":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/AmOZpsk", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/AmOZpsk"));
+                        links.add("https://imgur.com/a/AmOZpsk");
                         break;
                     case "50":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://imgur.com/a/gEOemNy", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://imgur.com/a/gEOemNy"));
+                        links.add("https://imgur.com/a/gEOemNy");
                         break;
                     case "brauerei":
-                        player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + "https://youtu.be/DQxHKIcpcxg", TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, "https://youtu.be/DQxHKIcpcxg"));
+                        links.add("https://youtu.be/DQxHKIcpcxg");
                         break;
+                    case "137":
+                        links.add("https://youtu.be/g6ke5IcXvZU");
+                        links.add("https://youtu.be/eSdpPll3jE0");
                     default:
                         player.sendMessage(new TextComponentString(PREFIX + "Der Spot hat keine verf\u00fcgbaren Beweise."));
+                        return;
+                }
+                player.sendMessage(new TextComponentString(PREFIX + "Beweise zum Spot " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + ":"));
+                for (String link : links) {
+                    player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "      \u27A5 " + TextFormatting.BLUE + link, TextFormatting.DARK_AQUA + "Link", ClickEvent.Action.OPEN_URL, link));
                 }
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));

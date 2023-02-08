@@ -4,6 +4,7 @@ import me.rqmses.aktiboom.commands.BombeCommand;
 import me.rqmses.aktiboom.commands.CheckModCommand;
 import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
+import me.rqmses.aktiboom.handlers.SoundHandler;
 import me.rqmses.aktiboom.utils.FormatUtils;
 import me.rqmses.aktiboom.utils.GameUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
@@ -18,10 +19,14 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
 import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatmessage;
@@ -31,7 +36,7 @@ public class ChatReceiveListener {
 
     public static final HashMap<String, String> playerranks = new HashMap<>();
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onMessage(ClientChatReceivedEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         String message = event.getMessage().getUnformattedText();
@@ -84,17 +89,23 @@ public class ChatReceiveListener {
             String[] contents = message.split(":", 3);
             String navi = contents[2].replace(" ", "");
             player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
+
+            if (ConfigHandler.customsounds) {
+                SoundHandler.playSound(SoundHandler.BOMBPL);
+            }
+
             NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
-            if (netHandlerPlayClient == null) {return;}
-            if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
-                if (ConfigHandler.autonavi) {
-                    if (!AFK) {
-                        player.sendChatMessage("/navi " + navi);
+            if (netHandlerPlayClient != null) {
+                if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
+                    if (ConfigHandler.autonavi) {
+                        if (!AFK) {
+                            player.sendChatMessage("/navi " + navi);
+                        }
                     }
+                    PlayerUpdateListener.showdistance = true;
+                    String[] coords = navi.split("/");
+                    PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
                 }
-                PlayerUpdateListener.showdistance = true;
-                String[] coords = navi.split("/");
-                PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
             }
         }
 
@@ -168,10 +179,24 @@ public class ChatReceiveListener {
             }
         }
 
-        if (message.startsWith("News: Die Bombe konnte ")) {
-            PlayerUpdateListener.showdistance = false;
-            PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
-            BombeCommand.planter = false;
+        if (message.contains("News: Die Bombe konnte nicht entsch\u00e4rft werden!")) {
+            if (ConfigHandler.customsounds) {
+                SoundHandler.playSound(SoundHandler.TERWIN);
+            }
+            resetBomb();
+        }
+
+        if (message.contains("News: Die Bombe konnte erfolgreich entsch\u00e4rft werden!")) {
+            if (ConfigHandler.customsounds) {
+                SoundHandler.playSound(SoundHandler.BOMBDEF);
+            }
+            resetBomb();
+        }
+
+        if (message.startsWith("News: Es gab ein Selbstmordattentat")) {
+            if (ConfigHandler.customsounds) {
+                SoundHandler.playSound(SoundHandler.HOSDOWN);
+            }
         }
 
         if (message.equals("Du bist nun im AFK-Modus.")) {
@@ -207,7 +232,7 @@ public class ChatReceiveListener {
                         } catch (IOException ignored) {
                         }
                     } else if (contents.length == 5) {
-                        if (contents[0].split(" ")[1].replace(" ", "").equals(CheckModCommand.checkplayer)) {
+                        if (contents[0].split(" ")[1].contains(CheckModCommand.checkplayer)) {
                             if (contents[3].replace(" ", "").equals(CheckModCommand.code)) {
                                 CheckModCommand.check = true;
                                 player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Installiert"));
@@ -218,5 +243,11 @@ public class ChatReceiveListener {
                 }
             }).start();
         }
+    }
+
+    public static void resetBomb() {
+        PlayerUpdateListener.showdistance = false;
+        PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
+        BombeCommand.planter = false;
     }
 }

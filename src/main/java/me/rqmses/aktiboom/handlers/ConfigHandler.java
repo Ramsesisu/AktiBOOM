@@ -52,6 +52,10 @@ public class ConfigHandler {
     @Config.Comment("Downloaded die neueste AktiBoom-Version automatisch. Bedenke, dass es verpflichtend ist Mod aktuell zu halten!")
     public static boolean autoupdate = true;
 
+    @Config.Name("Custom-Sounds")
+    @Config.Comment("Stellt Terror-bezogenene Custom-Sounds ein.")
+    public static boolean customsounds = true;
+
 
     @SubscribeEvent
     public static void onConfigChange(ConfigChangedEvent event) {

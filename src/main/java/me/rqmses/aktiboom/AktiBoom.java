@@ -35,7 +35,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.8.1";
+    public static final String VERSION = "1.8.2";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -54,16 +54,11 @@ public class AktiBoom {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws GeneralSecurityException, IOException {
-        // Commands
         CommandRegistration();
-
-        // Listeners
+        KeyBindRegistration();
+        SoundRegistration();
         ListenerRegistration();
 
-        // KeyBinds
-        KeyBindRegistration();
-
-        // Registration
         sheetsService = getSheetsService();
     }
 
@@ -127,5 +122,9 @@ public class AktiBoom {
     public void KeyBindRegistration() {
         ClientRegistry.registerKeyBinding(sprengguertel);
         ClientRegistry.registerKeyBinding(bombe);
+    }
+
+    public void  SoundRegistration() {
+        MinecraftForge.EVENT_BUS.register(new SoundRegisterListener());
     }
 }

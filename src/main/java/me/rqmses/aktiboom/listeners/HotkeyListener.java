@@ -1,5 +1,7 @@
 package me.rqmses.aktiboom.listeners;
 
+import me.rqmses.aktiboom.handlers.ConfigHandler;
+import me.rqmses.aktiboom.handlers.SoundHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,6 +22,10 @@ public class HotkeyListener {
             GuiChat guiChat = new GuiChat("/sprengg\u00fcrtel 10");
             Minecraft.getMinecraft().displayGuiScreen(guiChat);
             KeyPresser.keyPress(KeyEvent.VK_ENTER);
+
+            if (ConfigHandler.customsounds) {
+                SoundHandler.playSound(SoundHandler.TIMER);
+            }
         } else
         if (Keyboard.isKeyDown(bombe.getKeyCode())) {
             Robot KeyPresser = new Robot();
