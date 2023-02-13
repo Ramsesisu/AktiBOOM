@@ -73,7 +73,29 @@ public class ChatReceiveListener {
 
         if (message.contains(": %INFO% :")) {
             String[] contents = message.split(":", 3);
-            String text = contents[2].replaceAll("&e", "" + TextFormatting.YELLOW + "").replaceAll("&6", "" + TextFormatting.GOLD + "").replaceAll("&7", "" + TextFormatting.GRAY + "").replaceAll("&l", "" + TextFormatting.BOLD + "");
+            String text = contents[2]
+                    .replaceAll("&0", "" + TextFormatting.BLACK + "")
+                    .replaceAll("&1", "" + TextFormatting.DARK_BLUE + "")
+                    .replaceAll("&2", "" + TextFormatting.DARK_GREEN + "")
+                    .replaceAll("&3", "" + TextFormatting.DARK_AQUA + "")
+                    .replaceAll("&4", "" + TextFormatting.DARK_RED + "")
+                    .replaceAll("&5", "" + TextFormatting.DARK_PURPLE + "")
+                    .replaceAll("&6", "" + TextFormatting.GOLD + "")
+                    .replaceAll("&7", "" + TextFormatting.GRAY + "")
+                    .replaceAll("&8", "" + TextFormatting.DARK_GRAY + "")
+                    .replaceAll("&9", "" + TextFormatting.BLUE + "")
+                    .replaceAll("&a", "" + TextFormatting.GREEN + "")
+                    .replaceAll("&b", "" + TextFormatting.AQUA + "")
+                    .replaceAll("&c", "" + TextFormatting.RED + "")
+                    .replaceAll("&d", "" + TextFormatting.LIGHT_PURPLE + "")
+                    .replaceAll("&e", "" + TextFormatting.YELLOW + "")
+                    .replaceAll("&f", "" + TextFormatting.WHITE + "")
+                    .replaceAll("&k", "" + TextFormatting.OBFUSCATED + "")
+                    .replaceAll("&l", "" + TextFormatting.BOLD + "")
+                    .replaceAll("&m", "" + TextFormatting.STRIKETHROUGH + "")
+                    .replaceAll("&n", "" + TextFormatting.UNDERLINE + "")
+                    .replaceAll("&o", "" + TextFormatting.ITALIC + "")
+                    .replaceAll("&r", "" + TextFormatting.RESET + "");
 
             event.setMessage(new TextComponentString(PREFIX + TextFormatting.YELLOW + text));
 
@@ -208,10 +230,12 @@ public class ChatReceiveListener {
         }
 
         if (message.startsWith("Du hast ") && message.endsWith(" in deine Fraktion invitet!")) {
+            event.setCanceled(true);
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("Du hast ", "").replace(" in deine Fraktion invitet!", "") + "&e invitet!");
         }
 
         if (message.startsWith("[Fraktion] Du hast ") && message.endsWith(" aus der Fraktion geschmissen!")) {
+            event.setCanceled(true);
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("[Fraktion] Du hast ", "").replace(" aus der Fraktion geschmissen!", "") + "&e uninvitet!");
         }
 

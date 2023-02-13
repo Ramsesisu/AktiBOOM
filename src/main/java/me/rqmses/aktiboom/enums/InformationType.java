@@ -8,7 +8,8 @@ public enum InformationType {
     EMAILS("Equiplog", "D36:D60"),
     SECNAMES("SEC-Drogen", "H13:H20"),
     SECRANKS("SEC-Drogen", "I13:I20"),
-    CHECKMOD_PERMISSION("Mod-Rechte", "A2:A25");
+    CHECKMOD_PERMISSION("Mod-Rechte", "A2:A25"),
+    GLOBAL_PERMISSION("Mod-Rechte", "B2:B25");
 
     InformationType(String sheet, String range)
     {

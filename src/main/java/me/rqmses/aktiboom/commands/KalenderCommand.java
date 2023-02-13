@@ -274,7 +274,7 @@ public class KalenderCommand extends CommandBase implements IClientCommand {
                         player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
                         return;
                     }
-                    player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat eine &6&l" + args[0] + "&e-Aktivit\u00e4t zum &6" + args[2] + "&e um &6" + args[3] + " Uhr&e in den Kalender eingetragen.");
+                    player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine &6&l" + args[0] + "&e-Aktivit\u00e4t, geleitet von &6" + args[1] + "&e, zum &6" + args[2] + "&e um &6" + args[3] + " Uhr&e in den Kalender eingetragen.");
                 } else {
                     player.sendMessage(new TextComponentString(PREFIX + "Du musst Rang-3 sein um in den Kalender eintragen zu k\u00f6nnen!"));
                 }

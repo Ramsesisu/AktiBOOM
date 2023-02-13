@@ -43,6 +43,7 @@ public class AktiBoomCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             player.sendMessage(new TextComponentString(PREFIX + "Version " + VERSION + TextFormatting.DARK_GRAY + " - " + TextFormatting.DARK_RED + "Ramses"));
             player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "            \u27A5 " + TextFormatting.RED + "Code", TextFormatting.DARK_AQUA + "GitHub", ClickEvent.Action.OPEN_URL, "https://github.com/Ramsesisu/AktiBOOM"));
+            player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "            \u27A5 " + TextFormatting.BLUE + "Help", TextFormatting.DARK_GREEN + "Leitfaden", ClickEvent.Action.SUGGEST_COMMAND, "/leitfaden"));
             player.sendMessage(new TextComponentString(""));
             if (checkConnection()) {
                 player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Verbunden"));
