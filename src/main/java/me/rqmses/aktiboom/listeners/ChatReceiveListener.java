@@ -193,7 +193,7 @@ public class ChatReceiveListener {
             resetBomb();
         }
 
-        if (message.startsWith("News: Es gab ein Selbstmordattentat")) {
+        if (message.contains("News: Es gab ein Selbstmordattentat")) {
             if (ConfigHandler.customsounds) {
                 SoundHandler.playSound(SoundHandler.HOSDOWN);
             }
@@ -207,8 +207,12 @@ public class ChatReceiveListener {
             AFK = false;
         }
 
+        if (message.startsWith("Du hast ") && message.endsWith(" in deine Fraktion invitet!")) {
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("Du hast ", "").replace(" in deine Fraktion invitet!", "") + "&e invitet!");
+        }
+
         if (message.startsWith("[Fraktion] Du hast ") && message.endsWith(" aus der Fraktion geschmissen!")) {
-            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("[Fraktion] Du hast ", "").replace(" aus der Fraktion geschmissen!", "") + "&e aus der Fraktion uninvitet!");
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("[Fraktion] Du hast ", "").replace(" aus der Fraktion geschmissen!", "") + "&e uninvitet!");
         }
 
         if (message.equals("[Equip] Du hast dir eine RPG-7 equippt!")) {

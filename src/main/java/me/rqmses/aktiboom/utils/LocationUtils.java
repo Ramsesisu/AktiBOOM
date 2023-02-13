@@ -25,7 +25,7 @@ public class LocationUtils {
                 "363", "531", "B\u00e4ckerei", "Shop", "Windrad-FBI", "UCM", "Altes-Gef\u00e4ngnis", "H\u00f6lle", "Himmel",
                 "Checkpoint-Gef\u00e4ngnis", "Anwaltskanzelei", "Musikladen", "Alcatraz", "36", "144", "171", "190", "Stadion",
                 "433", "382", "Metzgerei", "Las-Unicas", "CT-Shop", "Mileu", "Ballas", "SH", "KH", "Uran", "523", "278",
-                "280", "121", "Brauerei", "470", "133");
+                "280", "121", "Brauerei", "470", "113");
     }
 
     @SuppressWarnings("CanBeFinal")

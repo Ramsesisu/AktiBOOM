@@ -35,7 +35,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.8.2";
+    public static final String VERSION = "1.8.3";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -103,6 +103,7 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new RenameMemberCommand());
         ClientCommandHandler.instance.registerCommand(new SetSECRankCommand());
         ClientCommandHandler.instance.registerCommand(new ContinueCommand());
+        ClientCommandHandler.instance.registerCommand(new EquipCommand());
     }
 
     public void ListenerRegistration() {

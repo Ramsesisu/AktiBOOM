@@ -77,7 +77,7 @@ public class CheckAuftragCommand extends CommandBase implements IClientCommand {
                         player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));
                         return;
                     }
-                    player.sendMessage(new TextComponentString(PREFIX + "Auslieferung von " + TextFormatting.GOLD + name));
+                    player.sendMessage(new TextComponentString(PREFIX + "Auslieferung von " + TextFormatting.GOLD + name + ":"));
                     player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
                 } catch (IOException e) {
                     player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht auf der Auslieferungsliste."));

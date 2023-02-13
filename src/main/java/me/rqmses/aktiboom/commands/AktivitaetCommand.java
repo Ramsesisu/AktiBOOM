@@ -1,7 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.ActivityType;
-import me.rqmses.aktiboom.enums.EquipType;
 import me.rqmses.aktiboom.handlers.ScreenHandler;
 import me.rqmses.aktiboom.utils.LocationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
@@ -60,17 +59,12 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
         }
 
         if (args.length == 1) {
-            targets = new ArrayList<>(Arrays.asList("Gebietseinnahme", "Entf\u00fchrung", "Flugzeugentf\u00fchrung", "UBoot-Entf\u00fchrung", "UBahn-Entf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
-                    "Menschenhandel", "Ausraub", "Autobombe", "Equip", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
-                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "RolePlay", "Schutzgeld", "Tuning"));
+            targets = new ArrayList<>(Arrays.asList("Gebietseinnahme", "Entf\u00fchrung", "Flugzeugentf\u00fchrung",
+                    "UBoot-Entf\u00fchrung", "UBahn-Entf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
+                    "Menschenhandel", "Ausraub", "Autobombe", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
+                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "Schutzgeld", "Tuning"));
         }
         if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("Equip")) {
-                targets = new ArrayList<>(Arrays.asList("MP5", "Pistole", "Kevlar", "Schwere-Kevlar", "RPG-7", "Nachzahlung"));
-            }
-            if (args[0].equalsIgnoreCase("RolePlay")) {
-                targets = new ArrayList<>(Arrays.asList("Ausraub", "Menschenhandel", "Auftragsauslieferung", "Propaganda", "Rekrutierung", "Drohung", "Schutzgeld", "Geisel-RP", "Verhandlung", "Tuning-RP"));
-            }
             if (args[0].equalsIgnoreCase("Auftragsauslieferung")) {
                 targets = new ArrayList<>(Collections.singletonList("0"));
             }
@@ -127,9 +121,6 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             if (args[0].equalsIgnoreCase("Training")) {
                 targets = new ArrayList<>(LocationUtils.getLocs());
             }
-            if (args[0].equalsIgnoreCase("Equip")) {
-                targets = new ArrayList<>(Collections.singletonList("0"));
-            }
         }
         if (args.length == 4) {
             if (args[0].equalsIgnoreCase("Bombe")) {
@@ -179,8 +170,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
 
         if (args.length > 0) {
             ActivityType type;
-            EquipType equiptype = EquipType.KEVLAR;
-            String price = "0";
+
             final String[] leading = {"FALSCH"};
             final String[] dead = new String[1];
             final String[] category = {""};
@@ -237,11 +227,6 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     argslenght = 3;
                     usage = "/aktivit\u00e4t Autobombe [K\u00e4ufer] [Opfer] [Einnahme] ([Explodiert])";
                     break;
-                case "equip":
-                    type = ActivityType.EQUIP;
-                    argslenght = 1;
-                    usage = "/aktivit\u00e4t Equip [Gegenstand] ([Einzahlung])";
-                    break;
                 case "training":
                     type = ActivityType.TRAININGS;
                     argslenght = 2;
@@ -265,11 +250,6 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     argslenght = 1;
                     usage = "/aktivit\u00e4t Sonstiges [Einnahme]";
                     break;
-                case "roleplay":
-                    type = ActivityType.ROLEPLAY;
-                    argslenght = 2;
-                    usage = "/aktivit\u00e4t RolePlay [Art] [Partner]";
-                    break;
                 default:
                     player.sendMessage(new TextComponentString(PREFIX + args[0] + " ist keine Kategorie!"));
                     return;
@@ -280,51 +260,8 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 return;
             }
 
-            if (args[0].equalsIgnoreCase("equip")) {
-                switch (args[1].toLowerCase()) {
-                    case "mp5":
-                        equiptype = EquipType.MP5;
-                        price = "550";
-                        break;
-                    case "pistole":
-                        equiptype = EquipType.PISTOLE;
-                        price = "350";
-                        break;
-                    case "kevlar":
-                    case "kev":
-                        price = "1450";
-                        break;
-                    case "schwere-kevlar":
-                    case "skev":
-                        equiptype = EquipType.SCHWEREKEVLAR;
-                        price = "2200";
-                        break;
-                    case "rpg-7":
-                    case "rpg":
-                        equiptype = EquipType.RPG7;
-                        price = "13000";
-                        break;
-                    case "nachzahlung":
-                        equiptype = EquipType.NACHZAHLUNG;
-                        if (args.length < 3) {
-                            player.sendMessage(new TextComponentString(PREFIX + "Gib einen Betrag an!"));
-                            return;
-                        }
-                        break;
-                    default:
-                        player.sendMessage(new TextComponentString(PREFIX + args[1] + " ist kein Gegenstand!"));
-                        return;
-                }
-
-                if (args.length == 3) {
-                    price = args[2];
-                }
-            }
-
             String link = ScreenHandler.handleFile();
 
-            String finalPrice = price;
-            EquipType finalEquiptype = equiptype;
             new Thread(() -> {
                 boolean success;
 
@@ -380,14 +317,6 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                             return;
                         }
                         break;
-                    case EQUIP:
-                        try {
-                            success = SheetUtils.addActivity(type, new String[]{date, finalPrice, finalEquiptype.getName(), link});
-                        } catch (IOException e) {
-                            player.sendMessage(errormsg);
-                            return;
-                        }
-                        break;
                     case TRAININGS:
                         if (args.length > 3) {
                             leading[0] = "WAHR";
@@ -437,14 +366,6 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                         }
                         try {
                             success = SheetUtils.addActivity(type, new String[]{date, args[1], category[0], link});
-                        } catch (IOException e) {
-                            player.sendMessage(errormsg);
-                            return;
-                        }
-                        break;
-                    case ROLEPLAY:
-                        try {
-                            success = SheetUtils.addActivity(type, new String[]{date, args[2], args[1], link});
                         } catch (IOException e) {
                             player.sendMessage(errormsg);
                             return;

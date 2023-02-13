@@ -77,7 +77,7 @@ public class CheckSchutzCommand extends CommandBase implements IClientCommand {
                         player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat kein Schutzgeld."));
                         return;
                     }
-                    player.sendMessage(new TextComponentString(PREFIX + "Auslieferung von " + TextFormatting.GOLD + name));
+                    player.sendMessage(new TextComponentString(PREFIX + "Schutzgeld von " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
                     player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + "bis " + TextFormatting.YELLOW + list.get(2).toString()));
                 } catch (IOException e) {
                     player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat kein Schutzgeld."));

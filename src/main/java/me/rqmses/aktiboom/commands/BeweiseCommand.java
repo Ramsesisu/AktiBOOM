@@ -114,6 +114,7 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
                     case "137":
                         links.add("https://youtu.be/g6ke5IcXvZU");
                         links.add("https://youtu.be/eSdpPll3jE0");
+                        break;
                     default:
                         player.sendMessage(new TextComponentString(PREFIX + "Der Spot hat keine verf\u00fcgbaren Beweise."));
                         return;

@@ -77,7 +77,7 @@ public class ClearNachweisCommand extends CommandBase implements IClientCommand 
                         }
 
                         player.sendMessage(new TextComponentString(PREFIX + "Der Aktivit\u00e4tsnachweis wurde erfolgreich zur\u00fcckgesetzt."));
-                        player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Aktivit\u00e4tsnachweis zur\u00fccckgesetzt!");
+                        player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Aktivit\u00e4tsnachweis zur\u00fcckgesetzt!");
                     } else {
                         player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Leader!"));
                     }
