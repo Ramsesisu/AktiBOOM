@@ -123,7 +123,9 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         command("/checkauftrag");
         description("Gibt Informationen zum Auslieferungsauftrag des Spielers aus.");
         command("/checkdrohung");
-        description("Gibt Informationen zur Sprengg\u00fcrteldrohung des Spielers aus.");
+        description("Gibt Informationen zum Auslieferungsauftrag des Spielers aus.");
+        command("/checkdrugs");
+        description("Gibt den Tascheninhalt des Members aus.");
         command("/checkequip");
         description("Gibt das eigene Equip oder des angegebenen Members in der Woche aus.");
         command("/checkmod");
@@ -148,6 +150,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Zeigt eine memberweite Info-Meldung an.");
         command("/info");
         description("Gibt die eigenen Informationen oder die des angegebenen Members aus.");
+        command("/invsee");
+        description("Gibt den Inventar-Inhalt des Members aus.");
         command("/kalender");
         description("Zeigt den Kalender an bzw. tr\u00e4gt in diesen ein.");
         command("/leitfaden");

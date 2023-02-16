@@ -10,7 +10,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.IClientCommand;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,7 +25,7 @@ import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
-public class CheckModCommand extends CommandBase implements IClientCommand {
+public class InvSeeCommand extends CommandBase implements IClientCommand {
 
     public static String code = "";
     public static String checkplayer = "";
@@ -35,13 +34,13 @@ public class CheckModCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public String getName() {
-        return "checkmod";
+        return "invsee";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/checkmod [Name]";
+        return "/invsee [Name]";
     }
 
     @Override
@@ -69,31 +68,30 @@ public class CheckModCommand extends CommandBase implements IClientCommand {
 
             if (args.length > 0) {
                 try {
-                    if (SheetUtils.getValueRange(InformationType.CHECKMOD_PERMISSION.getSheet(), InformationType.CHECKMOD_PERMISSION.getRange()).toString().contains(player.getName())) {
+                    if (SheetUtils.getValueRange(InformationType.INVSEE_PERMISSION.getSheet(), InformationType.INVSEE_PERMISSION.getRange()).toString().contains(player.getName())) {
                         checkplayer = args[0];
-                        player.sendMessage(new TextComponentString(PREFIX + "Mod-Infos von " + checkplayer + ":"));
+                        player.sendMessage(new TextComponentString(PREFIX + "Inventar von " + checkplayer + ":"));
 
                         code = String.valueOf((10000 + (int) (Math.random() * ((99999 - 10000) + 1))));
-                        player.sendChatMessage("/f %CHECK% : " + checkplayer + " : " + code);
+                        player.sendChatMessage("/f %INV% : " + checkplayer + " : " + code);
 
                         new Timer().schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (!CheckModCommand.check) {
-                                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.RED + "Nicht installiert"));
-                                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Version: " + TextFormatting.YELLOW + "< 1.7.4"));
+                                if (!InvSeeCommand.check) {
+                                    player.sendMessage(new TextComponentString(PREFIX + "Das Inventar von " + checkplayer + " konnte nicht erfasst werden!"));
                                 } else {
-                                    CheckModCommand.check = false;
+                                    InvSeeCommand.check = false;
                                 }
-                                CheckModCommand.checkplayer = "";
-                                CheckModCommand.code = "";
+                                InvSeeCommand.checkplayer = "";
+                                InvSeeCommand.code = "";
                             }
                         }, 3000);
                     } else {
                         player.sendMessage(new TextComponentString(PREFIX + "Du hast nicht die ben\u00f6tigten Rechte!"));
                     }
                 } catch (IOException e) {
-                    player.sendMessage(new TextComponentString(PREFIX + "Die CheckMod-Rechte konnten nicht erfasst werden!"));
+                    player.sendMessage(new TextComponentString(PREFIX + "Die InvSee-Rechte konnten nicht erfasst werden!"));
                 }
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + "Gib einen Member an!"));

@@ -35,7 +35,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.8.4";
+    public static final String VERSION = "1.8.7";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -44,6 +44,7 @@ public class AktiBoom {
     public static String SECRANK = "-";
     public static int RANK = 0;
     public static boolean AFK = false;
+    public static boolean KOMMS = true;
     public static String LATEST = VERSION;
 
     @Mod.EventHandler
@@ -106,6 +107,8 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new EquipCommand());
         ClientCommandHandler.instance.registerCommand(new LeitfadenCommand());
         ClientCommandHandler.instance.registerCommand(new GlobalCommand());
+        ClientCommandHandler.instance.registerCommand(new InvSeeCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckDrugsCommand());
     }
 
     public void ListenerRegistration() {

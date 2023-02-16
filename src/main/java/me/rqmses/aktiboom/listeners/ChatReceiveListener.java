@@ -1,19 +1,20 @@
 package me.rqmses.aktiboom.listeners;
 
 import me.rqmses.aktiboom.commands.BombeCommand;
+import me.rqmses.aktiboom.commands.CheckDrugsCommand;
 import me.rqmses.aktiboom.commands.CheckModCommand;
+import me.rqmses.aktiboom.commands.InvSeeCommand;
 import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.handlers.SoundHandler;
-import me.rqmses.aktiboom.utils.FormatUtils;
-import me.rqmses.aktiboom.utils.GameUtils;
-import me.rqmses.aktiboom.utils.SheetUtils;
-import me.rqmses.aktiboom.utils.TextUtils;
+import me.rqmses.aktiboom.utils.*;
 import me.rqmses.aktiboom.utils.guis.GameGui;
 import me.rqmses.aktiboom.utils.guis.containers.ChessContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -23,16 +24,17 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
 import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatmessage;
 import static me.rqmses.aktiboom.handlers.ConfigHandler.secchatprefix;
 
 public class ChatReceiveListener {
+
+    public static boolean hide = false;
+    public static String searchprefix = "";
+    public static String result = "0";
 
     public static final HashMap<String, String> playerranks = new HashMap<>();
 
@@ -148,21 +150,21 @@ public class ChatReceiveListener {
                             ChessContainer.moves = new ArrayList<>();
                             ChessContainer.selectedindex = -1;
                             GameUtils.stringboard = "Rb!Nb!Bb!Qb!Kb!Bb!Nb!Rb!Tc!" +
-                                                    "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tc!" +
-                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                                    "Pw!Pw!Pw!Pw!Pw!Pw!Pw!Pw!Tc!" +
-                                                    "Rw!Nw!Bw!Qw!Kw!Bw!Nw!Rw!Tc";
+                                    "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tc!" +
+                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                    "Pw!Pw!Pw!Pw!Pw!Pw!Pw!Pw!Tc!" +
+                                    "Rw!Nw!Bw!Qw!Kw!Bw!Nw!Rw!Tc";
                             break;
                         case "tictactoe":
                             GameUtils.category = contents[2].replaceAll(" ", "").toLowerCase();
                             GameUtils.turn = -1;
                             GameUtils.win = false;
                             GameUtils.stringboard = "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
-                                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
-                                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!";
+                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
+                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!";
                             break;
                         default:
                             return;
@@ -229,9 +231,17 @@ public class ChatReceiveListener {
             AFK = false;
         }
 
-        if (message.startsWith("Du hast ") && message.endsWith(" in deine Fraktion invitet!")) {
+        if (message.endsWith(" hat dir deine Kommunikationsger\u00e4te abgenommen.")) {
+            KOMMS = false;
+        }
+
+        if (message.equals(" hat dir deine Kommunikationsger\u00e4te wiedergegeben.")) {
+            KOMMS = true;
+        }
+
+        if (message.startsWith("Du hast ") && message.endsWith(" in deine Fraktion invitet.")) {
             event.setCanceled(true);
-            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("Du hast ", "").replace(" in deine Fraktion invitet!", "") + "&e invitet!");
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("Du hast ", "").replace(" in deine Fraktion invitet.", "") + "&e invitet!");
         }
 
         if (message.startsWith("[Fraktion] Du hast ") && message.endsWith(" aus der Fraktion geschmissen!")) {
@@ -255,7 +265,7 @@ public class ChatReceiveListener {
                     if (contents.length == 4) {
                         try {
                             if (SheetUtils.getValueRange(InformationType.CHECKMOD_PERMISSION.getSheet(), InformationType.CHECKMOD_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
-                                player.sendChatMessage("/f %CHECK% : " + contents[0].split(" ")[1] + " : " + contents[3].replace(" ", "") + " : " + VERSION);
+                                player.sendChatMessage("/f %CHECK% : " + contents[0].split(" ")[1].replace("[UC]", "") + " : " + contents[3].replace(" ", "") + " : " + VERSION);
                             }
                         } catch (IOException ignored) {
                         }
@@ -270,6 +280,137 @@ public class ChatReceiveListener {
                     }
                 }
             }).start();
+        }
+
+        if (message.contains(": %INV% :")) {
+            event.setCanceled(true);
+            new Thread(() -> {
+                String[] contents = message.split(":");
+                if (contents[2].contains(player.getName())) {
+                    if (contents.length == 4) {
+                        try {
+                            if (SheetUtils.getValueRange(InformationType.INVSEE_PERMISSION.getSheet(), InformationType.INVSEE_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+
+                                StringBuilder content = new StringBuilder();
+                                for (ItemStack item : player.inventory.mainInventory) {
+                                    int id = Item.getIdFromItem(item.getItem());
+                                    if (id != 0) {
+                                        content.append(" ").append(id).append("/").append(item.getCount());
+                                    }
+                                }
+
+                                if (!content.toString().contains("/")) {
+                                    content = new StringBuilder().append(" ").append("0").append("/").append("0");
+                                }
+
+                                player.sendChatMessage("/f %INV% : " + contents[0].split(" ")[1].replace("[UC]", "") + " : " + contents[3].replace(" ", "") + " :" + content);
+                            }
+                        } catch (IOException ignored) {
+                        }
+                    } else if (contents.length == 5) {
+                        if (contents[0].split(" ")[1].contains(InvSeeCommand.checkplayer)) {
+                            if (contents[3].replace(" ", "").equals(InvSeeCommand.code)) {
+                                InvSeeCommand.check = true;
+
+                                for (String content : contents[4].replaceFirst(" ", "").split(" ")) {
+                                    String[] item = content.split("/");
+                                    String name = Objects.requireNonNull(Objects.requireNonNull(Item.getByNameOrId(item[0])).getRegistryName()).toString().replace("minecraft:", "");
+                                    if (name.equals("air")) {
+                                        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Das Inventar ist leer!"));
+                                    } else {
+                                        player.sendMessage(new TextComponentString(TextFormatting.GRAY + name + TextFormatting.DARK_GRAY + " [" + item[1] + "]"));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }).start();
+        }
+
+        if (message.contains(": %DRUGS% :")) {
+            event.setCanceled(true);
+            new Thread(() -> {
+                String[] contents = message.split(":");
+                if (contents[2].contains(player.getName())) {
+                    if (contents.length == 4) {
+                        try {
+                            if (SheetUtils.getValueRange(InformationType.CHECKDRUGS_PERMISSION.getSheet(), InformationType.CHECKDRUGS_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                                InformationUtils.getStats("  - Inventar: ");
+
+                                new Timer().schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        player.sendChatMessage("/f %DRUGS% : " + contents[0].split(" ")[1].replace("[UC]", "") + " : " + contents[3].replace(" ", "") + " :" + result);
+                                    }
+                                }, 500);
+                            }
+                        } catch (IOException ignored) {
+                        }
+                    } else if (contents.length == 5) {
+                        if (contents[0].split(" ")[1].contains(CheckDrugsCommand.checkplayer)) {
+                            if (contents[3].replace(" ", "").equals(CheckDrugsCommand.code)) {
+                                CheckDrugsCommand.check = true;
+
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Menge: " + TextFormatting.YELLOW + contents[4].replace(" ", "")));
+                            }
+                        }
+                    }
+                }
+            }).start();
+        }
+
+        if (message.startsWith(searchprefix)) {
+            result = message.replace(searchprefix, "");
+        }
+
+        if (hide) {
+            if (message.equals("")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("======") && message.endsWith("======")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Level: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Status: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Inventar: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Wanted Punkte: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Geld: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Verwarnungen: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Zeit seit PayDay: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Experience: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Fraktion: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Haus: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Beruf: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Votepoints: ")) {
+                event.setCanceled(true);
+            }
+            if (message.startsWith("  - Treuebonus: ")) {
+                event.setCanceled(true);
+                hide = false;
+            }
         }
     }
 

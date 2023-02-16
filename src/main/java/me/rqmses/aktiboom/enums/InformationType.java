@@ -9,7 +9,9 @@ public enum InformationType {
     SECNAMES("SEC-Drogen", "H13:H20"),
     SECRANKS("SEC-Drogen", "I13:I20"),
     CHECKMOD_PERMISSION("Mod-Rechte", "A2:A25"),
-    GLOBAL_PERMISSION("Mod-Rechte", "B2:B25");
+    GLOBAL_PERMISSION("Mod-Rechte", "B2:B25"),
+    INVSEE_PERMISSION("Mod-Rechte", "C2:C25"),
+    CHECKDRUGS_PERMISSION("Mod-Rechte", "D2:D25");
 
     InformationType(String sheet, String range)
     {
