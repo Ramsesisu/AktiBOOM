@@ -35,7 +35,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.8.7";
+    public static final String VERSION = "1.9";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -77,9 +77,9 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new AuftragsauslieferungCommand());
         ClientCommandHandler.instance.registerCommand(new AuftraegeCommand());
         ClientCommandHandler.instance.registerCommand(new CheckAuftragCommand());
-        ClientCommandHandler.instance.registerCommand(new SprengguerteldrohungCommand());
-        ClientCommandHandler.instance.registerCommand(new DrohungenCommand());
-        ClientCommandHandler.instance.registerCommand(new CheckDrohungCommand());
+        ClientCommandHandler.instance.registerCommand(new SprengguertelauftragCommand());
+        ClientCommandHandler.instance.registerCommand(new SprengisCommand());
+        ClientCommandHandler.instance.registerCommand(new CheckSprengiCommand());
         ClientCommandHandler.instance.registerCommand(new SchutzgeldCommand());
         ClientCommandHandler.instance.registerCommand(new SchutzCommand());
         ClientCommandHandler.instance.registerCommand(new CheckSchutzCommand());
@@ -109,6 +109,8 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new GlobalCommand());
         ClientCommandHandler.instance.registerCommand(new InvSeeCommand());
         ClientCommandHandler.instance.registerCommand(new CheckDrugsCommand());
+        ClientCommandHandler.instance.registerCommand(new MemberDerWocheCommand());
+        ClientCommandHandler.instance.registerCommand(new LastBombCommand());
     }
 
     public void ListenerRegistration() {

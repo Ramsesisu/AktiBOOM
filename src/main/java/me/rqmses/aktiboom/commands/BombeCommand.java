@@ -1,6 +1,7 @@
 package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.utils.LocationUtils;
+import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -13,10 +14,9 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 import static me.rqmses.aktiboom.AktiBoom.RANK;
@@ -31,6 +31,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
     private static double yd = 0D;
     private static double zd = 0D;
     public static boolean planter = false;
+    public static String[] time = new String[] {};
 
     @Override
     @Nonnull
@@ -66,6 +67,9 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                 yd = player.posY;
                 zd = player.posZ;
 
+                Date date = Calendar.getInstance().getTime();
+                time = new String[] {new SimpleDateFormat("dd.MM.yyyy").format(date), new SimpleDateFormat("HH:mm").format(date)};
+
                 String pos = x + "/" + y + "/" + z;
 
                 String nearestnavi = LocationUtils.getNearestNavi(player.getPosition());
@@ -83,6 +87,13 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                             if (Minecraft.getMinecraft().world.getBlockState(new BlockPos(xd, yd, zd)).getBlock().toString().toLowerCase().contains("tnt")) {
                                 player.sendChatMessage("/f %INFO% :&6&l" + player.getName() + "&e hat eine Bombe bei &6" + pos + "&e gelegt.");
                                 planter = true;
+
+                                new Thread(() -> {
+                                    try {
+                                        SheetUtils.setValues("Win/Lose Statistik", "H34:K34", new String[]{time[0], time[1], nearestnavi, player.getName()});
+                                    } catch (IOException e) {
+                                    }
+                                }).start();
 
                                 timer.schedule(new TimerTask() {
                                     @Override

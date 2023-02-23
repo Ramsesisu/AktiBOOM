@@ -113,6 +113,7 @@ public class SetRankCommand extends CommandBase implements IClientCommand {
                             if (rank >= 4 && oldrank < 4) {
                                 SheetUtils.addEditor("Equiplog", "Equiplog", email);
                                 SheetUtils.addEditor("Win/Lose Statistik", "Win/Lose", email);
+                                SheetUtils.addEditor("Win/Lose Statistik", "Last", email);
                                 SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
                                 SheetUtils.addEditor("Kalender", "Datum", email);
                                 for (String member : memberlist) {
@@ -123,6 +124,7 @@ public class SetRankCommand extends CommandBase implements IClientCommand {
                             } else if (rank < 4 && oldrank >= 4) {
                                 SheetUtils.removeEditor("Equiplog", "Equiplog", email);
                                 SheetUtils.removeEditor("Win/Lose Statistik", "Win/Lose", email);
+                                SheetUtils.removeEditor("Win/Lose Statistik", "Last", email);
                                 SheetUtils.removeEditor("Spot\u00fcbersicht", "Spots", email);
                                 SheetUtils.removeEditor("Kalender", "Datum", email);
                                 for (String member : memberlist) {

@@ -40,6 +40,7 @@ public class PlayerJoinListener {
         BombeCommand.planter = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
         PlayerUpdateListener.showdistance = false;
+        PlayerJoinListener.timer.cancel();
 
 
         new Thread(() -> {
@@ -101,7 +102,7 @@ public class PlayerJoinListener {
         new Thread(() -> {
             SchutzCommand.syncList();
             AuftraegeCommand.syncList();
-            DrohungenCommand.syncList();
+            SprengisCommand.syncList();
             TuningsCommand.syncList();
         }).start();
 

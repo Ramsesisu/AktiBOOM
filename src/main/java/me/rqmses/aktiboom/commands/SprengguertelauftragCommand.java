@@ -22,24 +22,24 @@ import java.util.*;
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
 @SuppressWarnings("ALL")
-public class SprengguerteldrohungCommand extends CommandBase implements IClientCommand {
+public class SprengguertelauftragCommand extends CommandBase implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "sprengg\u00fcrteldrohung";
+        return "sprengg\u00fcrtelauftrag";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/sprengg\u00fcrteldrohung add/done/rename [Name] ([Kosten/Neuer Name]) ([Frist])";
+        return "/sprengg\u00fcrtelauftrag add/done/rename [Name] ([Kosten/Neuer Name]) ([Frist])";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("sprengidrohung", "drohung", "threat");
+        return Arrays.asList("sprengiauftrag", "sprengi");
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
         }
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("add")) {
-                targets = Collections.singletonList("2500");
+                targets = Collections.singletonList("3500");
             }
             if (args[0].equalsIgnoreCase("rename")) {
                 for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
@@ -86,15 +86,19 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
             if (args.length > 0) {
                 switch (args[0].toLowerCase()) {
                     case "add":
-                        if (args.length > 3) {
+                        if (args.length > 2) {
                             try {
-                                SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], args[3]});
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e eingetragen.");
+                                String deadline = "-";
+                                if (args.length > 3) {
+                                    deadline = args[3];
+                                }
+                                SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], deadline});
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat einen Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e eingetragen.");
                             } catch (IOException e) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht eingetragen werden."));
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Sprengg\u00fcrtelauftrag konnte nicht eingetragen werden."));
                             }
                         } else {
-                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung add [Name] [Preis] [Frist]"));
+                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrtelauftrag add [Name] [Preis] ([Frist])"));
                         }
                         break;
                     case "done":
@@ -103,17 +107,17 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
                                 int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
                                 List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G" + line + ":K" + line).getValues().get(0);
                                 if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keinen offenen Sprengg\u00fcrtelauftrag."));
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
                                 SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Sprengg\u00fcrteldrohung an &6&l" + args[1] + "&e gel\u00f6scht.");
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e gel\u00f6scht.");
                             } catch (IOException e) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Die Sprengg\u00fcrteldrohung konnte nicht gel\u00f6scht werden."));
+                                player.sendMessage(new TextComponentString(PREFIX + "Der Sprengg\u00fcrtelauftrag konnte nicht gel\u00f6scht werden."));
                             }
                         } else {
-                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung done [Name]"));
+                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrtelauftrag done [Name]"));
                         }
                         break;
                     case "rename":
@@ -122,7 +126,7 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
                                 int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", args[1]) + 4;
                                 List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G" + line + ":K" + line).getValues().get(0);
                                 if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keinen offenen Sprengg\u00fcrtelauftrag."));
                                     return;
                                 }
                                 SheetUtils.setValues("Auftr\u00e4ge", "H" + line, new String[]{args[2]});
@@ -131,7 +135,7 @@ public class SprengguerteldrohungCommand extends CommandBase implements IClientC
                                 player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
                             }
                         } else {
-                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrteldrohung rename [Name] [Neuer Name]"));
+                            player.sendMessage(new TextComponentString(PREFIX + "/sprengg\u00fcrtelauftrag rename [Name] [Neuer Name]"));
                         }
                         break;
                 }

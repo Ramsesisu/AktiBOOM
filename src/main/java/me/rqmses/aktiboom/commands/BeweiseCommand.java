@@ -48,7 +48,7 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("144", "127", "196", "189", "185", "340", "36", "Luigis", "433", "113", "347", "Triaden-HQ", "50", "Brauerei", "137");
+            targets = Arrays.asList("144", "127", "196", "189", "185", "340", "36", "Luigis", "433", "113", "347", "Triaden-HQ", "50", "Brauerei", "137", "521");
         }
         Collections.sort(targets);
         for (String target : targets) {
@@ -114,6 +114,9 @@ public class BeweiseCommand extends CommandBase implements IClientCommand {
                     case "137":
                         links.add("https://youtu.be/g6ke5IcXvZU");
                         links.add("https://youtu.be/eSdpPll3jE0");
+                        break;
+                    case "521":
+                        links.add("https://youtu.be/NNWsKOUkegg");
                         break;
                     default:
                         player.sendMessage(new TextComponentString(PREFIX + "Der Spot hat keine verf\u00fcgbaren Beweise."));

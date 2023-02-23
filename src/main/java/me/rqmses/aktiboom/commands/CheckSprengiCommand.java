@@ -25,24 +25,24 @@ import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber
-public class CheckDrohungCommand extends CommandBase implements IClientCommand {
+public class CheckSprengiCommand extends CommandBase implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "checkdrohung";
+        return "checksprengi";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/checkdrohung [Name]";
+        return "/checksprengi [Name]";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("checksprengg\u00fcrteldrohung", "checksprengidrohung", "checkthreat");
+        return Arrays.asList("checksprengg\u00fcrtelauftrag");
     }
 
     @Override
@@ -74,13 +74,13 @@ public class CheckDrohungCommand extends CommandBase implements IClientCommand {
                     int line = SheetUtils.searchLine("Auftr\u00e4ge", "H4:H54", name) + 4;
                     List<Object> list = SheetUtils.getValueRange("Auftr\u00e4ge", "G" + line + ":K" + line).getValues().get(0);
                     if (list.get(1).toString().equalsIgnoreCase("Name")) {
-                        player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                        player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keinen offenen Sprengg\u00fcrtelauftrag."));
                         return;
                     }
-                    player.sendMessage(new TextComponentString(PREFIX + "Sprengg\u00fcrteldrohung von " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
+                    player.sendMessage(new TextComponentString(PREFIX + "Sprengg\u00fcrtelauftrag von " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
                     player.sendMessage(new TextComponentString(TextFormatting.GOLD + list.get(1).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.YELLOW + list.get(3).toString() + " bis " + list.get(4) + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(2).toString() + TextFormatting.GRAY + " (" + list.get(0).toString() + ")"));
                 } catch (IOException e) {
-                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keine offene Sprengg\u00fcrteldrohung."));
+                    player.sendMessage(new TextComponentString(PREFIX + "Der Spieler hat keinen offenen Sprengg\u00fcrtelauftrag."));
                 }
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + "Du musst einen Spieler angeben!"));

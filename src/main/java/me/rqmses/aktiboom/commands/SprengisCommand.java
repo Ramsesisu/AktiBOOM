@@ -19,26 +19,26 @@ import java.util.List;
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
 @SuppressWarnings("ALL")
-public class DrohungenCommand extends CommandBase implements IClientCommand {
+public class SprengisCommand extends CommandBase implements IClientCommand {
 
     public static List<String> drohungen = new ArrayList<>();
 
     @Override
     @Nonnull
     public String getName() {
-        return "drohungen";
+        return "sprengis";
     }
 
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/drohungen";
+        return "/sprengis";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("sprengg\u00fcrteldrohungen", "sprengidrohungen", "threats");
+        return Arrays.asList("sprengg\u00fcrtelauftr\u00e4ge");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DrohungenCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            player.sendMessage(new TextComponentString(PREFIX + "Aktuelle Sprengg\u00fcrteldrohungen:"));
+            player.sendMessage(new TextComponentString(PREFIX + "Aktuelle Sprengg\u00fcrtelauftr\u00e4ge:"));
             player.sendMessage(new TextComponentString(""));
 
             List<List<Object>> values;

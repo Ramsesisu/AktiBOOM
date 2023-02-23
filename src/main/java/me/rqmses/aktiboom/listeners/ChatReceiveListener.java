@@ -282,6 +282,18 @@ public class ChatReceiveListener {
             }).start();
         }
 
+        if (message.contains(": %REFRESH% :")) {
+            event.setCanceled(true);
+            String[] contents = message.split(":");
+            if (contents[2].replace(" ", "").equals(player.getName())) {
+                new Thread(() -> {
+                    PlayerJoinListener.refresh();
+
+                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
+                }).start();
+            }
+        }
+
         if (message.contains(": %INV% :")) {
             event.setCanceled(true);
             new Thread(() -> {
