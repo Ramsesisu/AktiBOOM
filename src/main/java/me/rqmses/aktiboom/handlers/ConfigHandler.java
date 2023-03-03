@@ -56,6 +56,10 @@ public class ConfigHandler {
     @Config.Comment("Stellt Terror-bezogenene Custom-Sounds ein.")
     public static boolean customsounds = true;
 
+    @Config.Name("Show Ank\u00fcndigungen")
+    @Config.Comment("Zeigt beim Join die Ank\u00fcndigungen des Tages an.")
+    public static boolean showaktis = true;
+
 
     @SubscribeEvent
     public static void onConfigChange(ConfigChangedEvent event) {

@@ -42,7 +42,7 @@ public class CheckSprengiCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("checksprengg\u00fcrtelauftrag");
+        return Collections.singletonList("checksprengg\u00fcrtelauftrag");
     }
 
     @Override

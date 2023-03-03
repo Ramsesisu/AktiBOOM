@@ -105,7 +105,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                                             player.sendChatMessage("/f %INFO% :" + "Der n\u00e4chste Navipunkt zur Bombe ist: &6&l" + nearestnavi + "&7 (&l" + distance + "m&7)");
                                         }
                                     }
-                                }, 2750);
+                                }, 1500);
                             }
                         }
                     }, 250);

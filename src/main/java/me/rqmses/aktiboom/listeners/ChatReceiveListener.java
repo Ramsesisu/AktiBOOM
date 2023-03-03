@@ -111,26 +111,35 @@ public class ChatReceiveListener {
         if (message.contains(": %NAVI% :")) {
             event.setCanceled(true);
             String[] contents = message.split(":", 3);
-            String navi = contents[2].replace(" ", "");
-            player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
 
-            if (ConfigHandler.customsounds) {
-                SoundHandler.playSound(SoundHandler.BOMBPL);
+            if (contents[0].split(" ").length < 1) {
+                return;
             }
 
-            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
-            if (netHandlerPlayClient != null) {
-                if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
-                    if (ConfigHandler.autonavi) {
-                        if (!AFK) {
-                            player.sendChatMessage("/navi " + navi);
+            new Thread(() -> {
+                if (SheetUtils.getRank(contents[0].split(" ")[1].replace(" ", "")) >= 4) {
+                    String navi = contents[2].replace(" ", "");
+                    player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
+
+                    if (ConfigHandler.customsounds) {
+                        SoundHandler.playSound(SoundHandler.BOMBPL);
+                    }
+
+                    NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
+                    if (netHandlerPlayClient != null) {
+                        if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
+                            if (ConfigHandler.autonavi) {
+                                if (!AFK) {
+                                    player.sendChatMessage("/navi " + navi);
+                                }
+                            }
+                            PlayerUpdateListener.showdistance = true;
+                            String[] coords = navi.split("/");
+                            PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
                         }
                     }
-                    PlayerUpdateListener.showdistance = true;
-                    String[] coords = navi.split("/");
-                    PlayerUpdateListener.bombpos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
                 }
-            }
+            }).start();
         }
 
         if (message.contains(": %PARTY% :")) {
@@ -150,21 +159,21 @@ public class ChatReceiveListener {
                             ChessContainer.moves = new ArrayList<>();
                             ChessContainer.selectedindex = -1;
                             GameUtils.stringboard = "Rb!Nb!Bb!Qb!Kb!Bb!Nb!Rb!Tc!" +
-                                    "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tc!" +
-                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
-                                    "Pw!Pw!Pw!Pw!Pw!Pw!Pw!Pw!Tc!" +
-                                    "Rw!Nw!Bw!Qw!Kw!Bw!Nw!Rw!Tc";
+                                                    "Pb!Pb!Pb!Pb!Pb!Pb!Pb!Pb!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Ac!Ac!Ac!Ac!Ac!Ac!Ac!Ac!Tc!" +
+                                                    "Pw!Pw!Pw!Pw!Pw!Pw!Pw!Pw!Tc!" +
+                                                    "Rw!Nw!Bw!Qw!Kw!Bw!Nw!Rw!Tc";
                             break;
                         case "tictactoe":
                             GameUtils.category = contents[2].replaceAll(" ", "").toLowerCase();
                             GameUtils.turn = -1;
                             GameUtils.win = false;
                             GameUtils.stringboard = "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
-                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
-                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!";
+                                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!" +
+                                                    "Tb!Tb!Tb!Ab!Ab!Ab!Tb!Tb!Tb!";
                             break;
                         default:
                             return;
@@ -255,6 +264,10 @@ public class ChatReceiveListener {
 
         if (message.equals("[Equip] Du hast dir ein Sprengg\u00fcrtel equippt!")) {
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat sich einen &6&lSprengg\u00fcrtel &eequippt!");
+        }
+
+        if (message.equals("[Waffentransport] Du hast eine Waffenlieferung abgegeben.")) {
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat das Waffenlager aufgef\u00fcllt!");
         }
 
         if (message.contains(": %CHECK% :")) {

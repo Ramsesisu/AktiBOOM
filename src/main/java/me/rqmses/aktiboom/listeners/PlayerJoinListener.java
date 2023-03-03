@@ -31,6 +31,52 @@ public class PlayerJoinListener {
     public void onJoin(ClientChatReceivedEvent event) {
         if (event.getMessage().getUnformattedText().equals("Willkommen zur\u00fcck!")) {
             refresh();
+
+            if (ConfigHandler.showaktis) {
+                new Thread(() -> {
+                    String column;
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(new Date());
+
+                    switch (TimeUtils.calenderDay(calendar)) {
+                        case 1:
+                            column = "I";
+                            break;
+                        case 2:
+                            column = "C";
+                            break;
+                        case 3:
+                            column = "D";
+                            break;
+                        case 4:
+                            column = "E";
+                            break;
+                        case 5:
+                            column = "F";
+                            break;
+                        case 6:
+                            column = "G";
+                            break;
+                        case 7:
+                            column = "H";
+                            break;
+                        default:
+                            return;
+                    }
+
+                    List<List<Object>> list;
+
+                    try {
+                        list = SheetUtils.getValueRange("Kalender", column + "4:" + column + "41").getValues();
+                    } catch (IOException e) {
+                        return;
+                    }
+
+                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Heutige Aktivit\u00e4ten:"));
+                    KalenderCommand.loopDays(list);
+                }).start();
+            }
         }
     }
 
@@ -40,7 +86,9 @@ public class PlayerJoinListener {
         BombeCommand.planter = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
         PlayerUpdateListener.showdistance = false;
+
         PlayerJoinListener.timer.cancel();
+        PlayerJoinListener.timer = new Timer();
 
 
         new Thread(() -> {

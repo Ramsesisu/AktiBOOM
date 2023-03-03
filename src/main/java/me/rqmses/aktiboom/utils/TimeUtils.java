@@ -45,6 +45,10 @@ public class TimeUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
+        return calenderDay(calendar);
+    }
+
+    public static int calenderDay(Calendar calendar) {
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
 

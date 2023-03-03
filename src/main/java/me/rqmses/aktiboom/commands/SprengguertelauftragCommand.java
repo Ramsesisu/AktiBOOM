@@ -112,7 +112,7 @@ public class SprengguertelauftragCommand extends CommandBase implements IClientC
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
                                 SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e gel\u00f6scht.");
+                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e beendet.");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Der Sprengg\u00fcrtelauftrag konnte nicht gel\u00f6scht werden."));
                             }

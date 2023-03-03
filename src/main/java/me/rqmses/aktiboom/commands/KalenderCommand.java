@@ -362,7 +362,7 @@ public class KalenderCommand extends CommandBase implements IClientCommand {
         return false;
     }
 
-    private static void loopDays(List<List<Object>> kalender) {
+    public static void loopDays(List<List<Object>> kalender) {
         for (List<Object> list : kalender) {
             if (list.size() > 0) {
                 String value = list.get(0).toString();

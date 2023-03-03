@@ -144,6 +144,10 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("\u00d6ffnet das Equip-GUI bzw. tr\u00e4gt es ein.");
         command("/game");
         description("Startet eine Game-Party mit den angegebenen Membern bzw. \u00f6ffnet das Spielbrett.");
+        command("/geisel");
+        description("F\u00fcgt eine Geisel der Geisel-Liste hinzu, oder entfernt diese.");
+        command("/geiseln");
+        description("Gibt die Geisel-Liste aus, beziehungsweise setzt sie zur\u00fcck.");
         command("/global");
         description("Zeigt eine memberweite Info-Meldung an.");
         command("/info");
