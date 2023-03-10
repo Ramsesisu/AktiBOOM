@@ -12,7 +12,8 @@ public enum InformationType {
     GLOBAL_PERMISSION("Mod-Rechte", "B2:B25"),
     INVSEE_PERMISSION("Mod-Rechte", "C2:C25"),
     CHECKDRUGS_PERMISSION("Mod-Rechte", "D2:D25"),
-    REFRESH_PERMISSION("Mod-Rechte", "E2:E25");
+    REFRESH_PERMISSION("Mod-Rechte", "E2:E25"),
+    AWAY_PERMISSION("Mod-Rechte", "F2:F25");
 
     InformationType(String sheet, String range)
     {

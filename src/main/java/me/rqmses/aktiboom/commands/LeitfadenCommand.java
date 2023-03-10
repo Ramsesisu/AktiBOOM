@@ -112,6 +112,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("F\u00fcgt eine Auftragsauslieferung zur Liste hinzu oder entfernt.");
         command("/autobombe");
         description("F\u00fcgt eine gekaufte Autobombe zur Liste hinzu oder entfernt.");
+        command("/away");
+        description("Schickt einen Member offline.");
         command("/beweise");
         description("Gibt Videos zu den Fl\u00fcgen des angegebenen Spots aus.");
         command("/bombe");

@@ -38,7 +38,7 @@ public class SprengisCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("sprengg\u00fcrtelauftr\u00e4ge");
+        return Arrays.asList("sprengg\u00fcrtelauftr\u00e4ge", "sprengiauftr\u00e4ge");
     }
 
     @Override

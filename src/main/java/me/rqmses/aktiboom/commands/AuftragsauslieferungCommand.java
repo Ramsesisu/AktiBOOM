@@ -96,8 +96,8 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "B" + line + ":E" + line);
-                                SheetUtils.sortRange("Auftr\u00e4ge", "B4:E54");
                                 player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsauftrag von &6&l" + args[1] + "&e beendet.");
+                                SheetUtils.sortRange("Auftr\u00e4ge", "B4:E54");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht gel\u00f6scht werden."));
                             }

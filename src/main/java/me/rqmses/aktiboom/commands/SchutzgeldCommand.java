@@ -107,8 +107,8 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "M" + line + ":O" + line);
-                                SheetUtils.sortRange("Auftr\u00e4ge", "M4:O54");
                                 player.sendChatMessage("/f %INFO% :" + player.getName() + " hat das Schutzgeld von &6&l" + args[1] + "&e gel\u00f6scht.");
+                                SheetUtils.sortRange("Auftr\u00e4ge", "M4:O54");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Das Schutzgeld konnte nicht gel\u00f6scht werden."));
                             }

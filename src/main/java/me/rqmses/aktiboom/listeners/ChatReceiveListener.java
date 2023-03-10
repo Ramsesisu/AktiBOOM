@@ -385,6 +385,21 @@ public class ChatReceiveListener {
             }).start();
         }
 
+        if (message.contains(": %AWAY% :")) {
+            event.setCanceled(true);
+            new Thread(() -> {
+                String[] contents = message.split(":");
+                if (contents[2].replace(" ", "").equals(player.getName())) {
+                    try {
+                        if (SheetUtils.getValueRange(InformationType.AWAY_PERMISSION.getSheet(), InformationType.AWAY_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                            Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getNetworkManager().closeChannel(new TextComponentString("Verlasse UnicaCity"));
+                        }
+                    } catch (IOException ignored) {
+                    }
+                }
+            }).start();
+        }
+
         if (message.startsWith(searchprefix)) {
             result = message.replace(searchprefix, "");
         }

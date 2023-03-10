@@ -7,7 +7,7 @@ plugins {
 
 
 group = 'me.rqmses'
-version = '1.10'
+version = '1.10.1'
 
 java {
     archivesBaseName = 'AktiBOOM'
