@@ -392,7 +392,7 @@ public class ChatReceiveListener {
                 if (contents[2].replace(" ", "").equals(player.getName())) {
                     try {
                         if (SheetUtils.getValueRange(InformationType.AWAY_PERMISSION.getSheet(), InformationType.AWAY_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
-                            Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getNetworkManager().closeChannel(new TextComponentString("Verlasse UnicaCity"));
+                            Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getNetworkManager().closeChannel(new TextComponentString("Du wurdest von " + TextFormatting.BOLD + contents[0].split(" ")[1].replace(" ", "") + TextFormatting.RESET + " offline geschickt!"));
                         }
                     } catch (IOException ignored) {
                     }
