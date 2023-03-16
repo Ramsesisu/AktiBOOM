@@ -84,10 +84,10 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
             List<String> sperren = new ArrayList<>();
             try {
-                if (SheetUtils.getValueRange(InformationType.SPRENGGUERTEL_BAN.getSheet(), InformationType.SPRENGGUERTEL_BAN.getRange().replace("2", "1")).getValues().toString().contains(name)) {
+                if (SheetUtils.getValueRange(InformationType.SPRENGGUERTEL_BAN.getSheet(), InformationType.SPRENGGUERTEL_BAN.getRange().replaceFirst("2", "1")).getValues().toString().contains(name)) {
                     sperren.add("Sprengg\u00fcrtel");
                 }
-                if (SheetUtils.getValueRange(InformationType.RPG_7_BAN.getSheet(), InformationType.RPG_7_BAN.getRange().replace("2", "1")).getValues().toString().contains(name)) {
+                if (SheetUtils.getValueRange(InformationType.RPG_7_BAN.getSheet(), InformationType.RPG_7_BAN.getRange().replaceFirst("2", "1")).getValues().toString().contains(name)) {
                     sperren.add("RPG-7");
                 }
             } catch (IOException ignored) {
