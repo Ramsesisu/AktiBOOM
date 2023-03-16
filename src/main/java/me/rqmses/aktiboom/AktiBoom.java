@@ -35,7 +35,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.10.1";
+    public static final String VERSION = "1.11";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -114,6 +114,7 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new GeiselCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselnCommand());
         ClientCommandHandler.instance.registerCommand(new AwayCommand());
+        ClientCommandHandler.instance.registerCommand(new SperreCommand());
     }
 
     public void ListenerRegistration() {
@@ -125,6 +126,7 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new ClientTickListener());
         MinecraftForge.EVENT_BUS.register(new PlayerUpdateListener());
         MinecraftForge.EVENT_BUS.register(new PlayerDeathListener());
+        MinecraftForge.EVENT_BUS.register(new ContainerListener());
     }
 
     public static final KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");

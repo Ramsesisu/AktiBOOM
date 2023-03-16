@@ -66,7 +66,7 @@ public class AddMemberCommand extends CommandBase implements IClientCommand {
             if (args.length > 1) {
                 if (RANK >= 5) {
                     try {
-                        int sheetindex = SheetUtils.getSheetIndex() - 1;
+                        int sheetindex = SheetUtils.getSheetIndex() - 2;
                         SheetUtils.copySheet(976896585, args[0], sheetindex);
                         SheetUtils.setValues(args[0], "F21:H23", new String[]{args[0]});
 

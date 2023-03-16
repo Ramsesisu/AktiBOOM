@@ -8,6 +8,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -55,8 +56,13 @@ public class BombeCommand extends CommandBase implements IClientCommand {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (Minecraft.getMinecraft().getConnection().getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
+        if (Minecraft.getMinecraft().getConnection().getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity")) {
             if (RANK >= 4) {
+                if (player.inventory.getCurrentItem().getItem() != Item.getItemById(46)) {
+                    player.sendMessage(new TextComponentString(PREFIX + "Du musst die Bombe in der Hand halten!"));
+                    return;
+                }
+
                 Timer timer = new Timer();
 
                 x = player.getPosition().getX();

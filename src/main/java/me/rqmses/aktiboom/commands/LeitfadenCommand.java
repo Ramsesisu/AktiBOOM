@@ -190,6 +190,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Setzt einen Member auf den angegeben SEC-Rang im Nachweis und gibt die Rechte dazu.");
         command("/sf");
         description("Schreibt in den SEC-Chat.");
+        command("/sperre");
+        description("Sperrt ein Equipment f\u00fcr einen Member.");
         command("/sprengg\u00fcrtelauftrag");
         description("F\u00fcgt einen Sprengg\u00fcrtelauftrag zur Liste hinzu oder entfernt ihn.");
         command("/sprengis");

@@ -13,7 +13,10 @@ public enum InformationType {
     INVSEE_PERMISSION("Mod-Rechte", "C2:C25"),
     CHECKDRUGS_PERMISSION("Mod-Rechte", "D2:D25"),
     REFRESH_PERMISSION("Mod-Rechte", "E2:E25"),
-    AWAY_PERMISSION("Mod-Rechte", "F2:F25");
+    AWAY_PERMISSION("Mod-Rechte", "F2:F25"),
+    SPERRE_PERMISSION("Mod-Rechte", "G2:G25"),
+    SPRENGGUERTEL_BAN("Mod-Sperren", "A2:A25"),
+    RPG_7_BAN("Mod-Sperren", "B2:B25");
 
     InformationType(String sheet, String range)
     {

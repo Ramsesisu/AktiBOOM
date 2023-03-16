@@ -2,6 +2,7 @@ package me.rqmses.aktiboom.commands;
 
 import me.rqmses.aktiboom.enums.EquipType;
 import me.rqmses.aktiboom.handlers.ScreenHandler;
+import me.rqmses.aktiboom.listeners.ContainerListener;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -134,6 +135,9 @@ public class EquipCommand extends CommandBase implements IClientCommand {
                     }).start();
                 } else {
                     player.sendChatMessage("/equip");
+
+                    ContainerListener.verifysprengi = false;
+                    ContainerListener.verifyrpg = false;
                 }
             } else {
                 StringBuilder text = new StringBuilder();
