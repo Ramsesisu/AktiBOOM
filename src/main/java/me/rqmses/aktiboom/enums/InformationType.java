@@ -16,7 +16,8 @@ public enum InformationType {
     AWAY_PERMISSION("Mod-Rechte", "F2:F25"),
     SPERRE_PERMISSION("Mod-Rechte", "G2:G25"),
     SPRENGGUERTEL_BAN("Mod-Sperren", "A2:A25"),
-    RPG_7_BAN("Mod-Sperren", "B2:B25");
+    RPG_7_BAN("Mod-Sperren", "B2:B25"),
+    MATESHOTS("Win/Lose Statistik", "J37:K136");
 
     InformationType(String sheet, String range)
     {

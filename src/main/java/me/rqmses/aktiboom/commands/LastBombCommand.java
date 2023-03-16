@@ -15,6 +15,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +58,13 @@ public class LastBombCommand extends CommandBase implements IClientCommand {
                 return;
             }
 
-            player.sendMessage(new TextComponentString(PREFIX + "Die letzte Bombe war am " + TextFormatting.GOLD + list.get(0) + TextFormatting.YELLOW + " um " + TextFormatting.GOLD + list.get(1) + " Uhr" + TextFormatting.YELLOW + " bei " + TextFormatting.GOLD + list.get(2) + TextFormatting.YELLOW + ", gelegt von:" + TextFormatting.GOLD + " " + TextFormatting.BOLD + list.get(3) + TextFormatting.YELLOW + "."));
+            player.sendMessage(new TextComponentString(PREFIX + "Letzte Bombe:"));
+
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Datum: " + TextFormatting.YELLOW + list.get(0)));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Uhrzeit: " + TextFormatting.YELLOW + list.get(1) + TextFormatting.DARK_GRAY + " (" + TextFormatting.GRAY + LocalTime.parse(list.get(1).toString(), formatter).plusHours(4).format(formatter) + TextFormatting.DARK_GRAY + ")"));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Ort: " + TextFormatting.YELLOW + list.get(2)));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Leger: " + TextFormatting.YELLOW + list.get(3)));
         }).start();
     }
 

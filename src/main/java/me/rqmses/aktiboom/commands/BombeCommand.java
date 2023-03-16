@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.utils.LocationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.block.Block;
@@ -97,6 +98,8 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                                 new Thread(() -> {
                                     try {
                                         SheetUtils.setValues("Win/Lose Statistik", "H34:K34", new String[]{time[0], time[1], nearestnavi, player.getName()});
+
+                                        SheetUtils.clearValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange());
                                     } catch (IOException e) {
                                     }
                                 }).start();

@@ -1,6 +1,7 @@
 package me.rqmses.aktiboom.listeners;
 
 import me.rqmses.aktiboom.commands.*;
+import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.handlers.UpdateHandler;
 import me.rqmses.aktiboom.utils.SheetUtils;
@@ -114,6 +115,18 @@ public class PlayerJoinListener {
             }
         }).start();
 
+
+        new Thread(() -> {
+            List<List<Object>> members = new ArrayList<>();
+            try {
+                members = SheetUtils.getValueRange(InformationType.NAMES.getSheet(), InformationType.NAMES.getRange()).getValues();
+            } catch (IOException ignored) {
+            }
+
+            for (List<Object> member : members) {
+                MEMBER.add(member.get(0).toString());
+            }
+        }).start();
 
         new Thread(() -> {
             SEC = SheetUtils.isSEC(player.getName());

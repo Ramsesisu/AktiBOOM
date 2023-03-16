@@ -46,9 +46,9 @@ public class AktiBoomCommand extends CommandBase implements IClientCommand {
             player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "            \u27A5 " + TextFormatting.BLUE + "Help", TextFormatting.DARK_GREEN + "Leitfaden", ClickEvent.Action.SUGGEST_COMMAND, "/leitfaden"));
             player.sendMessage(new TextComponentString(""));
             if (checkConnection()) {
-                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Verbunden"));
+                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Status: " + TextFormatting.GREEN + "Verbunden"));
             } else {
-                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.RED + "Getrennt"));
+                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Status: " + TextFormatting.RED + "Getrennt"));
             }
         }).start();
     }

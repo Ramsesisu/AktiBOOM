@@ -162,6 +162,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt Informationen zum letzten Bomben-Plant aus.");
         command("/leitfaden");
         description("\u00d6ffnet diesen Leitfaden.");
+        command("/mateshots");
+        description("Gibt die Mateshots der letzten Bombe aus.");
         command("/memberderwoche");
         description("Gibt die aktuellen Member der Woche aus.");
         command("/nearestnavi");

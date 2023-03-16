@@ -128,6 +128,8 @@ public class ChatReceiveListener {
                     NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
                     if (netHandlerPlayClient != null) {
                         if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
+                            BOMBE = true;
+
                             if (ConfigHandler.autonavi) {
                                 if (!AFK) {
                                     player.sendChatMessage("/navi " + navi);
@@ -455,6 +457,8 @@ public class ChatReceiveListener {
     }
 
     public static void resetBomb() {
+        BOMBE = false;
+
         PlayerUpdateListener.showdistance = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
         BombeCommand.planter = false;

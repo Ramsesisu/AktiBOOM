@@ -19,6 +19,8 @@ import org.lwjgl.input.Keyboard;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static me.rqmses.aktiboom.handlers.SheetHandler.getSheetsService;
 import static me.rqmses.aktiboom.handlers.SheetHandler.sheetsService;
@@ -35,7 +37,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.11.1";
+    public static final String VERSION = "1.12";
 
 
     public static final String PREFIX = TextFormatting.DARK_GRAY + "[" + TextFormatting.GOLD + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -46,6 +48,8 @@ public class AktiBoom {
     public static boolean AFK = false;
     public static boolean KOMMS = true;
     public static String LATEST = VERSION;
+    public static List<String> MEMBER = new ArrayList<>();
+    public static boolean BOMBE = false;
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
@@ -115,6 +119,7 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new GeiselnCommand());
         ClientCommandHandler.instance.registerCommand(new AwayCommand());
         ClientCommandHandler.instance.registerCommand(new SperreCommand());
+        ClientCommandHandler.instance.registerCommand(new MateshotsCommand());
     }
 
     public void ListenerRegistration() {
@@ -127,6 +132,7 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new PlayerUpdateListener());
         MinecraftForge.EVENT_BUS.register(new PlayerDeathListener());
         MinecraftForge.EVENT_BUS.register(new ContainerListener());
+        MinecraftForge.EVENT_BUS.register(new DamageListener());
     }
 
     public static final KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");

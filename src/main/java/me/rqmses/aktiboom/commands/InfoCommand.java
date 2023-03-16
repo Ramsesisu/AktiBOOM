@@ -95,7 +95,7 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
             player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
 
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Name: " + TextFormatting.YELLOW + name));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Name: " + TextFormatting.YELLOW + name));
 
             String rankname = "Rekrut";
             switch (rank) {
@@ -131,8 +131,8 @@ public class InfoCommand extends CommandBase implements IClientCommand {
                 secrankname = "General";
             }
 
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "SEC: " + TextFormatting.YELLOW + secrankname));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrankname));
 
             StringBuilder stringsperren = new StringBuilder();
             if (sperren.size() > 0) {
@@ -147,7 +147,7 @@ public class InfoCommand extends CommandBase implements IClientCommand {
                 stringsperren.append(TextFormatting.YELLOW).append("-");
             }
 
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Sperren: " + stringsperren));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Sperren: " + stringsperren));
         }).start();
     }
 
