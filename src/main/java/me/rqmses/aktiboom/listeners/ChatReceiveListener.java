@@ -1,9 +1,6 @@
 package me.rqmses.aktiboom.listeners;
 
-import me.rqmses.aktiboom.commands.BombeCommand;
-import me.rqmses.aktiboom.commands.CheckDrugsCommand;
-import me.rqmses.aktiboom.commands.CheckModCommand;
-import me.rqmses.aktiboom.commands.InvSeeCommand;
+import me.rqmses.aktiboom.commands.*;
 import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.handlers.SoundHandler;
@@ -24,6 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
@@ -452,6 +450,17 @@ public class ChatReceiveListener {
             if (message.startsWith("  - Treuebonus: ")) {
                 event.setCanceled(true);
                 hide = false;
+            }
+        }
+
+        if (FBankCommand.checkTaxes) {
+            if (message.startsWith("[F-Bank] " + player.getName() + " hat ") && message.endsWith("$) in die F-Bank eingezahlt.") && message.contains("$ (-")) {
+                try {
+                    SheetUtils.setValues("\u00dcbersicht", "C31:D31", new String[]{"Ja", new SimpleDateFormat("dd.MM.yy HH:mm").format(new Date())});
+                } catch (IOException ignored) {
+                }
+
+                FBankCommand.checkTaxes = false;
             }
         }
     }

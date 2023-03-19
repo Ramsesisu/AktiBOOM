@@ -223,6 +223,10 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("- Sounds, passend zum Legen und zur Entfernung einer Bombe.");
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
         description("- Statusmeldung zum Tod des Planters.");
+        description("- Die Mateshots w\u00e4hrend einer Bombe k\u00f6nnen eingesehen werden.");
+        description("");
+        feature("Geiselnahmen");
+        description("- Geiseln k\u00f6nnen in eine Geisel-Liste eingetragen werden.");
         description("");
         feature("Sprengg\u00fcrtel");
         description("- Sounds beim Z\u00fcnden und der Detonation des Sprengg\u00fcrtels.");
@@ -242,6 +246,16 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         feature("Nametags");
         description("- Ein Farbcode f\u00fcr die Nametags der Spieler auf den einzelnen Listen ist einstellbar. \u21E8 Mod-Configs");
         description("");
+        feature("Sicherheit");
+        description("- Bei Steuern kann kein Geld in die F-Bank gezahlt werden.");
+        description("- Beim Equippen m\u00fcssen Sprengg\u00fcrtel und RPGs doppelt ausgew\u00e4hlt werden.");
+        description("- Membern k\u00f6nnen tempor\u00e4re Sperren vergeben werden.");
+        description("- Membern k\u00f6nnen offline geschickt werden.");
+        description("");
+        feature("Member");
+        description("- Drogen/Inventar eines Members k\u00f6nnen eingesehen werden.");
+        description("- Die Mod-Version jedes Members kann eingesehen werden.");
+        description("");
         feature("Aktualisierung");
         description("- Automatisches Updaten der AktiBoom-Version.");
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
@@ -253,7 +267,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         category("Installation:");
         description("1. Den Beitrag mit der neuesten Version heraussuchen (Updates werden regelm\u00e4\u00dfig hochgeladen)");
         description("");
-        description("2. Die angeh\u00e4ngte `AktiBOOM-X.Y.jar`-Datei herunterladen");
+        description("2. Die angeh\u00e4ngte `AktiBOOM-X.Y.Z.jar`-Datei herunterladen");
         description("");
         description("3. Die Datei in folgenden Ordner verschieben: C:/Users/Dein_Name/AppData/Roaming/.minecraft/mods");
         description("");
