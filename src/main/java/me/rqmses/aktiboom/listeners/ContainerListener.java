@@ -4,7 +4,7 @@ import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -35,7 +35,7 @@ public class ContainerListener {
     public void onSlot(GuiScreenEvent.MouseInputEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-        if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory) {
+        if (!(Minecraft.getMinecraft().currentScreen instanceof GuiChest)) {
             return;
         }
 
@@ -142,5 +142,5 @@ public class ContainerListener {
         if (event.getGuiContainer().getSlotUnderMouse() != null) {
             item = event.getGuiContainer().getSlotUnderMouse().getStack();
         }
-     }
+    }
 }
