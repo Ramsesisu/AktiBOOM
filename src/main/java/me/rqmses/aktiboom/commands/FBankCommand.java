@@ -68,6 +68,9 @@ public class FBankCommand extends CommandBase implements IClientCommand {
                         try {
                             if (SheetUtils.getValueRange("\u00dcbersicht", "C31:C31").getValues().toString().contains("Ja")) {
                                 Calendar calendar = new GregorianCalendar();
+                                if (calendar.get(Calendar.HOUR_OF_DAY) < 4) {
+                                    calendar.add(Calendar.DAY_OF_YEAR, -1);
+                                }
                                 calendar.set(Calendar.HOUR_OF_DAY, 4);
                                 calendar.set(Calendar.MINUTE, 0);
                                 calendar.set(Calendar.SECOND, 0);
@@ -78,7 +81,7 @@ public class FBankCommand extends CommandBase implements IClientCommand {
                                 if (checkDate.after(restartDate)) {
                                     taxes = true;
                                 } else {
-                                    SheetUtils.setValues("\u00dcbersicht", "C31:C31", new String[]{"Nein"});
+                                    SheetUtils.setValues("\u00dcbersicht", "C31:D31", new String[]{"Nein", new SimpleDateFormat("dd.MM.yy HH:mm").format(new Date())});
                                 }
                             }
                         } catch (IOException | ParseException ignored) {

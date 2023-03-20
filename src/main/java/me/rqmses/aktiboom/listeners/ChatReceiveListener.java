@@ -142,6 +142,19 @@ public class ChatReceiveListener {
             }).start();
         }
 
+        if (message.equals(player.getName() + " hat eine Bombe an ein Auto platziert.")) {
+            if (KOMMS) {
+                BlockPos pos = player.getPosition();
+                player.sendChatMessage("/f %CAR% : " + pos.getX() + "/" + pos.getY() + "/" + pos.getZ());
+            }
+        }
+
+        if (message.contains(": %CAR% :")) {
+            event.setCanceled(true);
+            String navi = message.split(":", 3)[2].replace(" ", "");
+            player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
+        }
+
         if (message.contains(": %PARTY% :")) {
             event.setCanceled(true);
             String[] contents = message.split(":", 4);
