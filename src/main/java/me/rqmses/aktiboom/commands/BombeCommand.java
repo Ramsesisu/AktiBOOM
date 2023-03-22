@@ -100,6 +100,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                                         SheetUtils.setValues("Win/Lose Statistik", "H34:K34", new String[]{time[0], time[1], nearestnavi, player.getName()});
 
                                         SheetUtils.clearValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange());
+                                        SheetUtils.clearValues(InformationType.KILLS.getSheet(), InformationType.KILLS.getRange());
                                     } catch (IOException e) {
                                     }
                                 }).start();

@@ -66,7 +66,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
                 if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
                     player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
                     if (args.length == 0) {
-                        general();
+                        player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
                     } else {
                         switch (args[0].toLowerCase()) {
                             case "commands":
@@ -79,7 +79,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
                                 installation();
                                 break;
                             default:
-                                general();
+                                player.sendMessage(new TextComponentString(PREFIX + "Die Kategorie " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " existiert nicht!"));
                                 break;
                         }
                     }
@@ -88,14 +88,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
                 }
             }
         }).start();
-    }
-
-    public static void general() {
-        commands();
-        description("");
-        features();
-        description("");
-        installation();
     }
 
     private static void commands() {
@@ -158,6 +150,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt den Inventar-Inhalt des Members aus.");
         command("/kalender");
         description("Zeigt den Kalender an bzw. tr\u00e4gt in diesen ein.");
+        command("/kills");
+        description("Gibt die Kills der letzten Bombe aus.");
         command("/lastbomb");
         description("Gibt Informationen zum letzten Bomben-Plant aus.");
         command("/leitfaden");
