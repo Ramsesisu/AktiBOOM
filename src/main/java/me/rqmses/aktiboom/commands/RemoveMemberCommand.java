@@ -84,6 +84,10 @@ public class RemoveMemberCommand extends CommandBase implements IClientCommand {
                         SheetUtils.clearValues("Equiplog", "C" + line + ":E" + line);
                         SheetUtils.sortRange("Equiplog", "C36:E60");
 
+                        line = SheetUtils.searchLine("Equiplog", "C977:C1000", args[0]) + 977;
+                        SheetUtils.clearValues("Equiplog", "C" + line + ":D" + line);
+                        SheetUtils.sortRange("Equiplog", "C977:D1000");
+
                         SheetUtils.deleteSheet(SheetUtils.getSheetID(args[0]));
                     } catch (IOException e) {
                         player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " konnte nicht aus dem Aktivit\u00e4tsnachweis entfernt werden!"));

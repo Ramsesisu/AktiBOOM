@@ -413,6 +413,23 @@ public class ChatReceiveListener {
             }).start();
         }
 
+        if (message.startsWith(" \u00BB Fraktionsgehalt: +") && message.endsWith("$")) {
+            new Thread(() -> {
+                try {
+                    int line = SheetUtils.searchLine("Equiplog", "C977:C1000", player.getName()) + 977;
+
+                    int added = Integer.parseInt(message.replace(" \u00BB Fraktionsgehalt: +", "").replace("$", ""));
+                    List<List<Object>> values = SheetUtils.getValueRange("Equiplog", "D" + line + ":D" + line).getValues();
+                    int current = 0;
+                    if (values != null) {
+                        current = Integer.parseInt(values.get(0).get(0).toString());
+                    }
+                    SheetUtils.setValues("Equiplog", "D" + line + ":D" + line, new String[]{String.valueOf(current + added)});
+                } catch (IOException ignored) {
+                }
+            }).start();
+        }
+
         if (message.startsWith(searchprefix)) {
             result = message.replace(searchprefix, "");
         }

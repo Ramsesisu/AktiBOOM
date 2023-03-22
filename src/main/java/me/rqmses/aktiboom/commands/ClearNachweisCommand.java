@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -76,7 +77,11 @@ public class ClearNachweisCommand extends CommandBase implements IClientCommand 
                             }
                         }
 
-                        player.sendMessage(new TextComponentString(PREFIX + "Der Aktivit\u00e4tsnachweis wurde erfolgreich zur\u00fcckgesetzt."));
+                        try {
+                            SheetUtils.clearValues(InformationType.EMAILS.getSheet(), "C977:D1000");
+                        } catch (IOException ignored) {
+                        }
+
                         player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Aktivit\u00e4tsnachweis zur\u00fcckgesetzt!");
                     } else {
                         player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Leader!"));
