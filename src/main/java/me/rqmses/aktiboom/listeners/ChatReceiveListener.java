@@ -398,6 +398,35 @@ public class ChatReceiveListener {
             }).start();
         }
 
+        if (message.contains(": %POS% :")) {
+            event.setCanceled(true);
+            new Thread(() -> {
+                String[] contents = message.split(":");
+                if (contents[2].contains(player.getName())) {
+                    if (contents.length == 4) {
+                        try {
+                            if (SheetUtils.getValueRange(InformationType.POSITION_PERMISSION.getSheet(), InformationType.POSITION_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                                BlockPos pos = player.getPosition();
+                                player.sendChatMessage("/f %POS% : " + contents[0].split(" ")[1].replace("[UC]", "") + " : " + contents[3].replace(" ", "") + " : " + pos.getX() + "/" + pos.getY() + "/" + pos.getZ());
+                            }
+                        } catch (IOException ignored) {
+                        }
+                    } else if (contents.length == 5) {
+                        if (contents[0].split(" ")[1].contains(PositionCommand.checkplayer)) {
+                            if (contents[3].replace(" ", "").equals(PositionCommand.code)) {
+                                PositionCommand.check = true;
+
+                                String navi = contents[4].replace(" ", "");
+                                player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "Koordinaten: " + TextFormatting.YELLOW + navi, TextFormatting.RED + "Route anzeigen", ClickEvent.Action.RUN_COMMAND, "/navi " + contents[4].replace(" ", "")));
+                                String[] coords = navi.split("/");
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Navipunkt: " + TextFormatting.YELLOW + LocationUtils.getNearestNavi(new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2])))));
+                            }
+                        }
+                    }
+                }
+            }).start();
+        }
+
         if (message.contains(": %AWAY% :")) {
             event.setCanceled(true);
             new Thread(() -> {

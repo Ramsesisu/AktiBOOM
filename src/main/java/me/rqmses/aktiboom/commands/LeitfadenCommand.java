@@ -166,6 +166,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt die aktuellen Member der Woche aus.");
         command("/nearestnavi");
         description("Gibt den n\u00e4chsten UC-Navipunkt von einem aus.");
+        command("/position");
+        description("Zeigt die Position eines Members an.");
         command("/refresh");
         description("L\u00e4dt deine Daten, oder die des angegebenen Members, aus dem Aktivit\u00e4tsnachweis neu.");
         command("/removemember");
