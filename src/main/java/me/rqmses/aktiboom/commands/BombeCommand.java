@@ -101,6 +101,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
 
                                         SheetUtils.clearValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange());
                                         SheetUtils.clearValues(InformationType.KILLS.getSheet(), InformationType.KILLS.getRange());
+                                        SheetUtils.clearValues(InformationType.KILLS_LOG.getSheet(), InformationType.KILLS_LOG.getRange());
                                     } catch (IOException e) {
                                     }
                                 }).start();

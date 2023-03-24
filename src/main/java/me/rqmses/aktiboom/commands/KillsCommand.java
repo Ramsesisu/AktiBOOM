@@ -16,6 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
@@ -43,19 +45,38 @@ public class KillsCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             List<List<Object>> kills;
+            List<List<Object>> logs;
             try {
                 kills = SheetUtils.getValueRange(InformationType.KILLS.getSheet(), InformationType.KILLS.getRange()).getValues();
+                logs = SheetUtils.getValueRange(InformationType.KILLS_LOG.getSheet(), InformationType.KILLS_LOG.getRange()).getValues();
             } catch (IOException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Die letzten Kills konnten nicht erfasst werden!"));
                 return;
             }
 
+            HashMap<String, Integer> killamounts = new HashMap<>();
+            for (List<Object> log : logs) {
+                String name = log.get(0).toString();
+
+                killamounts.putIfAbsent(name, 0);
+                killamounts.put(name, killamounts.get(name) + 1);
+            }
+
+            HashMap<String, List<String>> killlists = new HashMap<>();
+            for (List<Object> kill : kills) {
+                String name = kill.get(0).toString();
+
+                killlists.putIfAbsent(name, new ArrayList<>());
+                List<String> list = killlists.get(name);
+                list.add(kill.get(1).toString());
+                killlists.put(name, list);
+            }
+
             player.sendMessage(new TextComponentString(PREFIX + "Kills der letzten Bombe:"));
 
-            for (List<Object> kill : kills) {
-                player.sendMessage(new TextComponentString(TextFormatting.GOLD + "   \u271F " + TextFormatting.YELLOW + kill.get(1).toString() + TextFormatting.DARK_GRAY + " (" + TextFormatting.GRAY + kill.get(0).toString() + TextFormatting.DARK_GRAY + ")"));
-            }
-        }).start();
+            for (String name : killamounts.keySet()) {
+                player.sendMessage(new TextComponentString(TextFormatting.GOLD + "    " + name + TextFormatting.DARK_GRAY + " [" + TextFormatting.YELLOW + killamounts.get(name) + "x" + TextFormatting.DARK_GRAY + "] " + TextFormatting.DARK_GRAY + "(" + TextFormatting.GRAY + killlists.get(name).toString().replace("[", "").replace("]", "") + TextFormatting.DARK_GRAY + ")"));
+            }}).start();
     }
 
     @Override

@@ -120,8 +120,15 @@ public class StatistikCommand extends CommandBase implements IClientCommand {
                     }
                     player.sendMessage(new TextComponentString(""));
 
-                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Gewonnen: " + TextFormatting.GREEN + SheetUtils.getValueRange("Win/Lose Statistik", "H12:I12").getValues().get(0).get(0)));
-                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Verloren: " + TextFormatting.RED + SheetUtils.getValueRange("Win/Lose Statistik", "J12:K12").getValues().get(0).get(0)));
+                    String win = SheetUtils.getValueRange("Win/Lose Statistik", "H12:I12").getValues().get(0).get(0).toString();
+                    Float w = Float.valueOf(Integer.parseInt(win));
+                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Gewonnen: " + TextFormatting.GREEN + win));
+                    String lose = SheetUtils.getValueRange("Win/Lose Statistik", "J12:K12").getValues().get(0).get(0).toString();
+                    Float l = Float.valueOf(Integer.parseInt(lose));
+                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Verloren: " + TextFormatting.RED + lose));
+                    player.sendMessage(new TextComponentString(""));
+
+                    player.sendMessage(new TextComponentString(TextFormatting.GRAY + "" + TextFormatting.BOLD + "Rate: " + TextFormatting.BLUE + String.valueOf(Math.round((w/l) * 100.0)) + "%"));
                 } catch (IOException e) {
                     player.sendMessage(new TextComponentString(PREFIX + "Es konnte keine Verbindung zum Aktivit\u00e4tsnachweis hergestellt werden."));
                 }

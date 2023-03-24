@@ -18,7 +18,8 @@ public enum InformationType {
     SPRENGGUERTEL_BAN("Mod-Sperren", "A2:A25"),
     RPG_7_BAN("Mod-Sperren", "B2:B25"),
     MATESHOTS("Win/Lose Statistik", "J37:K136"),
-    KILLS("Win/Lose Statistik", "M37:N136");
+    KILLS("Win/Lose Statistik", "M37:N136"),
+    KILLS_LOG("Win/Lose Statistik", "P37:P136");
 
     InformationType(String sheet, String range)
     {
