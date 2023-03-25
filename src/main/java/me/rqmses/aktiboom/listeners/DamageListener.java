@@ -23,18 +23,20 @@ public class DamageListener {
 
         if (event.getEntity() instanceof EntityOtherPlayerMP) {
             if (BOMBE) {
-                if (Objects.requireNonNull(event.getSource().getTrueSource()).getName().equals(player.getName())) {
-                    if (Objects.equals(event.getSource().damageType, "arrow")) {
-                        if (MEMBER.contains(event.getEntity().getName())) {
-                            new Thread(() -> {
-                                try {
-                                    SheetUtils.addValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange(), new String[]{player.getName(), event.getEntity().getName()});
-                                } catch (IOException ignored) {
+                new Thread(() -> {
+                    if (event.getSource() != null && event.getSource().getTrueSource() != null) {
+                        if (Objects.requireNonNull(event.getSource().getTrueSource()).getName().equals(player.getName())) {
+                            if (Objects.equals(event.getSource().damageType, "arrow")) {
+                                if (MEMBER.contains(event.getEntity().getName())) {
+                                    try {
+                                        SheetUtils.addValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange(), new String[]{player.getName(), event.getEntity().getName()});
+                                    } catch (IOException ignored) {
+                                    }
                                 }
-                            }).start();
+                            }
                         }
                     }
-                }
+                }).start();
             }
         }
     }

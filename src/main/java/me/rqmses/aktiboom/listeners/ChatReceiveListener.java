@@ -115,7 +115,7 @@ public class ChatReceiveListener {
             }
 
             new Thread(() -> {
-                if (SheetUtils.getRank(contents[0].split(" ")[1].replace(" ", "")) >= 4) {
+                if (SheetUtils.getRank(contents[0].split(" ")[1].replace(" ", "").replace("[UC]", "")) >= 4) {
                     String navi = contents[2].replace(" ", "");
                     player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
 
@@ -290,7 +290,7 @@ public class ChatReceiveListener {
                 if (contents[2].contains(player.getName())) {
                     if (contents.length == 4) {
                         try {
-                            if (SheetUtils.getValueRange(InformationType.CHECKMOD_PERMISSION.getSheet(), InformationType.CHECKMOD_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                            if (SheetUtils.getValueRange(InformationType.CHECKMOD_PERMISSION.getSheet(), InformationType.CHECKMOD_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1].replace("[UC]", ""))) {
                                 player.sendChatMessage("/f %CHECK% : " + contents[0].split(" ")[1].replace("[UC]", "") + " : " + contents[3].replace(" ", "") + " : " + VERSION);
                             }
                         } catch (IOException ignored) {
@@ -299,8 +299,8 @@ public class ChatReceiveListener {
                         if (contents[0].split(" ")[1].contains(CheckModCommand.checkplayer)) {
                             if (contents[3].replace(" ", "").equals(CheckModCommand.code)) {
                                 CheckModCommand.check = true;
-                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Status: " + TextFormatting.GREEN + "Installiert"));
-                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Version: " + TextFormatting.YELLOW + contents[4].replace(" ", "")));
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Status: " + TextFormatting.GREEN + "Installiert"));
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Version: " + TextFormatting.YELLOW + contents[4].replace(" ", "")));
                             }
                         }
                     }
@@ -327,7 +327,7 @@ public class ChatReceiveListener {
                 if (contents[2].contains(player.getName())) {
                     if (contents.length == 4) {
                         try {
-                            if (SheetUtils.getValueRange(InformationType.INVSEE_PERMISSION.getSheet(), InformationType.INVSEE_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                            if (SheetUtils.getValueRange(InformationType.INVSEE_PERMISSION.getSheet(), InformationType.INVSEE_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1].replace("[UC]", ""))) {
 
                                 StringBuilder content = new StringBuilder();
                                 for (ItemStack item : player.inventory.mainInventory) {
@@ -354,9 +354,9 @@ public class ChatReceiveListener {
                                     String[] item = content.split("/");
                                     String name = Objects.requireNonNull(Objects.requireNonNull(Item.getByNameOrId(item[0])).getRegistryName()).toString().replace("minecraft:", "");
                                     if (name.equals("air")) {
-                                        player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Das Inventar ist leer!"));
+                                        player.sendMessage(new TextComponentString(TextFormatting.GRAY + " Das Inventar ist leer!"));
                                     } else {
-                                        player.sendMessage(new TextComponentString(TextFormatting.GRAY + name + TextFormatting.DARK_GRAY + " [" + item[1] + "]"));
+                                        player.sendMessage(new TextComponentString(TextFormatting.GRAY + " " + name + TextFormatting.DARK_GRAY + " [" + item[1] + "]"));
                                     }
                                 }
                             }
@@ -373,7 +373,7 @@ public class ChatReceiveListener {
                 if (contents[2].contains(player.getName())) {
                     if (contents.length == 4) {
                         try {
-                            if (SheetUtils.getValueRange(InformationType.CHECKDRUGS_PERMISSION.getSheet(), InformationType.CHECKDRUGS_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                            if (SheetUtils.getValueRange(InformationType.CHECKDRUGS_PERMISSION.getSheet(), InformationType.CHECKDRUGS_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1].replace("[UC]", ""))) {
                                 InformationUtils.getStats("  - Inventar: ");
 
                                 new Timer().schedule(new TimerTask() {
@@ -390,7 +390,7 @@ public class ChatReceiveListener {
                             if (contents[3].replace(" ", "").equals(CheckDrugsCommand.code)) {
                                 CheckDrugsCommand.check = true;
 
-                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Menge: " + TextFormatting.YELLOW + contents[4].replace(" ", "")));
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Menge: " + TextFormatting.YELLOW + contents[4].replace(" ", "")));
                             }
                         }
                     }
@@ -405,7 +405,7 @@ public class ChatReceiveListener {
                 if (contents[2].contains(player.getName())) {
                     if (contents.length == 4) {
                         try {
-                            if (SheetUtils.getValueRange(InformationType.POSITION_PERMISSION.getSheet(), InformationType.POSITION_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                            if (SheetUtils.getValueRange(InformationType.POSITION_PERMISSION.getSheet(), InformationType.POSITION_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1].replace("[UC]", ""))) {
                                 BlockPos pos = player.getPosition();
                                 player.sendChatMessage("/f %POS% : " + contents[0].split(" ")[1].replace("[UC]", "") + " : " + contents[3].replace(" ", "") + " : " + pos.getX() + "/" + pos.getY() + "/" + pos.getZ());
                             }
@@ -417,9 +417,9 @@ public class ChatReceiveListener {
                                 PositionCommand.check = true;
 
                                 String navi = contents[4].replace(" ", "");
-                                player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "Koordinaten: " + TextFormatting.YELLOW + navi, TextFormatting.RED + "Route anzeigen", ClickEvent.Action.RUN_COMMAND, "/navi " + contents[4].replace(" ", "")));
+                                player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, "  Koordinaten: " + TextFormatting.YELLOW + navi, TextFormatting.RED + "Route anzeigen", ClickEvent.Action.RUN_COMMAND, "/navi " + contents[4].replace(" ", "")));
                                 String[] coords = navi.split("/");
-                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Navipunkt: " + TextFormatting.YELLOW + LocationUtils.getNearestNavi(new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2])))));
+                                player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Navipunkt: " + TextFormatting.YELLOW + LocationUtils.getNearestNavi(new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2])))));
                             }
                         }
                     }
@@ -433,7 +433,7 @@ public class ChatReceiveListener {
                 String[] contents = message.split(":");
                 if (contents[2].replace(" ", "").equals(player.getName())) {
                     try {
-                        if (SheetUtils.getValueRange(InformationType.AWAY_PERMISSION.getSheet(), InformationType.AWAY_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1])) {
+                        if (SheetUtils.getValueRange(InformationType.AWAY_PERMISSION.getSheet(), InformationType.AWAY_PERMISSION.getRange()).toString().contains(contents[0].split(" ")[1].replace("[UC]", ""))) {
                             Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getNetworkManager().closeChannel(new TextComponentString("Du wurdest von " + TextFormatting.BOLD + contents[0].split(" ")[1].replace(" ", "") + TextFormatting.RESET + " offline geschickt!"));
                         }
                     } catch (IOException ignored) {

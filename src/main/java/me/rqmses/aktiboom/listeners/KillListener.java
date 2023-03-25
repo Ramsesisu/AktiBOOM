@@ -23,18 +23,18 @@ public class KillListener {
 
         if (event.getEntity() instanceof EntityOtherPlayerMP) {
             if (BOMBE) {
-                if (event.getSource().getTrueSource() != null) {
-                    if (Objects.requireNonNull(event.getSource().getTrueSource()).getName().equals(player.getName())) {
-                        if ((((EntityOtherPlayerMP) event.getEntity()).getHealth() - event.getAmount()) < 1) {
-                            new Thread(() -> {
+                new Thread(() -> {
+                    if (event.getSource() != null && event.getSource().getTrueSource() != null) {
+                        if (Objects.requireNonNull(event.getSource().getTrueSource()).getName().equals(player.getName())) {
+                            if ((((EntityOtherPlayerMP) event.getEntity()).getHealth() - event.getAmount()) < 1) {
                                 try {
                                     SheetUtils.addValues(InformationType.KILLS.getSheet(), InformationType.KILLS.getRange(), new String[]{player.getName(), event.getEntity().getName()});
                                 } catch (IOException ignored) {
                                 }
-                            }).start();
+                            }
                         }
                     }
-                }
+                }).start();
             }
         }
     }
