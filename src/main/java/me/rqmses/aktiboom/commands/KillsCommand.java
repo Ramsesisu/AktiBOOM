@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +55,8 @@ public class KillsCommand extends CommandBase implements IClientCommand {
                 return;
             }
 
+            player.sendMessage(new TextComponentString(PREFIX + "Kills der letzten Bombe:"));
+
             HashMap<String, Integer> killamounts = new HashMap<>();
             for (List<Object> log : logs) {
                 String name = log.get(0).toString();
@@ -66,16 +69,17 @@ public class KillsCommand extends CommandBase implements IClientCommand {
             for (List<Object> kill : kills) {
                 String name = kill.get(0).toString();
 
-                killlists.putIfAbsent(name, new ArrayList<>());
+                killlists.putIfAbsent(name, new ArrayList<>(Collections.singletonList("-")));
                 List<String> list = killlists.get(name);
-                list.add(kill.get(1).toString());
+                if (!list.contains(kill.get(1).toString())) {
+                    list.add(kill.get(1).toString());
+                }
                 killlists.put(name, list);
             }
 
-            player.sendMessage(new TextComponentString(PREFIX + "Kills der letzten Bombe:"));
-
             for (String name : killamounts.keySet()) {
-                player.sendMessage(new TextComponentString(TextFormatting.GOLD + "    " + name + TextFormatting.DARK_GRAY + " [" + TextFormatting.YELLOW + killamounts.get(name) + "x" + TextFormatting.DARK_GRAY + "] " + TextFormatting.DARK_GRAY + "(" + TextFormatting.GRAY + killlists.get(name).toString().replace("[", "").replace("]", "") + TextFormatting.DARK_GRAY + ")"));
+                killlists.putIfAbsent(name, new ArrayList<>(Collections.singletonList("-")));
+                player.sendMessage(new TextComponentString(TextFormatting.GOLD + "    " + name + TextFormatting.DARK_GRAY + " [" + TextFormatting.YELLOW + killamounts.get(name) + "x" + TextFormatting.DARK_GRAY + "] " + TextFormatting.DARK_GRAY + "(" + TextFormatting.GRAY + killlists.get(name).toString().replace("[", "").replace("]", "").replace("-, ", "") + TextFormatting.DARK_GRAY + ")"));
             }}).start();
     }
 
