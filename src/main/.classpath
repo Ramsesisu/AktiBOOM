@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/corretto-11"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/forge_gradle/maven_downloader/de/oceanlabs/mcp/mcp_stable/39-1.12/mcp_stable-39-1.12.zip"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/forge_gradle/minecraft_repo/versions/1.12.2/client-extra.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.12.2-14.23.5.2860_mapped_stable_39-1.12/forge-1.12.2-14.23.5.2860_mapped_stable_39-1.12-recomp.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.github.hazendaz.jsoup/jsoup/1.15.1/d73c05b1c737b9904514f336d91701d74048854b/jsoup-1.15.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/2.2.0/10e53fd4d987e37190432e896bdaa62e8ea2c628/google-api-client-2.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-sheets/v4-rev20230227-2.0.0/78cc9d9e30acbcd7b4c1f45e84fe122461019f63/google-api-services-sheets-v4-rev20230227-2.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.2/25ea2e8b0c338a877313bd4672d3fe056ea78f0d/jsr305-3.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.10.1/b3add478d4382b78ea20b1671390a858002feb6c/gson-2.10.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.18.0/89b684257096f548fa39a7df9fdaa409d4d4df91/error_prone_annotations-2.18.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.1/1dcf1de382a0bf95a3d8b0849546c88bac1292c9/failureaccess-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/31.1-jre/60458f877d055d0c9114d9e1a2efb737b4bc282c/guava-31.1-jre.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/b421526c5f297295adef1c886e5246c39d4ac629/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-apache-v2/1.42.3/3dc8cea436c52d0d248abe9648b0e4f1d02bd500/google-http-client-apache-v2-1.42.3.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.43.1/6f000784f9813ee33f976e42822d98ffacf3dbd/google-http-client-gson-1.43.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.43.1/2ef9413e65319ac448534b424522a2c48087d884/google-http-client-1.43.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.j2objc/j2objc-annotations/1.3/ba035118bc8bac37d7eff77700720999acd9986d/j2objc-annotations-1.3.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.34.1/af6b85ed729e96a5257741986e823aa241f3d9a4/google-oauth-client-java6-1.34.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.34.1/a6aff2c1be148bac622e5048e20f536f71b3380d/google-oauth-client-jetty-1.34.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.34.1/4a4f88c5e13143f882268c98239fb85c3b2c6cb2/google-oauth-client-1.34.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.ibm.icu/icu4j-core-mojang/51.2/63d216a9311cca6be337c1e458e587f99d382b84/icu4j-core-mojang-51.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.mojang/authlib/1.5.25/9834cdf236c22e84b946bba989e2f94ef5897c3c/authlib-1.5.25.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.mojang/patchy/1.3.9/eb8bb7b66fa0e2152b1b40b3856e82f7619439ee/patchy-1.3.9.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.mojang/realms/1.10.22/bd0dccebdf3744c75f1ca20063f16e8f7d5e663f/realms-1.10.22.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.mojang/text2speech/1.10.3/48fd510879dff266c3815947de66e3d4809f8668/text2speech-1.10.3.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.mojang/text2speech/1.10.3/84a4b856389cc4f485275b1f63497a95a857a443/text2speech-1.10.3-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.paulscode/codecjorbis/20101023/c73b5636faf089d9f00e8732a829577de25237ee/codecjorbis-20101023.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.paulscode/codecwav/20101023/12f031cfe88fef5c1dd36c563c0a3a69bd7261da/codecwav-20101023.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.paulscode/libraryjavasound/20101123/5c5e304366f75f9eaa2e8cca546a1fb6109348b3/libraryjavasound-20101123.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.paulscode/librarylwjglopenal/20100824/73e80d0794c39665aec3f62eee88ca91676674ef/librarylwjglopenal-20100824.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.paulscode/soundsystem/20120107/419c05fe9be71f792b2d76cfc9b67f1ed0fec7f6/soundsystem-20120107.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.typesafe.akka/akka-actor_2.11/2.3.3/ed62e9fc709ca0f2ff1a3220daa8b70a2870078e/akka-actor_2.11-2.3.3.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/com.typesafe/config/1.2.1/f771f71fdae3df231bcd54d5ca2d57f0bf93f467/config-1.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.15/49d94806b6e3dc933dacbd8acb0fdbab8ebd1e5d/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.5/2852e6e05fbb95076fc091f6d1780f1f8fe35e0f/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.27.2/1789190601b7a5361e4fa52b6bc95ec2cd71e854/grpc-context-1.27.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/io.netty/netty-all/4.1.9.Final/97860965d6a0a6b98e7f569f3f966727b8db75/netty-all-4.1.9.Final.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.31.1/66a60c7201c2b8b20ce495f0295b32bb0ccbbc57/opencensus-api-0.31.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-contrib-http-util/0.31.1/3c13fc5715231fadb16a9b74a44d9d59c460cfa8/opencensus-contrib-http-util-0.31.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/it.unimi.dsi/fastutil/7.1.0/9835253257524c1be7ab50c057aa2d418fb72082/fastutil-7.1.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/java3d/vecmath/1.5.2/79846ba34cbd89e2422d74d53752f993dcc2ccaf/vecmath-1.5.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/lzma/lzma/0.0.1/521616dc7487b42bef0e803bd2fa3faf668101d7/lzma-0.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/4.4.0/cb208278274bf12ebdb56c61bd7407e6f774d65a/jna-4.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/platform/3.4.0/e3f70017be8100d3d6923f50b3d2ee17714e9c13/platform-3.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/385ee093e01f587f30ee1c8a2ee7d408fd732e16/jinput-platform-2.0.5-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/53f9c919f34d2ca9de8c51fc4e1e8282029a9232/jinput-platform-2.0.5-natives-osx.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput-platform/2.0.5/7ff832a6eb9ab6a767f1ade2b548092d0fa64795/jinput-platform-2.0.5-natives-linux.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.jinput/jinput/2.0.5/39c7796b469a600f72380316f6b1f11db6c2c7c4/jinput-2.0.5.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.java.jutils/jutils/1.0.0/e12fe1fda814bd348c1579329c86943d2cd3c6a6/jutils-1.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.minecraft/launchwrapper/1.12/111e7bea9c968cdb3d06ef4632bf7ff0824d0f36/launchwrapper-1.12.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.minecraftforge/legacydev/0.2.3.1/f2cd4a8c9f09faf1c1e4a9a4c65df36e634f95db/legacydev-0.2.3.1-fatjar.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.minecraftforge/mergetool/1.0.13/c18446ec4d5814f447d7a79b314ba9a27cc8dbc8/mergetool-1.0.13-forge.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/5.0.4/4fdac2fbe92dfad86aa6e9301736f6b4342a3f5c/jopt-simple-5.0.4.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/net.sf.trove4j/trove4j/3.0.3/42ccaf4761f0dfdfa805c9e340d99a755907e2dd/trove4j-3.0.3.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-compress/1.8.1/a698750c16740fd5b3871425f4cb3bbaa87f529d/commons-compress-1.8.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.5/6c6c702c89bfff3cd9e80b04d668c5e190d588c6/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.14/1194890e6f56ec29177673f2f12d0b8e627dec98/httpclient-4.5.14.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.16/51cf043c87253c9f58b539c9f7e44c8894223850/httpcore-4.4.16.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.15.0/4a5aa7e55a29391c6f66e0b259d5189aa11e45d0/log4j-api-2.15.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-core/2.15.0/ba55c13d7ac2fd44df9cc8074455719a33f375b9/log4j-core-2.15.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-artifact/3.5.3/7dc72b6d6d8a6dced3d294ed54c2cc3515ade9f4/maven-artifact-3.5.3.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.checkerframework/checker-qual/3.12.0/d5692f0526415fcc6de94bb5bfbd3afd9dd3b3e5/checker-qual-3.12.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/3.1.0/60eecb6f15abdb1c653ad80abaac6fe188b3feaa/plexus-utils-3.1.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.jline/jline/3.5.1/51800e9d7a13608894a5a28eed0f5c7fa2f300fb/jline-3.5.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/b04f3ee8f5e43fa3b162981b50bb72fe1acabb33/lwjgl-platform-2.9.4-nightly-20150209.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl-platform/2.9.4-nightly-20150209/b84d5102b9dbfabfeb5e43c7e2828d98a7fc80e0/lwjgl-platform-2.9.4-nightly-20150209-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl/2.9.4-nightly-20150209/697517568c68e78ae0b4544145af031c81082dfe/lwjgl-2.9.4-nightly-20150209.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.lwjgl.lwjgl/lwjgl_util/2.9.4-nightly-20150209/d51a7c040a721d13efdfbd34f8b257b2df882ad0/lwjgl_util-2.9.4-nightly-20150209.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-analysis/6.2/c7d9a90d221cbb977848d2c777eb3aa7637e89df/asm-analysis-6.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-debug-all/5.2/3354e11e2b34215f06dab629ab88e06aca477c19/asm-debug-all-5.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/6.2/61570e046111559f38d4e0e580c005f75988c0a6/asm-tree-6.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-util/6.2/a9690730f92cc79eeadc20e400ebb41eccce10b1/asm-util-6.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/6.2/1b6c4ff09ce03f3052429139c2a68e295cae6604/asm-6.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-parser-combinators_2.11/1.0.1/f05d7345bf5a58924f2837c6c1f4d73a938e1ff0/scala-parser-combinators_2.11-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang.modules/scala-xml_2.11/1.0.2/820fbca7e524b530fdadc594c39d49a21ea0337e/scala-xml_2.11-1.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang.plugins/scala-continuations-library_2.11/1.0.2_mc/e517c53a7e9acd6b1668c5a35eccbaa3bab9aac/scala-continuations-library_2.11-1.0.2_mc.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang.plugins/scala-continuations-plugin_2.11.1/1.0.2_mc/f361a3283452c57fa30c1ee69448995de23c60f7/scala-continuations-plugin_2.11.1-1.0.2_mc.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-actors-migration_2.11/1.1.0/dfa8bc42b181d5b9f1a5dd147f8ae308b893eb6f/scala-actors-migration_2.11-1.1.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-actors/2.11.0/8ccfb6541de179bb1c4d45cf414acee069b7f78b/scala-actors-2.11.0.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-compiler/2.11.1/56ea2e6c025e0821f28d73ca271218b8dd04926a/scala-compiler-2.11.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.1/e11da23da3eabab9f4777b9220e60d44c1aab6a/scala-library-2.11.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-parser-combinators_2.11/1.0.1/f05d7345bf5a58924f2837c6c1f4d73a938e1ff0/scala-parser-combinators_2.11-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-reflect/2.11.1/6580347e61cc7f8e802941e7fde40fa83b8badeb/scala-reflect-2.11.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-swing_2.11/1.0.1/b1cdd92bd47b1e1837139c1c53020e86bb9112ae/scala-swing_2.11-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-xml_2.11/1.0.2/7a80ec00aec122fba7cd4e0d4cdd87ff7e4cb6d0/scala-xml_2.11-1.0.2.jar"/>
+	<classpathentry kind="lib" path="D:/.gradle/caches/modules-2/files-2.1/oshi-project/oshi-core/1.1/9ddf7b048a8d701be231c0f4f95fd986198fd2d8/oshi-core-1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.apis:google-api-services-sheets:v4-rev20230227-2.0.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.api-client:google-api-client:2.2.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.oauth-client:google-oauth-client-jetty:1.34.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.http-client:google-http-client-gson:1.43.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.http-client:google-http-client:1.43.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.github.hazendaz.jsoup:jsoup:1.15.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.minecraftforge:forge:1.12.2-14.23.5.2860_mapped_stable_39-1.12"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.oauth-client:google-oauth-client:1.34.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.http-client:google-http-client-apache-v2:1.42.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.httpcomponents:httpclient:4.5.14"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: commons-codec:commons-codec:1.15"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.guava:guava:31.1-jre"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.httpcomponents:httpcore:4.4.16"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.oauth-client:google-oauth-client-java6:1.34.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.code.gson:gson:2.10.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: io.opencensus:opencensus-contrib-http-util:0.31.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.code.findbugs:jsr305:3.0.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.errorprone:error_prone_annotations:2.18.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.j2objc:j2objc-annotations:1.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: io.opencensus:opencensus-api:0.31.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.minecraft:client:extra:1.12.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.minecraftforge:mergetool:forge:1.0.13"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.ow2.asm:asm-debug-all:5.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.minecraft:launchwrapper:1.12"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.jline:jline:3.5.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.typesafe.akka:akka-actor_2.11:2.3.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.typesafe:config:1.2.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-actors-migration_2.11:1.1.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-compiler:2.11.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang.plugins:scala-continuations-library_2.11:1.0.2_mc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang.plugins:scala-continuations-plugin_2.11.1:1.0.2_mc"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-reflect:2.11.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-library:2.11.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-parser-combinators_2.11:1.0.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-swing_2.11:1.0.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-xml_2.11:1.0.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: lzma:lzma:0.0.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: java3d:vecmath:1.5.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.sf.trove4j:trove4j:3.0.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.maven:maven-artifact:3.5.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.sf.jopt-simple:jopt-simple:5.0.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.logging.log4j:log4j-core:2.15.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.logging.log4j:log4j-api:2.15.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.minecraftforge:legacydev:fatjar:0.2.3.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: commons-logging:commons-logging:1.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.guava:failureaccess:1.0.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.checkerframework:checker-qual:3.12.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: io.grpc:grpc-context:1.27.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.mojang:patchy:1.3.9"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: oshi-project:oshi-core:1.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.java.dev.jna:jna:4.4.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.java.dev.jna:platform:3.4.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.ibm.icu:icu4j-core-mojang:51.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.paulscode:codecjorbis:20101023"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.paulscode:codecwav:20101023"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.paulscode:libraryjavasound:20101123"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.paulscode:librarylwjglopenal:20100824"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.paulscode:soundsystem:20120107"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: io.netty:netty-all:4.1.9.Final"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.commons:commons-lang3:3.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: commons-io:commons-io:2.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.java.jinput:jinput:2.0.5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.java.jutils:jutils:1.0.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.mojang:authlib:1.5.25"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.mojang:realms:1.10.22"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.apache.commons:commons-compress:1.8.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: it.unimi.dsi:fastutil:7.1.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.lwjgl.lwjgl:lwjgl:2.9.4-nightly-20150209"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.lwjgl.lwjgl:lwjgl-platform:2.9.4-nightly-20150209"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.mojang:text2speech:1.10.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang:scala-actors:2.11.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang.modules:scala-xml_2.11:1.0.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.codehaus.plexus:plexus-utils:3.1.0"/>
+	<classpathentry kind="output" path="/aktiboom/build/classes/java/main"/>
+</classpath>
