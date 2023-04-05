@@ -1,0 +1,42 @@
+{
+  "timer": {
+    "category" : "master",
+    "sounds": [{
+      "name": "aktiboom:timer",
+      "stream": false
+    }
+    ]
+  },
+  "bombdef": {
+    "category" : "master",
+    "sounds": [{
+      "name": "aktiboom:bombdef",
+      "stream": false
+    }
+    ]
+  },
+  "bombpl": {
+    "category" : "master",
+    "sounds": [{
+      "name": "aktiboom:bombpl",
+      "stream": false
+    }
+    ]
+  },
+  "terwin": {
+    "category" : "master",
+    "sounds": [{
+      "name": "aktiboom:terwin",
+      "stream": false
+    }
+    ]
+  },
+  "hosdown": {
+    "category" : "master",
+    "sounds": [{
+      "name": "aktiboom:hosdown",
+      "stream": false
+    }
+    ]
+  }
+}
