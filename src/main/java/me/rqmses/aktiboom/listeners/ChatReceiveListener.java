@@ -176,7 +176,7 @@ public class ChatReceiveListener {
             }).start();
         }
 
-        if (message.equals(player.getName() + " hat eine Bombe an ein Auto platziert.")) {
+        if (message.equals(player.getName() + " hat eine Bombe an ein Auto platziert.") || message.equals("[UC]" + player.getName() + " hat eine Bombe an ein Auto platziert.")) {
             if (KOMMS) {
                 BlockPos pos = player.getPosition();
                 player.sendChatMessage("/f %CAR% : " + pos.getX() + "/" + pos.getY() + "/" + pos.getZ());
@@ -457,14 +457,16 @@ public class ChatReceiveListener {
 
         if (message.contains(": %AWAY% :")) {
             event.setCanceled(true);
-            new Thread(() -> {
-                String[] contents = message.split(":");
-                if (contents[2].replace(" ", "").equals(player.getName())) {
-                    if (SheetUtils.getRank(contents[0].split(" ")[1].replace("[UC]", "")) >= 4) {
-                        Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getNetworkManager().closeChannel(new TextComponentString("Du wurdest von " + TextFormatting.BOLD + contents[0].split(" ")[1].replace(" ", "") + TextFormatting.RESET + " offline geschickt!"));
+            if (remote) {
+                new Thread(() -> {
+                    String[] contents = message.split(":");
+                    if (contents[2].replace(" ", "").equals(player.getName())) {
+                        if (SheetUtils.getRank(contents[0].split(" ")[1].replace("[UC]", "")) >= 4) {
+                            Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getNetworkManager().closeChannel(new TextComponentString("Du wurdest von " + TextFormatting.BOLD + contents[0].split(" ")[1].replace(" ", "") + TextFormatting.RESET + " offline geschickt!"));
+                        }
                     }
-                }
-            }).start();
+                }).start();
+            }
         }
 
         if (message.contains(": %AFK% :")) {

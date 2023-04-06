@@ -72,6 +72,10 @@ public class ConfigHandler {
     @Config.Comment("Startet in bestimmten Situationen automatisch ein Navi.")
     public static String prefix = "6";
 
+    @Config.Name("Toggle Remote (R4-Erlaubnis erforderlich)")
+    @Config.Comment("(De-)aktiviert den Remote-Zugriff auf Makros.")
+    public static boolean remote = true;
+
 
     @SubscribeEvent
     public static void onConfigChange(ConfigChangedEvent event) {

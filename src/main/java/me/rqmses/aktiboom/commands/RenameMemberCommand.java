@@ -74,8 +74,6 @@ public class RenameMemberCommand extends CommandBase implements IClientCommand {
                             return;
                         }
 
-                        SheetUtils.setValues(args[0], "F21:H23", new String[]{args[1]});
-
                         int line = SheetUtils.searchLine("\u00dcbersicht", "B4:B27", args[0]) + 4;
                         SheetUtils.setValues("\u00dcbersicht", "B" + line, new String[]{args[1]});
 

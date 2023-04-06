@@ -25,6 +25,18 @@
 	<classpathentry kind="src" path="java"/>
 	<classpathentry kind="src" path="java"/>
 	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="src" path="java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/corretto-11"/>
 	<classpathentry kind="lib" path="D:/.gradle/caches/forge_gradle/maven_downloader/de/oceanlabs/mcp/mcp_stable/39-1.12/mcp_stable-39-1.12.zip"/>
 	<classpathentry kind="lib" path="D:/.gradle/caches/forge_gradle/minecraft_repo/versions/1.12.2/client-extra.jar"/>
