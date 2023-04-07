@@ -122,17 +122,8 @@ public class InfoCommand extends CommandBase implements IClientCommand {
                     break;
             }
 
-            String secrankname = secrank;
-            if (secrank.startsWith("E-")) {
-                secrankname = "Executive";
-            } else if (secrank.startsWith("C-")) {
-                secrankname = "Commander";
-            } else if (secrank.startsWith("G-")) {
-                secrankname = "General";
-            }
-
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrankname));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrank));
 
             StringBuilder stringsperren = new StringBuilder();
             if (sperren.size() > 0) {

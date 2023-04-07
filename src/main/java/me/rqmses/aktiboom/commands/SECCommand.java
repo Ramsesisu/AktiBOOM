@@ -66,7 +66,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (args.length > 0) {
                 if (args.length > 1) {
-                    if (SECRANK.startsWith("C") || SECRANK.startsWith("G")) {
+                    if (SECRANK.equals("Commander") || SECRANK.equals("Marshal")) {
                         SheetUtils.tobecontinued = false;
                         SheetUtils.returnvalues = 0;
 
@@ -77,7 +77,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                         if (args[0].equalsIgnoreCase("invite")) {
                             try {
-                                SheetUtils.addValues("SEC-Drogen", "H13:I21", new String[]{args[1], "E-0" + SheetUtils.getRank(args[1])});
+                                SheetUtils.addValues("SEC-Drogen", "H13:I21", new String[]{args[1], "Executive"});
 
                                 SheetUtils.addEditor("SEC-Drogen", "SEC-Drogen", email);
                                 SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
@@ -125,7 +125,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                     for (List<Object> list : SheetUtils.getValueRange("SEC-Drogen", "H13:I21").getValues()) {
                         if (!list.get(1).toString().contains("Tester")) {
-                            player.sendMessage(new TextComponentString(TextFormatting.GRAY + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString()));
+                            player.sendMessage(new TextComponentString("  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString()));
                         }
                     }
                 } catch (IOException e) {

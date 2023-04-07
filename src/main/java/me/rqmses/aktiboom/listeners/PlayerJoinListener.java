@@ -150,13 +150,6 @@ public class PlayerJoinListener {
             SEC = SheetUtils.isSEC(player.getName());
             RANK = SheetUtils.getRank(player.getName());
             SECRANK = SheetUtils.getSECRank(player.getName());
-            if (SECRANK.startsWith("E-")) {
-                SECRANK = "Executive";
-            } else if (SECRANK.startsWith("C-")) {
-                SECRANK = "Commander";
-            } else if (SECRANK.startsWith("G-")) {
-                SECRANK = "General";
-            }
 
             if (RANK >= 5) {
                     if (!AFK) {

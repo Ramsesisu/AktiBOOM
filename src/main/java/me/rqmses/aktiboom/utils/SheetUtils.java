@@ -91,7 +91,7 @@ public class SheetUtils {
             }
             return getValueRange(InformationType.SECRANKS.getSheet(), InformationType.SECRANKS.getRange()).getValues().get(valueRange.getValues().indexOf(Collections.singletonList(name))).get(0).toString();
         } catch (IOException e) {
-            return "E-02";
+            return "Executive";
         }
     }
 

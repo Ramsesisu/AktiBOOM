@@ -67,13 +67,6 @@ public class ChatReceiveListener {
                     new Thread(() -> {
                         String secrank = SheetUtils.getSECRank(name);
                         secrankname[0] = secrank;
-                        if (secrank.startsWith("E-")) {
-                            secrankname[0] = "Executive";
-                        } else if (secrank.startsWith("C-")) {
-                            secrankname[0] = "Commander";
-                        } else if (secrank.startsWith("G-")) {
-                            secrankname[0] = "General";
-                        }
                     }).start();
                     secplayerranks.putIfAbsent(name, secrankname[0]);
                 }

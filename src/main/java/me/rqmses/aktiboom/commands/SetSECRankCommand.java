@@ -50,7 +50,7 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
             }
         }
         if (args.length == 2) {
-            targets = Arrays.asList("Executive", "Commander", "General");
+            targets = Arrays.asList("Executive", "Commander", "Marshal");
         }
         for (String target : targets) {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
@@ -66,24 +66,23 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 1) {
-                if (SECRANK.startsWith("C") || SECRANK.startsWith("G")) {
+                if (SECRANK.equals("Commander") || SECRANK.equals("Marshal")) {
                     String rank = args[1];
                     String oldrank = SheetUtils.getSECRank(args[0]);
 
-                    if (rank.startsWith("E") || rank.startsWith("C") || rank.startsWith("G")) {
-                        String secrank = rank.charAt(0) + "-0" + SheetUtils.getRank(args[0]);
-                        if (!SheetUtils.setSECRank(args[0], secrank)) {
+                    if (rank.equals("Executive") || rank.equals("Commander") || rank.equals("Marshal")) {
+                        if (!SheetUtils.setSECRank(args[0], rank)) {
                             player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " ist nicht in der Fraktion!"));
                         } else {
                             String email = SheetUtils.getEmail(args[0]);
 
-                            if (rank.startsWith("E") && !oldrank.startsWith("E")) {
+                            if (rank.equals("Executive") && !oldrank.equals("Executive")) {
                                 SheetUtils.removeEditor("SEC-Drogen", "SEC-Member", email);
-                            } else if ((rank.startsWith("C") || rank.startsWith("G")) && oldrank.startsWith("E")) {
+                            } else if ((rank.equals("Commander") || rank.equals("Marshal")) && oldrank.equals("Executive")) {
                                 SheetUtils.addEditor("SEC-Drogen", "SEC-Member", email);
                             }
 
-                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + secrank + TextFormatting.YELLOW + " aktualisiert."));
+                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + rank + TextFormatting.YELLOW + " aktualisiert."));
                         }
                     } else {
                         player.sendMessage(new TextComponentString(PREFIX + "Gib einen g\u00fcltigen Rang an!"));
