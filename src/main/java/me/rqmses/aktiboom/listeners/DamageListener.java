@@ -11,8 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.io.IOException;
 import java.util.Objects;
 
-import static me.rqmses.aktiboom.AktiBoom.BOMBE;
-import static me.rqmses.aktiboom.AktiBoom.MEMBER;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 
 public class DamageListener {
@@ -22,7 +21,7 @@ public class DamageListener {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (event.getEntity() instanceof EntityOtherPlayerMP) {
-            if (BOMBE) {
+            if (OPERATION) {
                 new Thread(() -> {
                     if (event.getSource() != null && event.getSource().getTrueSource() != null) {
                         if (Objects.requireNonNull(event.getSource().getTrueSource()).getName().equals(player.getName())) {

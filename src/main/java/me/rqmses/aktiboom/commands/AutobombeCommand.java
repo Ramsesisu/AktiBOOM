@@ -82,7 +82,7 @@ public class AutobombeCommand extends CommandBase implements IClientCommand {
                             }
                             try {
                                 SheetUtils.addValues("Auftr\u00e4ge", "Q4:T54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], price});
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat eine Autobombe f\u00fcr &6&l" + args[1] + "&e eingetragen.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat eine Autobombe f\u00fcr &6&l" + args[1] + "&e eingetragen.");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht eingetragen werden."));
                             }
@@ -100,7 +100,7 @@ public class AutobombeCommand extends CommandBase implements IClientCommand {
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "Q" + line + ":T" + line);
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat die Autobombe f\u00fcr &6&l" + args[1] + "&e platziert.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat die Autobombe f\u00fcr &6&l" + args[1] + "&e platziert.");
                                 SheetUtils.sortRange("Auftr\u00e4ge", "Q4:T54");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Die Autobombe konnte nicht gel\u00f6scht werden."));

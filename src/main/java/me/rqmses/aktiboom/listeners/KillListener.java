@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.io.IOException;
 import java.util.Objects;
 
-import static me.rqmses.aktiboom.AktiBoom.BOMBE;
+import static me.rqmses.aktiboom.AktiBoom.OPERATION;
 
 public class KillListener {
 
@@ -22,7 +22,7 @@ public class KillListener {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (event.getEntity() instanceof EntityOtherPlayerMP) {
-            if (BOMBE) {
+            if (OPERATION) {
                 new Thread(() -> {
                     if (event.getSource() != null && event.getSource().getTrueSource() != null) {
                         if (Objects.requireNonNull(event.getSource().getTrueSource()).getName().equals(player.getName())) {
@@ -44,7 +44,7 @@ public class KillListener {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         String message = event.getMessage().getUnformattedText();
-        if (BOMBE) {
+        if (OPERATION) {
             if (message.startsWith("[Karma] -") && message.endsWith(" Karma.")) {
                 int karma = Integer.parseInt(message.replace("[Karma] ", "").replace(" Karma.", ""));
                 if (karma < 0 && karma > -9) {

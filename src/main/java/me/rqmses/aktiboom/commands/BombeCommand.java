@@ -1,6 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
-import me.rqmses.aktiboom.enums.InformationType;
+import me.rqmses.aktiboom.utils.InformationUtils;
 import me.rqmses.aktiboom.utils.LocationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.block.Block;
@@ -103,9 +103,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                                     try {
                                         SheetUtils.setValues("Win/Lose Statistik", "H34:K34", new String[]{time[0], time[1], nearestnavi, player.getName()});
 
-                                        SheetUtils.clearValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange());
-                                        SheetUtils.clearValues(InformationType.KILLS.getSheet(), InformationType.KILLS.getRange());
-                                        SheetUtils.clearValues(InformationType.KILLS_LOG.getSheet(), InformationType.KILLS_LOG.getRange());
+                                        InformationUtils.clearOperation();
                                     } catch (IOException e) {
                                     }
                                 }).start();
@@ -120,7 +118,14 @@ public class BombeCommand extends CommandBase implements IClientCommand {
                                             player.sendChatMessage("/f %INFO% :" + "Der n\u00e4chste Navipunkt zur Bombe ist: &6&l" + nearestnavi + "&7 (&l" + distance + "m&7)");
                                         }
                                     }
-                                }, 1500);
+                                }, 500);
+
+                                timer.schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        player.sendChatMessage("/showdraht " + player.getName());
+                                    }
+                                }, 10000);
                             }
                         }
                     }, 250);

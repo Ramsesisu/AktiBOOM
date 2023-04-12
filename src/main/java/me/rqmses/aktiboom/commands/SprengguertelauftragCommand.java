@@ -93,7 +93,7 @@ public class SprengguertelauftragCommand extends CommandBase implements IClientC
                                     deadline = args[3];
                                 }
                                 SheetUtils.addValues("Auftr\u00e4ge", "G4:K54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], player.getName(), args[2], deadline});
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat einen Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e eingetragen.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat einen Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e eingetragen.");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Der Sprengg\u00fcrtelauftrag konnte nicht eingetragen werden."));
                             }
@@ -111,7 +111,7 @@ public class SprengguertelauftragCommand extends CommandBase implements IClientC
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "G" + line + ":K" + line);
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e beendet.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Sprengg\u00fcrtelauftrag f\u00fcr &6&l" + args[1] + "&e beendet.");
                                 SheetUtils.sortRange("Auftr\u00e4ge", "G4:K54");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Der Sprengg\u00fcrtelauftrag konnte nicht gel\u00f6scht werden."));

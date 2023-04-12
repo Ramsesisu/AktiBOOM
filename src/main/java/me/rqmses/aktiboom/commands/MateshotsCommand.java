@@ -53,7 +53,7 @@ public class MateshotsCommand extends CommandBase implements IClientCommand {
                 return;
             }
 
-            player.sendMessage(new TextComponentString(PREFIX + "Mateshots der letzten Bombe:"));
+            player.sendMessage(new TextComponentString(PREFIX + "Mateshots der letzten Gro\u00dfaktivit\u00e4t:"));
 
             HashMap<String, List<String>> mateshots = new HashMap<>();
             for (List<Object> shot : shots) {

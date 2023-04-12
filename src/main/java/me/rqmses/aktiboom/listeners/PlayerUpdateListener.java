@@ -9,8 +9,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static me.rqmses.aktiboom.AktiBoom.AFK;
-import static me.rqmses.aktiboom.AktiBoom.KOMMS;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 public class PlayerUpdateListener {
 
@@ -23,6 +22,17 @@ public class PlayerUpdateListener {
         if (event.getEntity() instanceof EntityPlayerSP) {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             long currentTime = System.currentTimeMillis();
+
+            if (OPERATION) {
+                if (player.getHealth() < 14) {
+                    if (currentTime - lastTime >= 15000) {
+                        lastTime = System.currentTimeMillis();
+                        if (KOMMS && !AFK) {
+                            player.sendChatMessage("/f %DEAD% :" + player.getName());
+                        }
+                    }
+                }
+            }
 
             if (showdistance) {
                 BlockPos pos = player.getPosition();
@@ -51,11 +61,13 @@ public class PlayerUpdateListener {
                     }
                 }
 
-                player.sendStatusMessage(new TextComponentString( color + TextFormatting.BOLD + distance + "m"), true);
+                if (!ReloadListener.reloadTimer) {
+                    player.sendStatusMessage(new TextComponentString(color + TextFormatting.BOLD + distance + "m"), true);
+                }
             }
 
             if (BombeCommand.planter) {
-                if (player.getHealth() < 10) {
+                if (player.getHealth() < 14) {
                     if (currentTime - lastTime >= 15000) {
                         lastTime = System.currentTimeMillis();
                         if (KOMMS) {

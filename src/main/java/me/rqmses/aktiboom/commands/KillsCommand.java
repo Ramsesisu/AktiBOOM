@@ -55,7 +55,7 @@ public class KillsCommand extends CommandBase implements IClientCommand {
                 return;
             }
 
-            player.sendMessage(new TextComponentString(PREFIX + "Kills der letzten Bombe:"));
+            player.sendMessage(new TextComponentString(PREFIX + "Kills der letzten Gro\u00dfaktivit\u00e4t:"));
 
             HashMap<String, Integer> killamounts = new HashMap<>();
             for (List<Object> log : logs) {

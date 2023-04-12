@@ -55,6 +55,8 @@ public class ChatReceiveListener {
         }
 
         if (message.contains(": %SECCHAT% :")) {
+            event.setCanceled(true);
+
             if (SEC) {
                 String[] contents = message.split(":", 3);
                 String name = contents[0].split(" ")[1].replace("[UC]", "");
@@ -71,21 +73,19 @@ public class ChatReceiveListener {
                     secplayerranks.putIfAbsent(name, secrankname[0]);
                 }
 
-                event.setMessage(new TextComponentString(FormatUtils.getColor(secchatprefix) + "" + TextFormatting.ITALIC + "SEC " + FormatUtils.getColor(secchatprefix) + secrankname[0] + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(secchatmessage) + EncryptionUtils.decode(text, KEYS.get(0))));
-            } else {
-                event.setCanceled(true);
+                player.sendMessage(new TextComponentString(FormatUtils.getColor(secchatprefix) + "" + TextFormatting.ITALIC + "SEC " + FormatUtils.getColor(secchatprefix) + secrankname[0] + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(secchatmessage) + EncryptionUtils.decode(text, KEYS.get(0))));
             }
         }
         if (message.contains(": %LEADER% :")) {
+            event.setCanceled(true);
+
             if (RANK >= 4) {
                 String[] contents = message.split(":", 3);
                 String name = contents[0].split(" ")[1].replace("[UC]", "");
                 String rank = contents[0].split(" ")[0];
                 String text = contents[2];
 
-                event.setMessage(new TextComponentString(FormatUtils.getColor(leaderchatprefix) + "" + TextFormatting.ITALIC + "Leader " + FormatUtils.getColor(leaderchatprefix) + rank + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(leaderchatmessage) + EncryptionUtils.decode(text, KEYS.get(1))));
-            } else {
-                event.setCanceled(true);
+                player.sendMessage(new TextComponentString(FormatUtils.getColor(leaderchatprefix) + "" + TextFormatting.ITALIC + "Leader " + FormatUtils.getColor(leaderchatprefix) + rank + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(leaderchatmessage) + EncryptionUtils.decode(text, KEYS.get(1))));
             }
         }
 
@@ -135,6 +135,7 @@ public class ChatReceiveListener {
 
         if (message.contains(": %NAVI% :")) {
             event.setCanceled(true);
+
             String[] contents = message.split(":", 3);
 
             if (contents[0].split(" ").length < 1) {
@@ -154,6 +155,7 @@ public class ChatReceiveListener {
                     if (netHandlerPlayClient != null) {
                         if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
                             BOMBE = true;
+                            OPERATION = true;
 
                             if (ConfigHandler.autonavi) {
                                 if (!AFK) {
@@ -178,12 +180,14 @@ public class ChatReceiveListener {
 
         if (message.contains(": %CAR% :")) {
             event.setCanceled(true);
+
             String navi = message.split(":", 3)[2].replace(" ", "");
             player.sendMessage(TextUtils.clickable(TextFormatting.GRAY, " \u27A5 " + TextFormatting.RED + "Route anzeigen", TextFormatting.GRAY + navi, ClickEvent.Action.RUN_COMMAND, "/navi " + navi));
         }
 
         if (message.contains(": %PARTY% :")) {
             event.setCanceled(true);
+
             String[] contents = message.split(":", 4);
             String players = contents[3];
             if (!GameUtils.party) {
@@ -239,6 +243,7 @@ public class ChatReceiveListener {
 
         if (message.contains(": %GAME% :")) {
             event.setCanceled(true);
+
             String[] contents = message.split(":", 4);
             String players = contents[2];
             if (GameUtils.party) {
@@ -290,11 +295,13 @@ public class ChatReceiveListener {
 
         if (message.startsWith("Du hast ") && message.endsWith(" in deine Fraktion invitet.")) {
             event.setCanceled(true);
+
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("Du hast ", "").replace(" in deine Fraktion invitet.", "") + "&e invitet!");
         }
 
         if (message.startsWith("[Fraktion] Du hast ") && message.endsWith(" aus der Fraktion geschmissen!")) {
             event.setCanceled(true);
+
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("[Fraktion] Du hast ", "").replace(" aus der Fraktion geschmissen!", "") + "&e uninvitet!");
         }
 
@@ -310,8 +317,35 @@ public class ChatReceiveListener {
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat das Waffenlager aufgef\u00fcllt!");
         }
 
+        if (message.equals("[Bombe] Du hast " + player.getName() + " den Draht gezeigt.")) {
+
+            event.setCanceled(true);
+        }
+
+        if (message.startsWith("[Bombe] " + player.getName() + " hat dir den Draht zum Entsch\u00e4rfen der Bombe gezeigt. Der Draht ist")) {
+            event.setCanceled(true);
+
+            String[] tempstring = message.split(" ");
+            String tempcolor = tempstring[tempstring.length - 1];
+            String color = TextFormatting.GRAY + "Unbekannt";
+            if (tempcolor.toLowerCase().contains("rot")) {
+                color = TextFormatting.RED + "Rot";
+            }
+            if (tempcolor.toLowerCase().contains("gr\u00fcn")) {
+                color = TextFormatting.GREEN + "Gr\u00fcn";
+            }
+            if (tempcolor.toLowerCase().contains("blau")) {
+                color = TextFormatting.BLUE + "Blau";
+            }
+            if (tempcolor.toLowerCase().contains("lila")) {
+                color = TextFormatting.LIGHT_PURPLE + "Lila";
+            }
+            player.sendMessage(new TextComponentString(PREFIX + "Die Drahtfarbe ist: " + color));
+        }
+
         if (message.contains(": %CHECK% :")) {
             event.setCanceled(true);
+
             new Thread(() -> {
                 String[] contents = message.split(":");
                 if (contents[2].contains(player.getName())) {
@@ -338,11 +372,12 @@ public class ChatReceiveListener {
 
         if (message.contains(": %REFRESH% :")) {
             event.setCanceled(true);
+
             String[] contents = message.split(":");
             if (contents[2].replace(" ", "").equals(player.getName())) {
                 new Thread(() -> {
                     if (SheetUtils.getRank(contents[0].split(" ")[1].replace("[UC]", "")) >= 4) {
-                        PlayerJoinListener.refresh();
+                        PlayerJoinListener.refresh(false);
 
                         Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
                     }
@@ -350,8 +385,34 @@ public class ChatReceiveListener {
             }
         }
 
+        if (message.contains(": %DEAD% :")) {
+            event.setCanceled(true);
+
+            if (deadinfo) {
+                String[] contents = message.split(":");
+                player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[2] + TextFormatting.YELLOW + " stirbt gerade!"));
+            }
+        }
+
+        if (message.contains(": %OPERATION% :")) {
+            event.setCanceled(true);
+
+            String[] contents = message.split(":");
+            if (SheetUtils.getRank(contents[0].split(" ")[1]) >= 4) {
+                if (contents[2].contains("start")) {
+                    OPERATION = true;
+                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat eine Gro\u00dfaktivit\u00e4t gestartet!"));
+                }
+                if (contents[2].contains("end")) {
+                    OPERATION = false;
+                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat die Gro\u00dfaktivit\u00e4t beendet!"));
+                }
+            }
+        }
+
         if (message.contains(": %INV% :")) {
             event.setCanceled(true);
+
             new Thread(() -> {
                 String[] contents = message.split(":");
                 if (contents[2].contains(player.getName())) {
@@ -610,6 +671,7 @@ public class ChatReceiveListener {
 
     public static void resetBomb() {
         BOMBE = false;
+        OPERATION = false;
 
         PlayerUpdateListener.showdistance = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);

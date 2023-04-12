@@ -38,7 +38,7 @@ public class FBankCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/fbank Einzahlen/Abbuchen [Betrag]";
+        return "/fbank Einzahlen/Auszahlen [Betrag]";
     }
 
     @Override
@@ -47,7 +47,7 @@ public class FBankCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("Einzahlen", "Abbuchen");
+            targets = Arrays.asList("Einzahlen", "Auszahlen");
         }
         for (String target : targets) {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
@@ -94,8 +94,8 @@ public class FBankCommand extends CommandBase implements IClientCommand {
                             player.sendMessage(new TextComponentString(PREFIX + "Die F-Bank hat aktuell Steuern!"));
                         }
                         break;
-                    case "abbuchen":
-                        player.sendChatMessage("/fbank Abbuchen " + args[1]);
+                    case "auszahlen":
+                        player.sendChatMessage("/fbank Auszahlen " + args[1]);
                         break;
                     default:
                         player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));

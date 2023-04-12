@@ -89,7 +89,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                         if (args.length > 3) {
                             try {
                                 SheetUtils.addValues("Auftr\u00e4ge", "M4:O54", new String[]{args[1], args[2], args[3]});
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat ein Schutzgeld von &6&l" + args[1] + "&e eingetragen.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat ein Schutzgeld von &6&l" + args[1] + "&e eingetragen.");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Das Schutzgeld konnte nicht eingetragen werden."));
                             }
@@ -107,7 +107,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "M" + line + ":O" + line);
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat das Schutzgeld von &6&l" + args[1] + "&e gel\u00f6scht.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat das Schutzgeld von &6&l" + args[1] + "&e gel\u00f6scht.");
                                 SheetUtils.sortRange("Auftr\u00e4ge", "M4:O54");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Das Schutzgeld konnte nicht gel\u00f6scht werden."));
@@ -131,7 +131,7 @@ public class SchutzgeldCommand extends CommandBase implements IClientCommand {
                                 player.sendMessage(new TextComponentString(PREFIX + "Der Name konnte nicht aktualisiert werden."));
                             }
                         } else {
-                            player.sendMessage(new TextComponentString(PREFIX + "/auftragsauslieferung rename [Name] [Neuer Name]"));
+                            player.sendMessage(new TextComponentString(PREFIX + "/schutzgeld rename [Name] [Neuer Name]"));
                         }
                         break;
                 }

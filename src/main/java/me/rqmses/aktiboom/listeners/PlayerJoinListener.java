@@ -33,7 +33,7 @@ public class PlayerJoinListener {
     @SubscribeEvent
     public void onJoin(ClientChatReceivedEvent event) {
         if (event.getMessage().getUnformattedText().equals("Willkommen zur\u00fcck!")) {
-            refresh();
+            refresh(true);
 
             if (ConfigHandler.showaktis) {
                 new Thread(() -> {
@@ -83,10 +83,14 @@ public class PlayerJoinListener {
         }
     }
 
-    public static void refresh() {
+    public static void refresh(boolean rejoin) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         AFK = false;
+
+        if (!rejoin) {
+            OPERATION = false;
+        }
 
         BombeCommand.planter = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
@@ -321,6 +325,8 @@ public class PlayerJoinListener {
                     }
                 }
 
+                // Verbuggt
+                /*
                 if (ConfigHandler.autorefresh) {
                     calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " 23:59"));
                     timer.schedule(new TimerTask() {
@@ -330,6 +336,7 @@ public class PlayerJoinListener {
                         }
                     }, calendar.getTime());
                 }
+                */
             } catch (IOException | ParseException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Der Kalender konnte nicht geladen werden!"));
             }

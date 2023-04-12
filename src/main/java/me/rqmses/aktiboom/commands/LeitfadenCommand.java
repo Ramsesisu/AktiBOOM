@@ -112,6 +112,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Schickt einen Member offline.");
         command("/beweise");
         description("Gibt Videos zu den Fl\u00fcgen des angegebenen Spots aus.");
+        command("/besprechung");
+        description("Setzt den Zeitpunkt der letzten Bepsprechung.");
         command("/bombe");
         description("Legt eine Bombe.");
         command("/bombendistanz");
@@ -150,6 +152,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt die Geisel-Liste aus, beziehungsweise setzt sie zur\u00fcck.");
         command("/global");
         description("Zeigt eine memberweite Info-Meldung an.");
+        command("/gro\u00dfakti");
+        description("Startet/Beendet eine Gro\u00dfaktivit\u00e4t.");
         command("/info");
         description("Gibt die eigenen Informationen oder die des angegebenen Members aus.");
         command("/invsee");
@@ -236,9 +240,11 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
         description("- Statusmeldung zum Tod des Planters.");
         description("- Die Mateshots w\u00e4hrend einer Bombe k\u00f6nnen eingesehen werden.");
+        description("- Dem Planter wird der Draht angezeigt.");
         description("");
         feature("Geiselnahmen");
         description("- Geiseln k\u00f6nnen in eine Geisel-Liste eingetragen werden.");
+        description("- Cooldown im GUI bei Reload einer RPG.");
         description("");
         feature("Sprengg\u00fcrtel");
         description("- Sounds beim Z\u00fcnden und der Detonation des Sprengg\u00fcrtels.");

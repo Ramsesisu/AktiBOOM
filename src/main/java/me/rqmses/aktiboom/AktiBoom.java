@@ -39,7 +39,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.17";
+    public static final String VERSION = "1.18";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -52,6 +52,7 @@ public class AktiBoom {
     public static String LATEST = VERSION;
     public static List<String> MEMBER = new ArrayList<>();
     public static boolean BOMBE = false;
+    public static boolean OPERATION = false;
 
     public static List<Integer> KEYS = new ArrayList<>();
 
@@ -133,6 +134,8 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new LeaderChatCommand());
         ClientCommandHandler.instance.registerCommand(new WirtschaftCommand());
         ClientCommandHandler.instance.registerCommand(new StreamerModeCommand());
+        ClientCommandHandler.instance.registerCommand(new BesprechungCommand());
+        ClientCommandHandler.instance.registerCommand(new GrossaktiCommand());
     }
 
     public void ListenerRegistration() {
@@ -147,6 +150,7 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new ContainerListener());
         MinecraftForge.EVENT_BUS.register(new DamageListener());
         MinecraftForge.EVENT_BUS.register(new KillListener());
+        MinecraftForge.EVENT_BUS.register(new ReloadListener());
     }
 
     public static final KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");

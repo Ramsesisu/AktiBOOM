@@ -12,6 +12,7 @@ public enum InformationType {
     SECRANKS("SEC-Drogen", "I13:I20"),
     WINLOSE("Win/Lose Statistik", "C7:F64"),
     KEYS("\u00dcbersicht", "O38:O39"),
+    MEETING("Equiplog", "G15:J17"),
     SPRENGGUERTEL_BAN("Mod-Sperren", "A2:A25"),
     RPG_7_BAN("Mod-Sperren", "B2:B25"),
     MATESHOTS("Win/Lose Statistik", "J37:K136"),

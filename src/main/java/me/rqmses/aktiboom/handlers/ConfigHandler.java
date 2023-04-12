@@ -22,7 +22,7 @@ public class ConfigHandler {
 
     @Config.Name("Schutzgelder-Nametag")
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
-    public static String schutzcolor = "";
+    public static String schutzcolor = "a";
 
     @Config.Name("Autobomben-Nametag")
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
@@ -75,6 +75,10 @@ public class ConfigHandler {
     @Config.Name("Toggle Remote (R4-Erlaubnis erforderlich)")
     @Config.Comment("(De-)aktiviert den Remote-Zugriff auf Makros.")
     public static boolean remote = true;
+
+    @Config.Name("Toggle Dead-Info")
+    @Config.Comment("Nachrichten, wenn Member bei einem Gro\u00dfeinsatz sterben.")
+    public static boolean deadinfo = true;
 
 
     @SubscribeEvent

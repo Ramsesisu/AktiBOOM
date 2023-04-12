@@ -78,7 +78,7 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
                         if (args.length > 3) {
                             try {
                                 SheetUtils.addValues("Auftr\u00e4ge", "B4:E54", new String[]{new SimpleDateFormat("dd.MM.yy").format(new Date()), args[1], args[2], args[3]});
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsauftrag von &6&l" + args[1] + "&e hinzugef\u00fcgt.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Auslieferungsauftrag von &6&l" + args[1] + "&e hinzugef\u00fcgt.");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht eingetragen werden."));
                             }
@@ -96,7 +96,7 @@ public class AuftragsauslieferungCommand extends CommandBase implements IClientC
                                     return;
                                 }
                                 SheetUtils.clearValues("Auftr\u00e4ge", "B" + line + ":E" + line);
-                                player.sendChatMessage("/f %INFO% :" + player.getName() + " hat den Auslieferungsauftrag von &6&l" + args[1] + "&e beendet.");
+                                player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat den Auslieferungsauftrag von &6&l" + args[1] + "&e beendet.");
                                 SheetUtils.sortRange("Auftr\u00e4ge", "B4:E54");
                             } catch (IOException e) {
                                 player.sendMessage(new TextComponentString(PREFIX + "Die Auftragsauslieferung konnte nicht gel\u00f6scht werden."));
