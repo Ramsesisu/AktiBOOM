@@ -2,6 +2,7 @@
 EncryptionUtils.java
 
 **/build/
+/.idea/
 
 # Common working directory
 run/
