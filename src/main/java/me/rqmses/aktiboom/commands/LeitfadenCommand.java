@@ -244,7 +244,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("");
         feature("Geiselnahmen");
         description("- Geiseln k\u00f6nnen in eine Geisel-Liste eingetragen werden.");
-        description("- Cooldown im GUI bei Reload einer RPG.");
+        description("- Cooldown im GUI bei Reload einer Alpha-7.");
         description("");
         feature("Sprengg\u00fcrtel");
         description("- Sounds beim Z\u00fcnden und der Detonation des Sprengg\u00fcrtels.");
@@ -266,7 +266,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("");
         feature("Sicherheit");
         description("- Bei Steuern kann kein Geld in die F-Bank gezahlt werden.");
-        description("- Beim Equippen m\u00fcssen Sprengg\u00fcrtel und RPGs doppelt ausgew\u00e4hlt werden.");
+        description("- Beim Equippen m\u00fcssen Sprengg\u00fcrtel und Alphas doppelt ausgew\u00e4hlt werden.");
         description("- Membern k\u00f6nnen tempor\u00e4re Sperren vergeben werden.");
         description("- Membern k\u00f6nnen offline geschickt werden.");
         description("");

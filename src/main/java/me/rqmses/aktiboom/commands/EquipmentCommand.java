@@ -95,13 +95,13 @@ public class EquipmentCommand extends CommandBase implements IClientCommand {
             player.sendMessage(new TextComponentString(PREFIX + "EquipLog von " + TextFormatting.DARK_GRAY + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
             player.sendMessage(new TextComponentString(""));
 
-            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "MP5: "));
+            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Scatter-3: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Anzahl: " + TextFormatting.YELLOW + values.get(2).get(1)));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Kosten: " + TextFormatting.YELLOW + values.get(2).get(2)));
             player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Sprengg\u00fcrtel: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Anzahl: " + TextFormatting.YELLOW + values.get(3).get(1)));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Kosten: " + TextFormatting.YELLOW + values.get(3).get(2)));
-            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Pistole: "));
+            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "P-69: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Anzahl: " + TextFormatting.YELLOW + values.get(4).get(1)));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Kosten: " + TextFormatting.YELLOW + values.get(4).get(2)));
             player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Kevlar: "));
@@ -110,7 +110,7 @@ public class EquipmentCommand extends CommandBase implements IClientCommand {
             player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Schwere Kevlar: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Anzahl: " + TextFormatting.YELLOW + values.get(6).get(1)));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Kosten: " + TextFormatting.YELLOW + values.get(6).get(2)));
-            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "RPG-7: "));
+            player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Alpha-7: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Anzahl: " + TextFormatting.YELLOW + values.get(7).get(1)));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Kosten: " + TextFormatting.YELLOW + values.get(7).get(2)));
             player.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + "-------------------------"));

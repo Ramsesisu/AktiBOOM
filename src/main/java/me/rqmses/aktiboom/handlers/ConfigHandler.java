@@ -72,12 +72,14 @@ public class ConfigHandler {
     @Config.Comment("Startet in bestimmten Situationen automatisch ein Navi.")
     public static String prefix = "6";
 
+    /*
     @Config.Name("Toggle Remote (R4-Erlaubnis erforderlich)")
     @Config.Comment("(De-)aktiviert den Remote-Zugriff auf Makros.")
     public static boolean remote = true;
+     */
 
     @Config.Name("Toggle Dead-Info")
-    @Config.Comment("Nachrichten, wenn Member bei einem Gro\u00dfeinsatz sterben.")
+    @Config.Comment("Nachrichten, wenn Member bei einem Gro\u00dfeinsatz low sind.")
     public static boolean deadinfo = true;
 
 

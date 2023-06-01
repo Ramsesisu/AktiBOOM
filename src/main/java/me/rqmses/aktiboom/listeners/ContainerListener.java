@@ -24,10 +24,10 @@ public class ContainerListener {
     private static ItemStack item = null;
 
     public static boolean verifysprengi = false;
-    public static boolean verifyrpg = false;
+    public static boolean verifyalpha = false;
 
     private static Timer sprengiequip = new Timer();
-    private static Timer rpgequip = new Timer();
+    private static Timer alphaequip = new Timer();
 
     private static long lastclick = 0;
 
@@ -84,17 +84,17 @@ public class ContainerListener {
                         sprengiequip = new Timer();
                     }
                 }
-                if (item.getDisplayName().contains("RPG-7")) {
+                if (item.getDisplayName().contains("Alpha-7")) {
                     if (System.currentTimeMillis() - lastclick < 500) {
                         event.setCanceled(true);
                         return;
                     }
                     lastclick = System.currentTimeMillis();
 
-                    if (!verifyrpg) {
+                    if (!verifyalpha) {
                         try {
-                            if (SheetUtils.getValueRange(InformationType.RPG_7_BAN.getSheet(), InformationType.RPG_7_BAN.getRange()).toString().contains(player.getName())) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Du hast eine " + TextFormatting.GOLD + "RPG-7" + TextFormatting.YELLOW + "-Sperre!"));
+                            if (SheetUtils.getValueRange(InformationType.ALPHA_7_BAN.getSheet(), InformationType.ALPHA_7_BAN.getRange()).toString().contains(player.getName())) {
+                                player.sendMessage(new TextComponentString(PREFIX + "Du hast eine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + "-Sperre!"));
                                 event.setCanceled(true);
                                 return;
                             }
@@ -103,34 +103,34 @@ public class ContainerListener {
                     }
 
                     if (RANK < 3) {
-                        player.sendMessage(new TextComponentString(PREFIX + "Du kannst dir keine " + TextFormatting.GOLD + "RPG-7" + TextFormatting.YELLOW + " equippen!"));
+                        player.sendMessage(new TextComponentString(PREFIX + "Du kannst dir keine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " equippen!"));
                         event.setCanceled(true);
                         return;
                     }
 
                     if (!SEC && RANK < 4) {
-                        player.sendMessage(new TextComponentString(PREFIX + "Du darfst dir keine " + TextFormatting.GOLD + "RPG-7" + TextFormatting.YELLOW + " equippen!"));
+                        player.sendMessage(new TextComponentString(PREFIX + "Du darfst dir keine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " equippen!"));
                         event.setCanceled(true);
                         return;
                     }
 
-                    if (!verifyrpg) {
+                    if (!verifyalpha) {
                         event.setCanceled(true);
-                        verifyrpg = true;
-                        player.sendMessage(new TextComponentString(PREFIX + "Klicke erneut, um die Auswahl " + TextFormatting.GOLD + "RPG-7" + TextFormatting.YELLOW + " zu best\u00e4tigen!"));
+                        verifyalpha = true;
+                        player.sendMessage(new TextComponentString(PREFIX + "Klicke erneut, um die Auswahl " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " zu best\u00e4tigen!"));
 
-                        rpgequip.schedule(new TimerTask() {
+                        alphaequip.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (verifyrpg) {
-                                    verifyrpg = false;
+                                if (verifyalpha) {
+                                    verifyalpha = false;
                                 }
                             }
                         }, TimeUnit.SECONDS.toMillis(5));
                     } else {
-                        verifyrpg = false;
+                        verifyalpha = false;
 
-                        rpgequip = new Timer();
+                        alphaequip = new Timer();
                     }
                 }
             }

@@ -16,7 +16,7 @@ import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
 public class ReloadListener {
 
-    private static String ammoRPG = null;
+    private static String ammoAlpha = null;
     public static boolean reloadTimer = false;
     public static Timer timer = new Timer();
 
@@ -27,15 +27,15 @@ public class ReloadListener {
         try {
             if (!player.inventory.getCurrentItem().isEmpty()) {
                 ItemStack item = player.inventory.getCurrentItem();
-                if (item.getDisplayName().contains("RPG-7")) {
+                if (item.getDisplayName().contains("Alpha-7")) {
                     assert item.getTagCompound() != null;
                     String ammo = item.getTagCompound().getCompoundTag("display").getTagList("Lore", 8).getStringTagAt(0);
 
-                    if (ammoRPG == null) {
-                        ammoRPG = ammo;
-                    } else if (!ammoRPG.equals(ammo)) {
+                    if (ammoAlpha == null) {
+                        ammoAlpha = ammo;
+                    } else if (!ammoAlpha.equals(ammo)) {
                         if (!ammo.startsWith(TextFormatting.GOLD + "0")) {
-                            ammoRPG = null;
+                            ammoAlpha = null;
 
                             if (!reloadTimer) {
                                 reloadTimer = true;
@@ -49,9 +49,9 @@ public class ReloadListener {
                                 @Override
                                 public void run() {
                                     if (time[0] > 0) {
-                                        player.sendStatusMessage(new TextComponentString(TextFormatting.YELLOW + "RPG-Reload: " + TextFormatting.RED + time[0]-- + TextFormatting.GRAY + " Sekunden"), true);
+                                        player.sendStatusMessage(new TextComponentString(TextFormatting.YELLOW + "Alpha-Reload: " + TextFormatting.RED + time[0]-- + TextFormatting.GRAY + " Sekunden"), true);
                                     } else {
-                                        player.sendMessage(new TextComponentString(PREFIX + "Deine " + TextFormatting.GOLD + "RPG-7" + TextFormatting.YELLOW + " ist nun nachgeladen!"));
+                                        player.sendMessage(new TextComponentString(PREFIX + "Deine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " ist nun nachgeladen!"));
                                         reloadTimer = false;
                                         cancel();
                                     }

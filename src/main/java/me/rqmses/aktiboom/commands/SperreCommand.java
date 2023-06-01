@@ -47,7 +47,7 @@ public class SperreCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("Sprengg\u00fcrtel", "RPG-7");
+            targets = Arrays.asList("Sprengg\u00fcrtel", "Alpha-7");
         }
         if (args.length == 2) {
             for (NetworkPlayerInfo playerInfo : Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap()) {
@@ -75,8 +75,8 @@ public class SperreCommand extends CommandBase implements IClientCommand {
                         case "sprengg\u00fcrtel":
                             informationType = InformationType.SPRENGGUERTEL_BAN;
                             break;
-                        case "rpg-7":
-                            informationType = InformationType.RPG_7_BAN;
+                        case "alpha-7":
+                            informationType = InformationType.ALPHA_7_BAN;
                             break;
                         default:
                             player.sendMessage(new TextComponentString(PREFIX + "Eine " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + "-Sperre existiert nicht!"));

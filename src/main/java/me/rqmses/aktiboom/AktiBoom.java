@@ -39,7 +39,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "1.18.2";
+    public static final String VERSION = "2.1.0";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -116,21 +116,16 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new EquipCommand());
         ClientCommandHandler.instance.registerCommand(new LeitfadenCommand());
         ClientCommandHandler.instance.registerCommand(new GlobalCommand());
-        ClientCommandHandler.instance.registerCommand(new InvSeeCommand());
-        ClientCommandHandler.instance.registerCommand(new CheckDrugsCommand());
         ClientCommandHandler.instance.registerCommand(new MemberDerWocheCommand());
         ClientCommandHandler.instance.registerCommand(new LastBombCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselnCommand());
-        ClientCommandHandler.instance.registerCommand(new AwayCommand());
         ClientCommandHandler.instance.registerCommand(new SperreCommand());
         ClientCommandHandler.instance.registerCommand(new MateshotsCommand());
         ClientCommandHandler.instance.registerCommand(new FBankCommand());
         ClientCommandHandler.instance.registerCommand(new KillsCommand());
         ClientCommandHandler.instance.registerCommand(new GehaelterCommand());
-        ClientCommandHandler.instance.registerCommand(new PositionCommand());
         ClientCommandHandler.instance.registerCommand(new JumpBombeCommand());
-        ClientCommandHandler.instance.registerCommand(new AFKCommand());
         ClientCommandHandler.instance.registerCommand(new LeaderChatCommand());
         ClientCommandHandler.instance.registerCommand(new WirtschaftCommand());
         ClientCommandHandler.instance.registerCommand(new StreamerModeCommand());

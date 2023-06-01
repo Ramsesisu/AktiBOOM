@@ -52,7 +52,7 @@ public class EquipCommand extends CommandBase implements IClientCommand {
         ArrayList<String> list = new ArrayList<>();
         List<String> targets = new ArrayList<>();
         if (args.length == 1) {
-            targets = Arrays.asList("Mp5", "Pistole", "Kevlar", "Schwere-Kevlar", "RPG-7", "Nachzahlung");
+            targets = Arrays.asList("Scatter-3", "P-69", "Kevlar", "Schwere-Kevlar", "Alpha-7", "Nachzahlung");
         }
         if (args.length == 2) {
             targets = Collections.singletonList("0");
@@ -78,12 +78,14 @@ public class EquipCommand extends CommandBase implements IClientCommand {
                     int discount = 0;
 
                     switch (args[0].toLowerCase()) {
-                        case "mp5":
-                            equiptype = EquipType.MP5;
+                        case "scatter-3":
+                        case "scatter":
+                            equiptype = EquipType.SCATTER3;
                             price = "550";
                             break;
-                        case "pistole":
-                            equiptype = EquipType.PISTOLE;
+                        case "p-69":
+                        case "p":
+                            equiptype = EquipType.P69;
                             price = "350";
                             break;
                         case "kevlar":
@@ -97,9 +99,9 @@ public class EquipCommand extends CommandBase implements IClientCommand {
                             price = "2200";
                             discount = 800;
                             break;
-                        case "rpg-7":
-                        case "rpg":
-                            equiptype = EquipType.RPG7;
+                        case "alpha-7":
+                        case "alpha":
+                            equiptype = EquipType.ALPHA7;
                             price = "13000";
                             break;
                         case "nachzahlung":
@@ -149,7 +151,7 @@ public class EquipCommand extends CommandBase implements IClientCommand {
                     player.sendChatMessage("/equip");
 
                     ContainerListener.verifysprengi = false;
-                    ContainerListener.verifyrpg = false;
+                    ContainerListener.verifyalpha = false;
                 }
             } else {
                 StringBuilder text = new StringBuilder();

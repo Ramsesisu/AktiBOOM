@@ -2,11 +2,11 @@ package me.rqmses.aktiboom.enums;
 
 public enum EquipType {
 
-    MP5("MP5"),
-    PISTOLE("Pistole"),
+    SCATTER3("Scatter-3"),
+    P69("P-69"),
     KEVLAR("Kevlar"),
     SCHWEREKEVLAR("schwere Kevlar"),
-    RPG7("RPG-7"),
+    ALPHA7("Alpha-7"),
     NACHZAHLUNG("Nachzahlung");
 
     EquipType(String name) {

@@ -305,8 +305,8 @@ public class ChatReceiveListener {
             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat &6&l" + message.replace("[Fraktion] Du hast ", "").replace(" aus der Fraktion geschmissen!", "") + "&e uninvitet!");
         }
 
-        if (message.equals("[Equip] Du hast dir eine RPG-7 equippt!")) {
-            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat sich eine &6&lRPG-7 &eequippt!");
+        if (message.equals("[Equip] Du hast dir eine Alpha-7 equippt!")) {
+            player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat sich eine &6&lAlpha-7 &eequippt!");
         }
 
         if (message.equals("[Equip] Du hast dir ein Sprengg\u00fcrtel equippt!")) {
@@ -397,19 +397,22 @@ public class ChatReceiveListener {
         if (message.contains(": %OPERATION% :")) {
             event.setCanceled(true);
 
-            String[] contents = message.split(":");
-            if (SheetUtils.getRank(contents[0].split(" ")[1]) >= 4) {
-                if (contents[2].contains("start")) {
-                    OPERATION = true;
-                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat eine Gro\u00dfaktivit\u00e4t gestartet!"));
+            new Thread(() -> {
+                String[] contents = message.split(":");
+                if (SheetUtils.getRank(contents[0].split(" ")[1]) >= 4) {
+                    if (contents[2].contains("start")) {
+                        OPERATION = true;
+                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat eine Gro\u00dfaktivit\u00e4t gestartet!"));
+                    }
+                    if (contents[2].contains("end")) {
+                        OPERATION = false;
+                        player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat die Gro\u00dfaktivit\u00e4t beendet!"));
+                    }
                 }
-                if (contents[2].contains("end")) {
-                    OPERATION = false;
-                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat die Gro\u00dfaktivit\u00e4t beendet!"));
-                }
-            }
+            }).start();
         }
 
+        /*
         if (message.contains(": %INV% :")) {
             event.setCanceled(true);
 
@@ -453,7 +456,9 @@ public class ChatReceiveListener {
                 }
             }).start();
         }
+         */
 
+        /*
         if (message.contains(": %DRUGS% :")) {
             event.setCanceled(true);
             new Thread(() -> {
@@ -482,7 +487,9 @@ public class ChatReceiveListener {
                 }
             }).start();
         }
+         */
 
+        /*
         if (message.contains(": %POS% :")) {
             event.setCanceled(true);
             new Thread(() -> {
@@ -508,7 +515,9 @@ public class ChatReceiveListener {
                 }
             }).start();
         }
+         */
 
+        /*
         if (message.contains(": %AWAY% :")) {
             event.setCanceled(true);
             if (remote) {
@@ -522,7 +531,9 @@ public class ChatReceiveListener {
                 }).start();
             }
         }
+         */
 
+        /*
         if (message.contains(": %AFK% :")) {
             event.setCanceled(true);
             new Thread(() -> {
@@ -534,6 +545,7 @@ public class ChatReceiveListener {
                 }
             }).start();
         }
+         */
 
         if (message.startsWith(" \u00BB Fraktionsgehalt: +") && message.endsWith("$")) {
             new Thread(() -> {
@@ -571,48 +583,20 @@ public class ChatReceiveListener {
         }
 
         if (hide) {
-            if (message.equals("")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("======") && message.endsWith("======")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Level: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Status: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Inventar: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Wanted Punkte: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Geld: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Verwarnungen: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Zeit seit PayDay: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Experience: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Fraktion: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Haus: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Beruf: ")) {
-                event.setCanceled(true);
-            }
-            if (message.startsWith("  - Votepoints: ")) {
-                event.setCanceled(true);
-            }
+            if (message.equals("")) event.setCanceled(true);
+            if (message.startsWith("======") && message.endsWith("======")) event.setCanceled(true);
+            if (message.startsWith("  - Level: ")) event.setCanceled(true);
+            if (message.startsWith("  - Status: ")) event.setCanceled(true);
+            if (message.startsWith("  - Inventar: ")) event.setCanceled(true);
+            if (message.startsWith("  - Wanted Punkte: ")) event.setCanceled(true);
+            if (message.startsWith("  - Geld: ")) event.setCanceled(true);
+            if (message.startsWith("  - Verwarnungen: ")) event.setCanceled(true);
+            if (message.startsWith("  - Zeit seit PayDay: ")) event.setCanceled(true);
+            if (message.startsWith("  - Experience: ")) event.setCanceled(true);
+            if (message.startsWith("  - Fraktion: ")) event.setCanceled(true);
+            if (message.startsWith("  - Haus: ")) event.setCanceled(true);
+            if (message.startsWith("  - Beruf: ")) event.setCanceled(true);
+            if (message.startsWith("  - Votepoints: ")) event.setCanceled(true);
             if (message.startsWith("  - Treuebonus: ")) {
                 event.setCanceled(true);
                 hide = false;

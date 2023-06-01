@@ -39,7 +39,7 @@ public class SECDrugsCommand extends CommandBase implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(ICommandSender sender) {
-        return "/secdrugs [Kokain-Menge] [Gras-Menge]";
+        return "/secdrugs [Pulver-Menge] [Kr\u00e4uter-Menge]";
     }
 
     @Override
