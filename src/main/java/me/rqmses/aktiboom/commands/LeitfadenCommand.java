@@ -96,8 +96,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         category("Commands:");
         command("/addmember");
         description("F\u00fcgt einen Member zum Aktinachweis hinzu.");
-        command("/afk");
-        description("Schickt einen Member AFK.");
         command("/aktiboom");
         description("Gibt Informationen rund um die Mod aus.");
         command("/akti");
@@ -108,8 +106,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("F\u00fcgt eine Auftragsauslieferung zur Liste hinzu oder entfernt.");
         command("/autobombe");
         description("F\u00fcgt eine gekaufte Autobombe zur Liste hinzu oder entfernt.");
-        command("/away");
-        description("Schickt einen Member offline.");
         command("/beweise");
         description("Gibt Videos zu den Fl\u00fcgen des angegebenen Spots aus.");
         command("/besprechung");
@@ -122,8 +118,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt die Anzahl der eigenen Aktivit\u00e4ten oder des angegebenen Members aus.");
         command("/checkauftrag");
         description("Gibt Informationen zum Auslieferungsauftrag des Spielers aus.");
-        command("/checkdrugs");
-        description("Gibt den Tascheninhalt des Members aus.");
         command("/checkmod");
         description("\u00dcberpr\u00fcft den Installationsstatus des angegebenen Members.");
         command("/checkschutz");
@@ -156,10 +150,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Startet/Beendet eine Gro\u00dfaktivit\u00e4t.");
         command("/info");
         description("Gibt die eigenen Informationen oder die des angegebenen Members aus.");
-        command("/invsee");
-        description("Gibt den Inventar-Inhalt des Members aus.");
-        command("/jumpbombe");
-        description("Legt eine Bombe um einen Block erh\u00f6ht.");
         command("/kalender");
         description("Zeigt den Kalender an bzw. tr\u00e4gt in diesen ein.");
         command("/kills");
@@ -176,8 +166,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt die aktuellen Member der Woche aus.");
         command("/nearestnavi");
         description("Gibt den n\u00e4chsten UC-Navipunkt von einem aus.");
-        command("/position");
-        description("Zeigt die Position eines Members an.");
         command("/refresh");
         description("L\u00e4dt deine Daten, oder die des angegebenen Members, aus dem Aktivit\u00e4tsnachweis neu.");
         command("/removemember");
@@ -238,7 +226,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("- Warnung, wenn der Radius \u00fcberschritten wird.");
         description("- Sounds, passend zum Legen und zur Entfernung einer Bombe.");
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
-        description("- Statusmeldung zum Tod des Planters.");
         description("- Die Mateshots w\u00e4hrend einer Bombe k\u00f6nnen eingesehen werden.");
         description("- Dem Planter wird der Draht angezeigt.");
         description("");
@@ -268,10 +255,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("- Bei Steuern kann kein Geld in die F-Bank gezahlt werden.");
         description("- Beim Equippen m\u00fcssen Sprengg\u00fcrtel und Alphas doppelt ausgew\u00e4hlt werden.");
         description("- Membern k\u00f6nnen tempor\u00e4re Sperren vergeben werden.");
-        description("- Membern k\u00f6nnen offline geschickt werden.");
         description("");
         feature("Member");
-        description("- Drogen/Inventar eines Members k\u00f6nnen eingesehen werden.");
         description("- Die Mod-Version jedes Members kann eingesehen werden.");
         description("");
         feature("Aktualisierung");

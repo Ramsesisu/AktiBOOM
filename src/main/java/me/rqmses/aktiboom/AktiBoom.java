@@ -39,7 +39,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "2.1.0";
+    public static final String VERSION = "3.0.0";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -102,7 +102,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new TuningsCommand());
         ClientCommandHandler.instance.registerCommand(new CheckTuningCommand());
         ClientCommandHandler.instance.registerCommand(new GameCommand());
-        ClientCommandHandler.instance.registerCommand(new TrainingsserverCommand());
         ClientCommandHandler.instance.registerCommand(new NearestNaviCommand());
         ClientCommandHandler.instance.registerCommand(new BombenDistanzCommand());
         ClientCommandHandler.instance.registerCommand(new CheckModCommand());
@@ -125,7 +124,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new FBankCommand());
         ClientCommandHandler.instance.registerCommand(new KillsCommand());
         ClientCommandHandler.instance.registerCommand(new GehaelterCommand());
-        ClientCommandHandler.instance.registerCommand(new JumpBombeCommand());
         ClientCommandHandler.instance.registerCommand(new LeaderChatCommand());
         ClientCommandHandler.instance.registerCommand(new WirtschaftCommand());
         ClientCommandHandler.instance.registerCommand(new StreamerModeCommand());

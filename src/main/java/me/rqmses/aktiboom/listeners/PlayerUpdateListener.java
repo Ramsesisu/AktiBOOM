@@ -23,29 +23,6 @@ public class PlayerUpdateListener {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             long currentTime = System.currentTimeMillis();
 
-            if (BombeCommand.planter) {
-                if (player.getHealth() < 14) {
-                    if (currentTime - lastTime >= 15000) {
-                        lastTime = System.currentTimeMillis();
-                        if (KOMMS) {
-                            player.sendChatMessage("/f %INFO% :Der Planter &6" + player.getName() + "&e stirbt!");
-                            return;
-                        }
-                    }
-                }
-            }
-
-            if (OPERATION) {
-                if (player.getHealth() < 14) {
-                    if (currentTime - lastTime >= 15000) {
-                        lastTime = System.currentTimeMillis();
-                        if (KOMMS && !AFK) {
-                            player.sendChatMessage("/f %DEAD% :" + player.getName());
-                        }
-                    }
-                }
-            }
-
             if (showdistance) {
                 BlockPos pos = player.getPosition();
                 double distance = (double) Math.round(pos.getDistance(bombpos.getX(), pos.getY(), bombpos.getZ()) * 10) / 10;
