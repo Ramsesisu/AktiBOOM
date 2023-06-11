@@ -17,6 +17,26 @@ import static me.rqmses.aktiboom.AktiBoom.OPERATION;
 
 public class KillListener {
 
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onMessage(ClientChatReceivedEvent event) {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+
+        String message = event.getMessage().getUnformattedText();
+        if (OPERATION) {
+            if (message.startsWith("[Karma] -") && message.endsWith(" Karma.")) {
+                int karma = Integer.parseInt(message.replace("[Karma] ", "").replace(" Karma.", ""));
+                if (karma < 0 && karma > -9) {
+                    new Thread(() -> {
+                        try {
+                            SheetUtils.addValues(InformationType.KILLS_LOG.getSheet(), InformationType.KILLS_LOG.getRange(), new String[]{player.getName()});
+                        } catch (IOException ignored) {
+                        }
+                    }).start();
+                }
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onDamage(LivingAttackEvent event) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
@@ -35,26 +55,6 @@ public class KillListener {
                         }
                     }
                 }).start();
-            }
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onMessage(ClientChatReceivedEvent event) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
-
-        String message = event.getMessage().getUnformattedText();
-        if (OPERATION) {
-            if (message.startsWith("[Karma] -") && message.endsWith(" Karma.")) {
-                int karma = Integer.parseInt(message.replace("[Karma] ", "").replace(" Karma.", ""));
-                if (karma < 0 && karma > -9) {
-                    new Thread(() -> {
-                        try {
-                            SheetUtils.addValues(InformationType.KILLS_LOG.getSheet(), InformationType.KILLS_LOG.getRange(), new String[]{player.getName()});
-                        } catch (IOException ignored) {
-                        }
-                    }).start();
-                }
             }
         }
     }
