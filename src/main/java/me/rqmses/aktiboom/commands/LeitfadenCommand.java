@@ -109,9 +109,9 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         command("/beweise");
         description("Gibt Videos zu den Fl\u00fcgen des angegebenen Spots aus.");
         command("/besprechung");
-        description("Setzt den Zeitpunkt der letzten Bepsprechung.");
+        description("Setzt den Zeitpunkt der letzten Besprechung.");
         command("/bombe");
-        description("Legt eine Bombe.");
+        description("Legt eine Bombe und \u00fcberpr\u00fcft, ob der Spot regeltechnisch legitim ist.");
         command("/bombendistanz");
         description("(De-)aktiviert die Distanzanzeige zur Bombe.");
         command("/checkaktis");
@@ -119,7 +119,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         command("/checkauftrag");
         description("Gibt Informationen zum Auslieferungsauftrag des Spielers aus.");
         command("/checkmod");
-        description("\u00dcberpr\u00fcft den Installationsstatus des angegebenen Members.");
+        description("Zeigt an, ob bei einem Member die aktuellste Mod-Version installiert ist.");
         command("/checkschutz");
         description("Gibt Informationen zum Schutzgeld des Spielers aus.");
         command("/checksecdrugs");
@@ -223,7 +223,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
         description("- Ausgabe der Distanz zum n\u00e4chsten Navipunkt.");
         description("- Anzeige der Distanz zur Bombe ohne H\u00f6he");
-        description("- Warnung, wenn der Radius \u00fcberschritten wird.");
+        description("- Warnung, wenn der Bomben-Radius \u00fcberschritten wird.");
         description("- Sounds, passend zum Legen und zur Entfernung einer Bombe.");
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
         description("- Die Mateshots w\u00e4hrend einer Bombe k\u00f6nnen eingesehen werden.");
@@ -231,7 +231,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("");
         feature("Geiselnahmen");
         description("- Geiseln k\u00f6nnen in eine Geisel-Liste eingetragen werden.");
-        description("- Cooldown im GUI bei Reload einer Alpha-7.");
+        description("- Cooldown im GUI beim Reload einer Alpha-7.");
         description("");
         feature("Sprengg\u00fcrtel");
         description("- Sounds beim Z\u00fcnden und der Detonation des Sprengg\u00fcrtels.");
@@ -239,10 +239,10 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("");
         feature("Kalender");
         description("- Eintragen in den Kalender Ingame.");
-        description("- Erfolgen einer Benachrichtigung, wenn eine Aktivit\u00e4t bevorsteht zu starten.");
+        description("- Erfolgen einer Benachrichtigung, wenn eine geplante Aktivit\u00e4t aussteht.");
         description("");
         feature("Spiele");
-        description("- Spielen von vorgegeben Spielen mit Membern.");
+        description("- Spielen von vorgegeben Spielen mit Membern. \u21E8 Schach, TicTacToe");
         description("");
         feature("HotKeys");
         description("- HotKey zum Legen einer Bombe einstellbar. \u21E8 Steuerung");
@@ -254,10 +254,10 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         feature("Sicherheit");
         description("- Bei Steuern kann kein Geld in die F-Bank gezahlt werden.");
         description("- Beim Equippen m\u00fcssen Sprengg\u00fcrtel und Alphas doppelt ausgew\u00e4hlt werden.");
-        description("- Membern k\u00f6nnen tempor\u00e4re Sperren vergeben werden.");
+        description("- Member, die aufgrund ihres Rangs ein Item nicht haben d\u00fcrfen, k\u00f6nnen dieses nicht equippen.");
         description("");
         feature("Member");
-        description("- Die Mod-Version jedes Members kann eingesehen werden.");
+        description("- Anzeige, ob ein Member eine legitime Mod-Version besitzt.");
         description("");
         feature("Aktualisierung");
         description("- Automatisches Updaten der AktiBoom-Version.");
