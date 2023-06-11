@@ -145,7 +145,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         command("/geiseln");
         description("Gibt die Geisel-Liste aus, beziehungsweise setzt sie zur\u00fcck.");
         command("/global");
-        description("Zeigt eine memberweite Info-Meldung an.");
+        description("Zeigt eine memberweite Info-Meldung im F-Chat an.");
         command("/gro\u00dfakti");
         description("Startet/Beendet eine Gro\u00dfaktivit\u00e4t.");
         command("/info");
@@ -153,7 +153,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         command("/kalender");
         description("Zeigt den Kalender an bzw. tr\u00e4gt in diesen ein.");
         command("/kills");
-        description("Gibt die Kills der letzten Bombe aus.");
+        description("Gibt die Anzahl der Kills der letzten Bombe aus.");
         command("/lastbomb");
         description("Gibt Informationen zum letzten Bomben-Plant aus.");
         command("/lf");
@@ -197,9 +197,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         command("/sprengis");
         description("Gibt eine Liste aktueller Sprengg\u00fcrtelauftr\u00e4ge aus.");
         command("/statistik");
-        description("Gibt die monatliche Statistik aus bzw. tr\u00e4gt in diese ein.");
-        command("/training");
-        description("Stellt eine direkte Verbindung zum Trainingsserver her.");
+        description("Gibt die w\u00f6chtentliche Statistik aus bzw. tr\u00e4gt in diese ein.");
         command("/tunings");
         description("Gibt eine Liste aktueller gekaufter Autobomben aus.");
         command("/wirtschaft");
