@@ -50,11 +50,11 @@ public class AktiBoom {
     public static boolean AFK = false;
     public static boolean KOMMS = true;
     public static String LATEST = VERSION;
-    public static List<String> MEMBER = new ArrayList<>();
+    public static final List<String> MEMBER = new ArrayList<>();
     public static boolean BOMBE = false;
     public static boolean OPERATION = false;
 
-    public static List<Integer> KEYS = new ArrayList<>();
+    public static final List<Integer> KEYS = new ArrayList<>();
 
     @Mod.EventHandler
     public void preinit(FMLPreInitializationEvent event) {
@@ -93,7 +93,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new SchutzCommand());
         ClientCommandHandler.instance.registerCommand(new CheckSchutzCommand());
         ClientCommandHandler.instance.registerCommand(new RefreshCommand());
-        ClientCommandHandler.instance.registerCommand(new SECChatCommand());
         ClientCommandHandler.instance.registerCommand(new SECCommand());
         ClientCommandHandler.instance.registerCommand(new StatistikCommand());
         ClientCommandHandler.instance.registerCommand(new KalenderCommand());
@@ -119,12 +118,9 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new LastBombCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselnCommand());
-        ClientCommandHandler.instance.registerCommand(new SperreCommand());
         ClientCommandHandler.instance.registerCommand(new MateshotsCommand());
         ClientCommandHandler.instance.registerCommand(new FBankCommand());
-        ClientCommandHandler.instance.registerCommand(new KillsCommand());
         ClientCommandHandler.instance.registerCommand(new GehaelterCommand());
-        ClientCommandHandler.instance.registerCommand(new LeaderChatCommand());
         ClientCommandHandler.instance.registerCommand(new WirtschaftCommand());
         ClientCommandHandler.instance.registerCommand(new StreamerModeCommand());
         ClientCommandHandler.instance.registerCommand(new BesprechungCommand());
@@ -142,7 +138,6 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new PlayerDeathListener());
         MinecraftForge.EVENT_BUS.register(new ContainerListener());
         MinecraftForge.EVENT_BUS.register(new DamageListener());
-        MinecraftForge.EVENT_BUS.register(new KillListener());
         MinecraftForge.EVENT_BUS.register(new ReloadListener());
     }
 

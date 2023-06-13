@@ -1,6 +1,5 @@
 package me.rqmses.aktiboom.commands;
 
-import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.IOException;
 import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
@@ -82,17 +80,6 @@ public class InfoCommand extends CommandBase implements IClientCommand {
                 secrank = SECRANK;
             }
 
-            List<String> sperren = new ArrayList<>();
-            try {
-                if (SheetUtils.getValueRange(InformationType.SPRENGGUERTEL_BAN.getSheet(), InformationType.SPRENGGUERTEL_BAN.getRange().replaceFirst("2", "1")).getValues().toString().contains(name)) {
-                    sperren.add("Sprengg\u00fcrtel");
-                }
-                if (SheetUtils.getValueRange(InformationType.ALPHA_7_BAN.getSheet(), InformationType.ALPHA_7_BAN.getRange().replaceFirst("2", "1")).getValues().toString().contains(name)) {
-                    sperren.add("Alpha-7");
-                }
-            } catch (IOException ignored) {
-            }
-
             player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
 
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Name: " + TextFormatting.YELLOW + name));
@@ -124,21 +111,6 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrank));
-
-            StringBuilder stringsperren = new StringBuilder();
-            if (sperren.size() > 0) {
-                for (int i = 0; i < sperren.size(); i++) {
-                    if (i == 0) {
-                        stringsperren.append(TextFormatting.YELLOW).append(sperren.get(0));
-                    } else {
-                        stringsperren.append(TextFormatting.GRAY).append(", ").append(TextFormatting.YELLOW).append(sperren.get(i));
-                    }
-                }
-            } else {
-                stringsperren.append(TextFormatting.YELLOW).append("-");
-            }
-
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Sperren: " + stringsperren));
         }).start();
     }
 

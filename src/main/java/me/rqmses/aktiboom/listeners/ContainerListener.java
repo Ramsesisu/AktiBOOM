@@ -1,7 +1,5 @@
 package me.rqmses.aktiboom.listeners;
 
-import me.rqmses.aktiboom.enums.InformationType;
-import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -13,7 +11,6 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.input.Mouse;
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -48,17 +45,6 @@ public class ContainerListener {
                     }
                     lastclick = System.currentTimeMillis();
 
-                    if (!verifysprengi) {
-                        try {
-                            if (SheetUtils.getValueRange(InformationType.SPRENGGUERTEL_BAN.getSheet(), InformationType.SPRENGGUERTEL_BAN.getRange()).toString().contains(player.getName())) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Du hast eine " + TextFormatting.GOLD + "Sprengg\u00fcrtel" + TextFormatting.YELLOW + "-Sperre!"));
-                                event.setCanceled(true);
-                                return;
-                            }
-                        } catch (IOException ignored) {
-                        }
-                    }
-
                     if (RANK < 3) {
                         player.sendMessage(new TextComponentString(PREFIX + "Du kannst dir keinen " + TextFormatting.GOLD + "Sprengg\u00fcrtel" + TextFormatting.YELLOW + " equippen!"));
                         event.setCanceled(true);
@@ -90,17 +76,6 @@ public class ContainerListener {
                         return;
                     }
                     lastclick = System.currentTimeMillis();
-
-                    if (!verifyalpha) {
-                        try {
-                            if (SheetUtils.getValueRange(InformationType.ALPHA_7_BAN.getSheet(), InformationType.ALPHA_7_BAN.getRange()).toString().contains(player.getName())) {
-                                player.sendMessage(new TextComponentString(PREFIX + "Du hast eine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + "-Sperre!"));
-                                event.setCanceled(true);
-                                return;
-                            }
-                        } catch (IOException ignored) {
-                        }
-                    }
 
                     if (RANK < 3) {
                         player.sendMessage(new TextComponentString(PREFIX + "Du kannst dir keine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " equippen!"));

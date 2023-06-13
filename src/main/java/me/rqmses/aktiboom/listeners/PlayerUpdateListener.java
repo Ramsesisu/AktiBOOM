@@ -1,6 +1,5 @@
 package me.rqmses.aktiboom.listeners;
 
-import me.rqmses.aktiboom.commands.BombeCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.math.BlockPos;

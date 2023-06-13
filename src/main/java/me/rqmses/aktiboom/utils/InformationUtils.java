@@ -21,7 +21,5 @@ public class InformationUtils {
 
     public static void clearOperation() throws IOException {
         SheetUtils.clearValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange());
-        SheetUtils.clearValues(InformationType.KILLS.getSheet(), InformationType.KILLS.getRange());
-        SheetUtils.clearValues(InformationType.KILLS_LOG.getSheet(), InformationType.KILLS_LOG.getRange());
     }
 }

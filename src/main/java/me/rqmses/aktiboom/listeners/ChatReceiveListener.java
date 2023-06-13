@@ -3,14 +3,14 @@ package me.rqmses.aktiboom.listeners;
 import me.rqmses.aktiboom.commands.*;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.handlers.SoundHandler;
-import me.rqmses.aktiboom.utils.*;
+import me.rqmses.aktiboom.utils.GameUtils;
+import me.rqmses.aktiboom.utils.SheetUtils;
+import me.rqmses.aktiboom.utils.TextUtils;
 import me.rqmses.aktiboom.utils.guis.GameGui;
 import me.rqmses.aktiboom.utils.guis.containers.ChessContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
-import static me.rqmses.aktiboom.handlers.ConfigHandler.*;
 
 public class ChatReceiveListener {
 
@@ -51,41 +50,6 @@ public class ChatReceiveListener {
             if (prefixes.contains(message.split(" ")[0])) {
                 event.setCanceled(true);
                 return;
-            }
-        }
-
-        if (message.contains(": %SECCHAT% :")) {
-            event.setCanceled(true);
-
-            if (SEC) {
-                String[] contents = message.split(":", 3);
-                String name = contents[0].split(" ")[1].replace("[UC]", "");
-                String text = contents[2];
-
-                final String[] secrankname = new String[1];
-                if (secplayerranks.containsKey(name)) {
-                    secrankname[0] = secplayerranks.get(name);
-                } else {
-                    new Thread(() -> {
-                        String secrank = SheetUtils.getSECRank(name);
-                        secrankname[0] = secrank;
-                    }).start();
-                    secplayerranks.putIfAbsent(name, secrankname[0]);
-                }
-
-                player.sendMessage(new TextComponentString(FormatUtils.getColor(secchatprefix) + "" + TextFormatting.ITALIC + "SEC " + FormatUtils.getColor(secchatprefix) + secrankname[0] + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(secchatmessage) + EncryptionUtils.decode(text, KEYS.get(0))));
-            }
-        }
-        if (message.contains(": %LEADER% :")) {
-            event.setCanceled(true);
-
-            if (RANK >= 4) {
-                String[] contents = message.split(":", 3);
-                String name = contents[0].split(" ")[1].replace("[UC]", "");
-                String rank = contents[0].split(" ")[0];
-                String text = contents[2];
-
-                player.sendMessage(new TextComponentString(FormatUtils.getColor(leaderchatprefix) + "" + TextFormatting.ITALIC + "Leader " + FormatUtils.getColor(leaderchatprefix) + rank + " " + name + TextFormatting.DARK_GRAY + ":" + FormatUtils.getColor(leaderchatmessage) + EncryptionUtils.decode(text, KEYS.get(1))));
             }
         }
 

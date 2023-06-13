@@ -324,19 +324,6 @@ public class PlayerJoinListener {
                         }, calendar.getTime());
                     }
                 }
-
-                // Verbuggt
-                /*
-                if (ConfigHandler.autorefresh) {
-                    calendar.setTime(new SimpleDateFormat("dd.MM.yy HH:mm").parse(new SimpleDateFormat("dd.MM.yy").format(new Date()) + " 23:59"));
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            refresh();
-                        }
-                    }, calendar.getTime());
-                }
-                */
             } catch (IOException | ParseException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Der Kalender konnte nicht geladen werden!"));
             }
