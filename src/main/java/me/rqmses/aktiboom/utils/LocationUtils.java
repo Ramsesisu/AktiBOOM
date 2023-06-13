@@ -28,7 +28,6 @@ public class LocationUtils {
                 "280", "121", "Brauerei", "470", "113");
     }
 
-    @SuppressWarnings("CanBeFinal")
     public static HashMap<String, BlockPos> uclocs = new HashMap<>();
 
     public static void setLocs() {
