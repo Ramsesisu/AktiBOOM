@@ -28,22 +28,6 @@ public class ConfigHandler {
     @Config.Comment("F\u00e4rbt die Namen der Spieler in dem gegeben ColorCode.")
     public static String tuningcolor = "";
 
-    @Config.Name("SECChat-Farbe-Prefix")
-    @Config.Comment("F\u00e4rbt den Prefix des SEC-Chats in dem gegeben ColorCode.")
-    public static String secchatprefix = "c";
-
-    @Config.Name("SECChat-Farbe-Nachricht")
-    @Config.Comment("F\u00e4rbt die Nachricht des SEC-Chats in dem gegeben ColorCode.")
-    public static String secchatmessage = "7";
-
-    @Config.Name("LeaderChat-Farbe-Prefix")
-    @Config.Comment("F\u00e4rbt den Prefix des Leader-Chats in dem gegeben ColorCode.")
-    public static String leaderchatprefix = "3";
-
-    @Config.Name("LeaderChat-Farbe-Nachricht")
-    @Config.Comment("F\u00e4rbt die Nachricht des Leader-Chats in dem gegeben ColorCode.")
-    public static String leaderchatmessage = "7";
-
     @Config.Name("Auto-Refresh")
     @Config.Comment("Aktualisiert die Mod-Daten automatisch.")
     public static boolean autorefresh = true;
@@ -71,10 +55,6 @@ public class ConfigHandler {
     @Config.Name("Prefix-Farbe")
     @Config.Comment("Startet in bestimmten Situationen automatisch ein Navi.")
     public static String prefix = "6";
-
-    @Config.Name("Toggle Dead-Info")
-    @Config.Comment("Nachrichten, wenn Member bei einem Gro\u00dfeinsatz low sind.")
-    public static boolean deadinfo = true;
 
 
     @SubscribeEvent
