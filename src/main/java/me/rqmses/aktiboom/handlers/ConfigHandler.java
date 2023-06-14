@@ -53,7 +53,7 @@ public class ConfigHandler {
     public static boolean showaktis = true;
 
     @Config.Name("Prefix-Farbe")
-    @Config.Comment("Startet in bestimmten Situationen automatisch ein Navi.")
+    @Config.Comment("\u00c4ndert die Farbe des AktiBoom-Prefix.")
     public static String prefix = "6";
 
 
