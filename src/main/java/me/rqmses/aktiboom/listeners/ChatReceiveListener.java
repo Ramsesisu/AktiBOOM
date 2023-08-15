@@ -253,7 +253,7 @@ public class ChatReceiveListener {
             KOMMS = false;
         }
 
-        if (message.equals(" hat dir deine Kommunikationsger\u00e4te wiedergegeben.")) {
+        if (message.endsWith(" hat dir deine Kommunikationsger\u00e4te wiedergegeben.") || message.equals("Du hast dein Handy genommen.")) {
             KOMMS = true;
         }
 

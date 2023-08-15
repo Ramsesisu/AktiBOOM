@@ -2,7 +2,6 @@ package me.rqmses.aktiboom.commands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -61,32 +60,25 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
-            if (netHandlerPlayClient != null) {
-                if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
-                    if (args.length == 0) {
-                        player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
-                    } else {
-                        switch (args[0].toLowerCase()) {
-                            case "commands":
-                                player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
-                                commands();
-                                break;
-                            case "features":
-                                player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
-                                features();
-                                break;
-                            case "installation":
-                                player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
-                                installation();
-                                break;
-                            default:
-                                player.sendMessage(new TextComponentString(PREFIX + "Die Kategorie " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " existiert nicht!"));
-                                break;
-                        }
-                    }
-                } else {
-                    player.sendChatMessage("/leitfaden");
+            if (args.length == 0) {
+                player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
+            } else {
+                switch (args[0].toLowerCase()) {
+                    case "commands":
+                        player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
+                        commands();
+                        break;
+                    case "features":
+                        player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
+                        features();
+                        break;
+                    case "installation":
+                        player.sendMessage(new TextComponentString(PREFIX + "AktiBoom-Leitfaden:"));
+                        installation();
+                        break;
+                    default:
+                        player.sendMessage(new TextComponentString(PREFIX + "Die Kategorie " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " existiert nicht!"));
+                        break;
                 }
             }
         }).start();
@@ -106,8 +98,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("F\u00fcgt eine Auftragsauslieferung zur Liste hinzu oder entfernt.");
         command("/autobombe");
         description("F\u00fcgt eine gekaufte Autobombe zur Liste hinzu oder entfernt.");
-        command("/beweise");
-        description("Gibt Videos zu den Fl\u00fcgen des angegebenen Spots aus.");
         command("/besprechung");
         description("Setzt den Zeitpunkt der letzten Besprechung.");
         command("/bombe");

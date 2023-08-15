@@ -84,6 +84,10 @@ public class RemoveMemberCommand extends CommandBase implements IClientCommand {
                         SheetUtils.clearValues("Equiplog", "C" + line + ":E" + line);
                         SheetUtils.sortRange("Equiplog", "C36:E60");
 
+                        line = SheetUtils.searchLine("Equiplog", "B4:B27", args[0]) + 4;
+                        SheetUtils.clearValues("Equiplog", "B" + line + ":D" + line);
+                        SheetUtils.sortRange("Equiplog", "B4:D27");
+
                         line = SheetUtils.searchLine("Equiplog", "C977:C1000", args[0]) + 977;
                         SheetUtils.clearValues("Equiplog", "C" + line + ":D" + line);
                         SheetUtils.sortRange("Equiplog", "C977:D1000");

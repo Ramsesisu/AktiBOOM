@@ -58,7 +58,7 @@ public class GehaelterCommand extends CommandBase implements IClientCommand {
                 for (List<Object> member : members) {
                     if (!Objects.equals(member.get(0).toString(), "")) {
                         String money;
-                        if (Objects.equals(member.get(1).toString(), "")) {
+                        if (member.size() < 2) {
                             money = "0$";
                         } else {
                             money = member.get(1) + "$";

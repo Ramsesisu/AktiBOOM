@@ -156,9 +156,6 @@ public class PlayerJoinListener {
             SECRANK = SheetUtils.getSECRank(player.getName());
 
             if (RANK >= 5) {
-                    if (!AFK) {
-                        InformationUtils.getEquip(TimeUtils.hoursSinceMeeting());
-                    }
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -174,12 +171,12 @@ public class PlayerJoinListener {
                 for (List<Object> value : values) {
                     String secrank = value.get(1).toString();
                     String secrankname = secrank;
-                    if (secrank.startsWith("E-")) {
+                    if (secrank.startsWith("E")) {
                         secrankname = "Executive";
-                    } else if (secrank.startsWith("C-")) {
+                    } else if (secrank.startsWith("C")) {
                         secrankname = "Commander";
-                    } else if (secrank.startsWith("G-")) {
-                        secrankname = "General";
+                    } else if (secrank.startsWith("M")) {
+                        secrankname = "Marshal";
                     }
                     ChatReceiveListener.secplayerranks.put(value.get(0).toString(), secrankname);
                 }

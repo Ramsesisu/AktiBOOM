@@ -80,7 +80,6 @@ public class ClearNachweisCommand extends CommandBase implements IClientCommand 
                         try {
                             SheetUtils.clearValues(InformationType.EQUIPLOG.getSheet(), InformationType.EQUIPLOG.getRange());
                             SheetUtils.clearValues(InformationType.WINLOSE.getSheet(), InformationType.WINLOSE.getRange());
-                            SheetUtils.clearValues(InformationType.EMAILS.getSheet(), "D977:D1000");
                             SheetUtils.setLine(InformationType.DISCOUNT.getSheet(), InformationType.DISCOUNT.getRange(), new String[]{"0"});
                         } catch (IOException ignored) {
                         }

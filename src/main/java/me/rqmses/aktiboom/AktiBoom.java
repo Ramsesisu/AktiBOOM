@@ -39,7 +39,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "3.0.0";
+    public static final String VERSION = "3.1.0";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -96,7 +96,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new SECCommand());
         ClientCommandHandler.instance.registerCommand(new StatistikCommand());
         ClientCommandHandler.instance.registerCommand(new KalenderCommand());
-        ClientCommandHandler.instance.registerCommand(new BeweiseCommand());
         ClientCommandHandler.instance.registerCommand(new AutobombeCommand());
         ClientCommandHandler.instance.registerCommand(new TuningsCommand());
         ClientCommandHandler.instance.registerCommand(new CheckTuningCommand());
@@ -141,8 +140,8 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new ReloadListener());
     }
 
-    public static final KeyBinding sprengguertel = new KeyBinding("/sprengg\u00fcrtel 10", Keyboard.KEY_NONE, "AktiBOOM");
-    public static final KeyBinding bombe = new KeyBinding("/bombe", Keyboard.KEY_NONE, "AktiBOOM");
+    public static final KeyBinding sprengguertel = new KeyBinding("Sprengg\u00fcrtel", Keyboard.KEY_NONE, "AktiBoom");
+    public static final KeyBinding bombe = new KeyBinding("Bombe", Keyboard.KEY_NONE, "AktiBoom");
 
     public void KeyBindRegistration() {
         ClientRegistry.registerKeyBinding(sprengguertel);
