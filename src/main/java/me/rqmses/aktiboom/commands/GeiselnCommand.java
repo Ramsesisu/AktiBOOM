@@ -93,25 +93,25 @@ public class GeiselnCommand extends CommandBase implements IClientCommand {
                         case "rettungsdienst":
                             switch (values.get(2).toString().toLowerCase()) {
                                 case "0":
-                                    cost += 3000;
+                                    cost += 5000;
                                     break;
                                 case "1":
-                                    cost += 4000;
+                                    cost += 6000;
                                     break;
                                 case "2":
-                                    cost += 4500;
+                                    cost += 7000;
                                     break;
                                 case "3":
-                                    cost += 5500;
+                                    cost += 10000;
                                     break;
                                 case "4":
-                                    cost += 8000;
+                                    cost += 14000;
                                     break;
                                 case "5":
-                                    cost += 12000;
+                                    cost += 18000;
                                     break;
                                 case "6":
-                                    cost += 15000;
+                                    cost += 22000;
                                     break;
                             }
                             break;
@@ -120,57 +120,57 @@ public class GeiselnCommand extends CommandBase implements IClientCommand {
                         case "polizei":
                             switch (values.get(2).toString().toLowerCase()) {
                                 case "0":
-                                    cost += 4000;
-                                    break;
-                                case "1":
-                                    cost += 4500;
-                                    break;
-                                case "2":
-                                    cost += 5000;
-                                    break;
-                                case "3":
                                     cost += 6000;
                                     break;
-                                case "4":
-                                    cost += 11000;
-                                    break;
-                                case "5":
-                                    cost += 15000;
-                                    break;
-                                case "6":
-                                    cost += 20000;
-                                    break;
-                            }
-                            break;
-                        case "hrt":
-                            cost += 5000;
-                        case "fbi":
-                            switch (values.get(2).toString().toLowerCase()) {
-                                case "0":
-                                    cost += 5000;
-                                    break;
                                 case "1":
-                                    cost += 5500;
-                                    break;
-                                case "2":
-                                    cost += 6000;
-                                    break;
-                                case "3":
                                     cost += 7000;
                                     break;
+                                case "2":
+                                    cost += 8000;
+                                    break;
+                                case "3":
+                                    cost += 11000;
+                                    break;
                                 case "4":
-                                    cost += 13000;
+                                    cost += 16000;
                                     break;
                                 case "5":
-                                    cost += 20000;
+                                    cost += 22000;
                                     break;
                                 case "6":
                                     cost += 26000;
                                     break;
                             }
                             break;
+                        case "hrt":
+                            cost += 4000;
+                        case "fbi":
+                            switch (values.get(2).toString().toLowerCase()) {
+                                case "0":
+                                    cost += 6000;
+                                    break;
+                                case "1":
+                                    cost += 7000;
+                                    break;
+                                case "2":
+                                    cost += 8000;
+                                    break;
+                                case "3":
+                                    cost += 12000;
+                                    break;
+                                case "4":
+                                    cost += 18000;
+                                    break;
+                                case "5":
+                                    cost += 24000;
+                                    break;
+                                case "6":
+                                    cost += 28000;
+                                    break;
+                            }
+                            break;
                         default:
-                            cost += 1500;
+                            cost += 4000;
                             stringrank = "";
                     }
 
