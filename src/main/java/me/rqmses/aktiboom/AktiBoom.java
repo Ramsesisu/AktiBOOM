@@ -39,7 +39,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "3.1.1";
+    public static final String VERSION = "3.2.0";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -124,6 +124,9 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new StreamerModeCommand());
         ClientCommandHandler.instance.registerCommand(new BesprechungCommand());
         ClientCommandHandler.instance.registerCommand(new GrossaktiCommand());
+        ClientCommandHandler.instance.registerCommand(new AddSpotCommand());
+        ClientCommandHandler.instance.registerCommand(new RemoveSpotCommand());
+        ClientCommandHandler.instance.registerCommand(new SpotCommand());
     }
 
     public void ListenerRegistration() {

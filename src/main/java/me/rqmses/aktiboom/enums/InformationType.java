@@ -13,6 +13,7 @@ public enum InformationType {
     WINLOSE("Win/Lose Statistik", "C7:F64"),
     KEYS("\u00dcbersicht", "O38:O39"),
     MEETING("Equiplog", "G15:J17"),
+    SPOTS("Spot\u00fcbersicht", "C9:I299"),
     MATESHOTS("Win/Lose Statistik", "J37:K136");
 
     InformationType(String sheet, String range)

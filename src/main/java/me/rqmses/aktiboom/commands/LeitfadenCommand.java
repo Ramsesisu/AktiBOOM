@@ -88,6 +88,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         category("Commands:");
         command("/addmember");
         description("F\u00fcgt einen Member zum Aktinachweis hinzu.");
+        command("/addspot");
+        description("F\u00fcgt einen Spot zur Spot\u00fcbersicht bei.");
         command("/aktiboom");
         description("Gibt Informationen rund um die Mod aus.");
         command("/akti");
@@ -156,6 +158,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("L\u00e4dt deine Daten, oder die des angegebenen Members, aus dem Aktivit\u00e4tsnachweis neu.");
         command("/removemember");
         description("Entfernt einen Member aus dem Aktivit\u00e4tsnachweis.");
+        command("/removespot");
+        description("L\u00f6scht einen Spot in der Spot\u00fcbersicht.");
         command("/renamemember");
         description("Benennt einen Spieler im Aktivit\u00e4tsnachweis um.");
         command("/rp");
@@ -174,6 +178,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Setzt einen Member auf den angegeben Rang im Nachweis und gibt die Rechte dazu.");
         command("/setsecrank");
         description("Setzt einen Member auf den angegeben SEC-Rang im Nachweis und gibt die Rechte dazu.");
+        command("/spot");
+        description("Gibt die Spotliste gem\u00e4\u00df der Suchparameter aus.");
         command("/sprengg\u00fcrtelauftrag");
         description("F\u00fcgt einen Sprengg\u00fcrtelauftrag zur Liste hinzu oder entfernt ihn.");
         command("/sprengis");
@@ -208,6 +214,7 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("  (Standartm\u00e4\u00dfig in den Mod-Einstellungen aktiviert)");
         description("- Die Mateshots w\u00e4hrend einer Bombe k\u00f6nnen eingesehen werden.");
         description("- Dem Planter wird der Draht angezeigt.");
+        description("- Einsicht und Eintragung der Spot\u00fcbersicht f\u00fcr Bomben und Taktiken.");
         description("");
         feature("Geiselnahmen");
         description("- Geiseln k\u00f6nnen in eine Geisel-Liste eingetragen werden.");
