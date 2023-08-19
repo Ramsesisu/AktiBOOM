@@ -80,13 +80,13 @@ public class CheckSECDrugsCommand extends CommandBase implements IClientCommand 
 
             player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Pulver: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Geholt: " + TextFormatting.YELLOW + "" + TextFormatting.BOLD + pulver));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (250 - pulver)));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (350 - pulver)));
             player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Kr\u00e4uter: "));
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   Geholt: " + TextFormatting.YELLOW + "" + TextFormatting.BOLD + kraeuter));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (250 - kraeuter)));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "   \u00dcbrig:  " + TextFormatting.YELLOW + (350 - kraeuter)));
             player.sendMessage(new TextComponentString(""));
 
-            if (pulver < 250 || kraeuter < 250) {
+            if (pulver < 350 || kraeuter < 350) {
                 player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Drogen \u00fcbrig: " + TextFormatting.GREEN + "" + TextFormatting.BOLD + "Ja"));
             } else {
                 player.sendMessage(new TextComponentString(TextFormatting.GRAY + "Drogen \u00fcbrig: " + TextFormatting.RED + "" + TextFormatting.BOLD + "Nein"));
