@@ -140,8 +140,8 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new ReloadListener());
     }
 
-    public static final KeyBinding sprengguertel = new KeyBinding("Sprengg\u00fcrtel", Keyboard.KEY_NONE, "AktiBoom");
-    public static final KeyBinding bombe = new KeyBinding("Bombe", Keyboard.KEY_NONE, "AktiBoom");
+    public static final KeyBinding sprengguertel = new KeyBinding("key.sprengguertel", Keyboard.KEY_NONE, "key.categories.aktiboom");
+    public static final KeyBinding bombe = new KeyBinding("key.bombe", Keyboard.KEY_NONE, "key.categories.aktiboom");
 
     public void KeyBindRegistration() {
         ClientRegistry.registerKeyBinding(sprengguertel);
