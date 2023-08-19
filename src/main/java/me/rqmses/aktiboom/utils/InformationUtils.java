@@ -8,6 +8,8 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.util.text.TextComponentString;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
 
@@ -25,12 +27,14 @@ public class InformationUtils {
         NetHandlerPlayClient netHandlerPlayClient = Minecraft.getMinecraft().getConnection();
         if (netHandlerPlayClient != null) {
             if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
-                try {
-                    SheetUtils.clearValues("Equiplog", "D4:D27");
-                } catch (IOException ignored) {
-                }
-
                 ChatReceiveListener.hide = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        ChatReceiveListener.hide = false;
+                    }
+                }, 5 * 1000);
+
                 player.sendChatMessage("/equiplog " + hours);
                 player.sendMessage(new TextComponentString(PREFIX + "Der Equiplog wird aktualisiert."));
             }

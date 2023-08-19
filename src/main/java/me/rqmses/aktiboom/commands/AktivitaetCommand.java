@@ -62,7 +62,7 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             targets = Arrays.asList("Gebietseinnahme", "Entf\u00fchrung", "Flugzeugentf\u00fchrung",
                     "UBoot-Entf\u00fchrung", "UBahn-Entf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
                     "Menschenhandel", "Ausraub", "Autobombe", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
-                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "Schutzgeld", "Tuning");
+                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "Schutzgeld", "Tuning", "FBI-Einbruch");
         }
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("Auftragsauslieferung")) {
@@ -187,6 +187,11 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     argslenght = 2;
                     usage = "/aktivit\u00e4t Gebietseinahme [Leiter] [Ort] ([Einnahme]) ([Protokoll])";
                     break;
+                case "fbi-einbruch":
+                    type = ActivityType.GEBIETSEINNAHMEN;
+                    argslenght = 1;
+                    usage = "/aktivit\u00e4t FBI-Einbruch [Leiter] ([Protokoll])";
+                    break;
                 case "ubahn-entf\u00fchrung":
                 case "uboot-entf\u00fchrung":
                 case "flugzeugentf\u00fchrung":
@@ -268,18 +273,33 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                     case ENTFUEHRUNGEN:
                     case GEBIETSEINNAHMEN:
                     case GEISELNAHMEN:
-                        if (args.length > 3) {
-                            leading[0] = "WAHR";
-                            money[0] = args[3];
-                            if (args.length > 4) {
-                                forum[0] = args[4];
+                        if (args[0].equalsIgnoreCase("FBI-Einbruch")) {
+                            money[0] = "";
+                            if (args.length > 2) {
+                                leading[0] = "WAHR";
+                                money[0] = "0";
+                                forum[0] = args[2];
                             }
-                        }
-                        try {
-                            success = SheetUtils.addActivity(type, new String[]{date, leading[0], args[1], args[2], money[0], link, forum[0]});
-                        } catch (IOException e) {
-                            player.sendMessage(errormsg);
-                            return;
+                            try {
+                                success = SheetUtils.addActivity(type, new String[]{date, leading[0], args[1], "FBI", money[0], link, forum[0]});
+                            } catch (IOException e) {
+                                player.sendMessage(errormsg);
+                                return;
+                            }
+                        } else {
+                            if (args.length > 3) {
+                                leading[0] = "WAHR";
+                                money[0] = args[3];
+                                if (args.length > 4) {
+                                    forum[0] = args[4];
+                                }
+                            }
+                            try {
+                                success = SheetUtils.addActivity(type, new String[]{date, leading[0], args[1], args[2], money[0], link, forum[0]});
+                            } catch (IOException e) {
+                                player.sendMessage(errormsg);
+                                return;
+                            }
                         }
                         break;
                     case BOMBEN:
