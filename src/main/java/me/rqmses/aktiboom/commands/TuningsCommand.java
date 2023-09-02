@@ -79,14 +79,13 @@ public class TuningsCommand extends CommandBase implements IClientCommand {
     public static void syncList() {
         new Thread(() -> {
             tunings = new ArrayList<>();
-            List<List<Object>> values;
+            List<List<Object>> values = new ArrayList<>();
             try {
                 values = SheetUtils.getValueRange("Auftr\u00e4ge", "Q4:T54").getValues();
-            } catch (IOException e) {
-                return;
-            }
-            if (values == null) {
-                return;
+                if (values == null) {
+                    return;
+                }
+            } catch (IOException ignored) {
             }
             for (List<Object> list : values) {
                 tunings.add(list.get(1).toString());

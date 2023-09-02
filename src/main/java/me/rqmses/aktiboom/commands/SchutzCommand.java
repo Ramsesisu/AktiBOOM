@@ -79,14 +79,13 @@ public class SchutzCommand extends CommandBase implements IClientCommand {
     public static void syncList() {
         new Thread(() -> {
             schutz = new ArrayList<>();
-            List<List<Object>> values;
+            List<List<Object>> values = new ArrayList<>();
             try {
                 values = SheetUtils.getValueRange("Auftr\u00e4ge", "M4:O54").getValues();
-            } catch (IOException e) {
-                return;
-            }
-            if (values == null) {
-                return;
+                if (values == null) {
+                    return;
+                }
+            } catch (IOException ignored) {
             }
             for (List<Object> list : values) {
                 schutz.add(list.get(0).toString());

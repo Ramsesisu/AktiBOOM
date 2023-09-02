@@ -79,14 +79,13 @@ public class SprengisCommand extends CommandBase implements IClientCommand {
     public static void syncList() {
         new Thread(() -> {
             drohungen = new ArrayList<>();
-            List<List<Object>> values;
+            List<List<Object>> values = new ArrayList<>();
             try {
                 values = SheetUtils.getValueRange("Auftr\u00e4ge", "G4:K54").getValues();
-            } catch (IOException e) {
-                return;
-            }
-            if (values == null) {
-                return;
+                if (values == null) {
+                    return;
+                }
+            } catch (IOException ignored) {
             }
             for (List<Object> list : values) {
                 drohungen.add(list.get(1).toString());

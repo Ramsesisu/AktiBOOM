@@ -83,7 +83,7 @@ public class ChatReceiveListener {
 
             if (ConfigHandler.autorefresh) {
                 if (text.contains("Sprengg\u00fcrtelauftrag")) {
-                    SchutzCommand.syncList();
+                    SprengisCommand.syncList();
                 }
                 if (text.contains("Auftragsauslieferung")) {
                     AuftraegeCommand.syncList();

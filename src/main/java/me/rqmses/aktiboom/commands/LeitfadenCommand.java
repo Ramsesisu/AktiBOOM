@@ -148,8 +148,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt Informationen zum letzten Bomben-Plant aus.");
         command("/leitfaden");
         description("\u00d6ffnet diesen Leitfaden.");
-        command("/mateshots");
-        description("Gibt die Mateshots der letzten Bombe aus.");
         command("/memberderwoche");
         description("Gibt die aktuellen Member der Woche aus.");
         command("/nearestnavi");
@@ -184,8 +182,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("F\u00fcgt einen Sprengg\u00fcrtelauftrag zur Liste hinzu oder entfernt ihn.");
         command("/sprengis");
         description("Gibt eine Liste aktueller Sprengg\u00fcrtelauftr\u00e4ge aus.");
-        command("/statistik");
-        description("Gibt die w\u00f6chtentliche Statistik aus bzw. tr\u00e4gt in diese ein.");
         command("/tunings");
         description("Gibt eine Liste aktueller gekaufter Autobomben aus.");
         command("/wirtschaft");

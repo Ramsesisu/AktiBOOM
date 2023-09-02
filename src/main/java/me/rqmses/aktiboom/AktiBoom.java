@@ -39,7 +39,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "3.2.0";
+    public static final String VERSION = "3.2.1";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -94,7 +94,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new CheckSchutzCommand());
         ClientCommandHandler.instance.registerCommand(new RefreshCommand());
         ClientCommandHandler.instance.registerCommand(new SECCommand());
-        ClientCommandHandler.instance.registerCommand(new StatistikCommand());
         ClientCommandHandler.instance.registerCommand(new KalenderCommand());
         ClientCommandHandler.instance.registerCommand(new AutobombeCommand());
         ClientCommandHandler.instance.registerCommand(new TuningsCommand());
@@ -117,7 +116,6 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new LastBombCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselCommand());
         ClientCommandHandler.instance.registerCommand(new GeiselnCommand());
-        ClientCommandHandler.instance.registerCommand(new MateshotsCommand());
         ClientCommandHandler.instance.registerCommand(new FBankCommand());
         ClientCommandHandler.instance.registerCommand(new GehaelterCommand());
         ClientCommandHandler.instance.registerCommand(new WirtschaftCommand());
@@ -139,7 +137,6 @@ public class AktiBoom {
         MinecraftForge.EVENT_BUS.register(new PlayerUpdateListener());
         MinecraftForge.EVENT_BUS.register(new PlayerDeathListener());
         MinecraftForge.EVENT_BUS.register(new ContainerListener());
-        MinecraftForge.EVENT_BUS.register(new DamageListener());
         MinecraftForge.EVENT_BUS.register(new ReloadListener());
     }
 
