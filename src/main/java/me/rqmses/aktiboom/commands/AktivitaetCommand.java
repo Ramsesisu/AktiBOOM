@@ -62,7 +62,8 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             targets = Arrays.asList("Gebietseinnahme", "Entf\u00fchrung", "Flugzeugentf\u00fchrung",
                     "UBoot-Entf\u00fchrung", "UBahn-Entf\u00fchrung", "Geiselnahme", "Bombe", "Sprengg\u00fcrtel",
                     "Menschenhandel", "Ausraub", "Autobombe", "Training", "Waffentransport", "Zuzahlung", "Bombenspot",
-                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "Schutzgeld", "Tuning", "FBI-Einbruch");
+                    "RP-Event", "Spende", "Drohung", "Geisel", "Auftragsauslieferung", "Schutzgeld", "Tuning", "FBI-Einbruch",
+                    "Einweisung");
         }
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("Auftragsauslieferung")) {
@@ -250,12 +251,13 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                 case "schutzgeld":
                 case "geisel":
                 case "auftragsauslieferung":
+                case "einweisung":
                     type = ActivityType.SONSTIGES;
-                    argslenght = 1;
-                    usage = "/aktivit\u00e4t Sonstiges [Einnahme]";
+                    argslenght = 0;
+                    usage = "/aktivit\u00e4t Sonstiges ([Einnahme])";
                     break;
                 default:
-                    player.sendMessage(new TextComponentString(PREFIX + args[0] + " ist keine Kategorie!"));
+                    player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.GOLD + " ist keine Kategorie!"));
                     return;
             }
 
@@ -382,9 +384,17 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
                             case "tuning":
                                 category[0] = "Tuning";
                                 break;
+                            case "einweisung":
+                                category[0] = "Einweisung";
+                                break;
+                        }
+                        if (args.length < 2) {
+                            money[0] = "0";
+                        } else {
+                            money[0] = args[1];
                         }
                         try {
-                            success = SheetUtils.addActivity(type, new String[]{date, args[1], category[0], link});
+                            success = SheetUtils.addActivity(type, new String[]{date, money[0], category[0], link});
                         } catch (IOException e) {
                             player.sendMessage(errormsg);
                             return;
@@ -404,7 +414,6 @@ public class AktivitaetCommand extends CommandBase implements IClientCommand {
             player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
         }
     }
-
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;

@@ -83,7 +83,7 @@ public class AddSpotCommand extends CommandBase implements IClientCommand {
                     StringBuilder taktik = new StringBuilder();
                     if (args.length > 6) {
                         for (int i = 6; i < args.length; i++) {
-                            taktik.append(args[i]);
+                            taktik.append(args[i]).append(" ");
                         }
                     }
 

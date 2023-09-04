@@ -67,7 +67,7 @@ public class SpotCommand extends CommandBase implements IClientCommand {
 
             List<List<Object>> spots;
             try {
-                spots = SheetUtils.getValueRange(InformationType.SPOTS.getSheet(), "C9:H299").getValues();
+                spots = SheetUtils.getValueRange(InformationType.SPOTS.getSheet(), "C9:I299").getValues();
             } catch (IOException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Die Spot\u00fcbersicht konnte nicht erfasst werden!"));
                 return;
@@ -78,8 +78,9 @@ public class SpotCommand extends CommandBase implements IClientCommand {
                 List<String> stats = spot.stream()
                         .map(Object::toString)
                         .collect(Collectors.toList());
+                stats.replaceAll(String::toLowerCase);
                 for (String arg : args) {
-                    if (!stats.contains(arg)) {
+                    if (!stats.contains(arg.toLowerCase())) {
                         removed.add(spot.get(0).toString());
                         break;
                     }
@@ -97,6 +98,9 @@ public class SpotCommand extends CommandBase implements IClientCommand {
                     String proof = spot.get(5).toString();
                     if (proof.length() > 1) {
                         player.sendMessage(TextUtils.clickable(TextFormatting.YELLOW, "   Beweis: " + TextFormatting.GRAY + proof, TextFormatting.DARK_AQUA + "Beweis", ClickEvent.Action.OPEN_URL, proof));
+                    }
+                    if (spot.size() > 6) {
+                        player.sendMessage(new TextComponentString(TextFormatting.YELLOW + "   Taktik: " + TextFormatting.GRAY + spot.get(6).toString()));
                     }
                 }
             }
