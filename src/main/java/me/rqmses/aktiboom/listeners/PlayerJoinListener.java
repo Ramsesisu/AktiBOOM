@@ -141,12 +141,12 @@ public class PlayerJoinListener {
         new Thread(() -> {
             List<List<Object>> members = new ArrayList<>();
             try {
-                members = SheetUtils.getValueRange(InformationType.NAMES.getSheet(), InformationType.NAMES.getRange()).getValues();
+                members = SheetUtils.getValueRange(InformationType.NAMES.getSheet(), "A4:B27").getValues();
             } catch (IOException ignored) {
             }
 
             for (List<Object> member : members) {
-                MEMBER.add(member.get(0).toString());
+                MEMBER.put(member.get(1).toString(), Integer.parseInt(member.get(0).toString()));
             }
         }).start();
 
@@ -171,14 +171,14 @@ public class PlayerJoinListener {
                 for (List<Object> value : values) {
                     String secrank = value.get(1).toString();
                     String secrankname = secrank;
-                    if (secrank.startsWith("E")) {
-                        secrankname = "Executive";
-                    } else if (secrank.startsWith("C")) {
-                        secrankname = "Commander";
-                    } else if (secrank.startsWith("M")) {
-                        secrankname = "Marshal";
+                    if (secrank.startsWith("F")) {
+                        secrankname = "Feld";
+                    } else if (secrank.startsWith("O")) {
+                        secrankname = "Ober";
+                    } else if (secrank.startsWith("S")) {
+                        secrankname = "Stabs";
                     }
-                    ChatReceiveListener.secplayerranks.put(value.get(0).toString(), secrankname);
+                    SECMEMBER.put(value.get(0).toString(), secrankname);
                 }
             } catch (IOException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Die SEC-R\u00e4nge konnten nicht geladen werden!"));

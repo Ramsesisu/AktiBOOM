@@ -28,7 +28,7 @@ public class LocationUtils {
                 "280", "121", "Brauerei", "470", "113");
     }
 
-    public static HashMap<String, BlockPos> uclocs = new HashMap<>();
+    public static final HashMap<String, BlockPos> uclocs = new HashMap<>();
 
     public static void setLocs() {
         for (NaviPoints naviPoint : NaviPoints.values()) {

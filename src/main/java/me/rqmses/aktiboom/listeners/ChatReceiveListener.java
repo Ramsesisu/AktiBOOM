@@ -32,7 +32,6 @@ public class ChatReceiveListener {
     public static String result = "0";
 
     public static List<List<Object>> lastMembers = new ArrayList<>();
-    public static final HashMap<String, String> secplayerranks = new HashMap<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onMessage(ClientChatReceivedEvent event) {
@@ -50,6 +49,16 @@ public class ChatReceiveListener {
             if (prefixes.contains(message.split(" ")[0])) {
                 event.setCanceled(true);
                 return;
+            }
+        }
+
+        if (prefixes.contains(message.split(" ")[0])) {
+            String[] contents = message.split(" ");
+            if (MEMBER.containsKey(contents[1].replace(":", "")) && contents[1].endsWith(":")) {
+                String name = contents[1].replace(":", "");
+                if (SECMEMBER.containsKey(name)) {
+                    event.setMessage(new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], SECMEMBER.get(name) + contents[0].toLowerCase())));
+                }
             }
         }
 

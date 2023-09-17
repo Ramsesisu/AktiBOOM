@@ -22,6 +22,7 @@ import org.lwjgl.input.Keyboard;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static me.rqmses.aktiboom.handlers.SheetHandler.getSheetsService;
@@ -39,7 +40,7 @@ public class AktiBoom {
 
     public static final String MOD_ID = "aktiboom";
     public static final String MOD_NAME = "AktiBOOM";
-    public static final String VERSION = "3.2.3";
+    public static final String VERSION = "3.3.0";
 
 
     public static String PREFIX = TextFormatting.DARK_GRAY + "[" + FormatUtils.getColor(ConfigHandler.prefix) + "AktiBOOM" + TextFormatting.DARK_GRAY + "] " + TextFormatting.YELLOW;
@@ -50,7 +51,8 @@ public class AktiBoom {
     public static boolean AFK = false;
     public static boolean KOMMS = true;
     public static String LATEST = VERSION;
-    public static final List<String> MEMBER = new ArrayList<>();
+    public static final HashMap<String, Integer> MEMBER = new HashMap<>();
+    public static final HashMap<String, String> SECMEMBER = new HashMap<>();
     public static boolean BOMBE = false;
     public static boolean OPERATION = false;
 

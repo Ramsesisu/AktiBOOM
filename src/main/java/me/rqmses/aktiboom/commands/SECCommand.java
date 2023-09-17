@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.utils.InformationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -17,8 +18,8 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.SECRANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
+import static me.rqmses.aktiboom.AktiBoom.MEMBER;
 
 @SuppressWarnings("ALL")
 public class SECCommand extends CommandBase implements IClientCommand {
@@ -66,7 +67,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (args.length > 0) {
                 if (args.length > 1) {
-                    if (SECRANK.equals("Commander") || SECRANK.equals("Marshal")) {
+                    if (SECRANK.equals("Ober") || SECRANK.equals("Stabs")) {
                         SheetUtils.tobecontinued = false;
                         SheetUtils.returnvalues = 0;
 
@@ -77,7 +78,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                         if (args[0].equalsIgnoreCase("invite")) {
                             try {
-                                SheetUtils.addValues("SEC-Drogen", "H13:I21", new String[]{args[1], "Executive"});
+                                SheetUtils.addValues("SEC-Drogen", "H13:I21", new String[]{args[1], "Feld"});
 
                                 SheetUtils.addEditor("SEC-Drogen", "SEC-Drogen", email);
                                 SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
@@ -113,7 +114,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
                             SheetUtils.returnvalues = 0;
                         }
                     } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "Du bist kein SEC-Commander oder General."));
+                        player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Ober" + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + " oder Stabs" + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + "!"));
                     }
                 } else {
                     player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
@@ -125,7 +126,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                     for (List<Object> list : SheetUtils.getValueRange("SEC-Drogen", "H13:I21").getValues()) {
                         if (!list.get(1).toString().contains("Tester")) {
-                            player.sendMessage(new TextComponentString("  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString()));
+                            player.sendMessage(new TextComponentString("  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString() + InformationUtils.getRankName(MEMBER.get(list.get(0).toString())).toLowerCase()));
                         }
                     }
                 } catch (IOException e) {

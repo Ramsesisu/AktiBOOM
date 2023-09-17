@@ -44,4 +44,25 @@ public class InformationUtils {
     public static void clearOperation() throws IOException {
         SheetUtils.clearValues(InformationType.MATESHOTS.getSheet(), InformationType.MATESHOTS.getRange());
     }
+
+    public static String getRankName(int rank) {
+        switch (rank) {
+            case 0:
+                return "Rekrut";
+            case 1:
+                return "Feldwebel";
+            case 2:
+                return "Leutnant";
+            case 3:
+                return "Hauptmann";
+            case 4:
+                return "Major";
+            case 5:
+                return "General";
+            case 6:
+                return "Kommandant";
+            default:
+                return "Zivilist";
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.utils.InformationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -84,33 +85,8 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Name: " + TextFormatting.YELLOW + name));
 
-            String rankname = "Rekrut";
-            switch (rank) {
-                case -1:
-                    rankname = "Nicht in der Fraktion";
-                    break;
-                case 1:
-                    rankname = "Feldwebel";
-                    break;
-                case 2:
-                    rankname = "Leutnant";
-                    break;
-                case 3:
-                    rankname = "Hauptmann";
-                    break;
-                case 4:
-                    rankname = "Major";
-                    break;
-                case 5:
-                    rankname = "General";
-                    break;
-                case 6:
-                    rankname = "Kommandant";
-                    break;
-            }
-
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + rankname + " (" + rank + ")"));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrank));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + InformationUtils.getRankName(rank) + " (" + rank + ")"));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrank + InformationUtils.getRankName(rank).toLowerCase()));
         }).start();
     }
 
