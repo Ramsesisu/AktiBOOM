@@ -167,7 +167,7 @@ public class PlayerJoinListener {
             }
 
             try {
-                List<List<Object>> values = SheetUtils.getValueRange("SEC-Drogen", "H13:I21").getValues();
+                List<List<Object>> values = SheetUtils.getValueRange("SEC", "H13:I21").getValues();
                 for (List<Object> value : values) {
                     String secrank = value.get(1).toString();
                     String secrankname = secrank;

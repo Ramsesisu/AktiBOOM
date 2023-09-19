@@ -172,6 +172,8 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Gibt eine Liste aktueller SEC-Member aus bzw. (un-)invitet.");
         command("/secdrugs");
         description("Tr\u00e4gt eine Drogenabholung des SECs ein.");
+        command("/secpoints");
+        description("Stellt die Punkte eines SEC-Members ein.");
         command("/setrank");
         description("Setzt einen Member auf den angegeben Rang im Nachweis und gibt die Rechte dazu.");
         command("/setsecrank");

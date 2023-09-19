@@ -86,9 +86,9 @@ public class RenameMemberCommand extends CommandBase implements IClientCommand {
                         line = SheetUtils.searchLine("Equiplog", "C977:C1000", args[0]) + 977;
                         SheetUtils.setLine("Equiplog", "C" + line, new String[]{args[1]});
 
-                        line = SheetUtils.searchLine("SEC-Drogen", "H13:H21", args[0]) + 13;
+                        line = SheetUtils.searchLine("SEC", "H13:H21", args[0]) + 13;
                         if (line > 12) {
-                            SheetUtils.setLine("SEC-Drogen", "H" + line, new String[]{args[1]});
+                            SheetUtils.setLine("SEC", "H" + line, new String[]{args[1]});
                         }
 
                         SheetUtils.renameSheet(SheetUtils.getSheetID(args[0]), args[1]);

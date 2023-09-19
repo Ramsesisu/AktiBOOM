@@ -205,7 +205,7 @@ public class SheetUtils {
     }
 
     public static boolean addSECDrugs(String[] args) throws IOException {
-        ValueRange valueRange = getValueRange("SEC-Drogen", "C4:C34");
+        ValueRange valueRange = getValueRange("SEC", "C4:C34");
 
         int line = 0;
         if (valueRange.getValues() != null) {
@@ -219,7 +219,7 @@ public class SheetUtils {
         }
 
         sheetsService.spreadsheets().values()
-                .append(SPREADSHEET_ID, "SEC-Drogen!C" + (4 + line), new ValueRange().setValues(Collections.singletonList(Arrays.asList(new Object[]{args[0], args[1], args[2], args[3]}))))
+                .append(SPREADSHEET_ID, "SEC!C" + (4 + line), new ValueRange().setValues(Collections.singletonList(Arrays.asList(new Object[]{args[0], args[1], args[2], args[3]}))))
                 .setValueInputOption("USER_ENTERED")
                 .setInsertDataOption("OVERWRITE")
                 .execute();

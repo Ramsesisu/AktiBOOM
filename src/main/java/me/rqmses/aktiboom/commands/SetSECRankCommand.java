@@ -77,9 +77,9 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
                             String email = SheetUtils.getEmail(args[0]);
 
                             if (rank.equals("Feld") && !oldrank.equals("Feld")) {
-                                SheetUtils.removeEditor("SEC-Drogen", "SEC-Member", email);
+                                SheetUtils.removeEditor("SEC", "SEC-Member", email);
                             } else if ((rank.equals("Ober") || rank.equals("Stabs")) && oldrank.equals("Feld")) {
-                                SheetUtils.addEditor("SEC-Drogen", "SEC-Member", email);
+                                SheetUtils.addEditor("SEC", "SEC-Member", email);
                             }
 
                             player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + rank + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + TextFormatting.YELLOW + " aktualisiert."));

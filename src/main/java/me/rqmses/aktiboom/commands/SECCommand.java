@@ -78,9 +78,9 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                         if (args[0].equalsIgnoreCase("invite")) {
                             try {
-                                SheetUtils.addValues("SEC-Drogen", "H13:I21", new String[]{args[1], "Feld"});
+                                SheetUtils.addValues("SEC", "H13:I21", new String[]{args[1], "Feld"});
 
-                                SheetUtils.addEditor("SEC-Drogen", "SEC-Drogen", email);
+                                SheetUtils.addEditor("SEC", "SEC-Drogen", email);
                                 SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
 
                                 player.sendChatMessage("/f %INFO% :&6&l" + args[1] + "&e wurde von " + player.getName() + " in das SEC invitet.");
@@ -90,16 +90,16 @@ public class SECCommand extends CommandBase implements IClientCommand {
                         }
                         if (args[0].equalsIgnoreCase("uninvite")) {
                             try {
-                                int line = SheetUtils.searchLine("SEC-Drogen", "H13:H21", args[1]) + 13;
-                                List<Object> list = SheetUtils.getValueRange("SEC-Drogen", "H" + line + ":I" + line).getValues().get(0);
+                                int line = SheetUtils.searchLine("SEC", "H13:H21", args[1]) + 13;
+                                List<Object> list = SheetUtils.getValueRange("SEC", "H" + line + ":I" + line).getValues().get(0);
                                 if (list.get(1).toString().equalsIgnoreCase("Name")) {
                                     player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht im SEC."));
                                     return;
                                 }
-                                SheetUtils.clearValues("SEC-Drogen", "H" + line + ":I" + line);
-                                SheetUtils.sortRange("SEC-Drogen", "H13:I21");
+                                SheetUtils.clearValues("SEC", "H" + line + ":I" + line);
+                                SheetUtils.sortRange("SEC", "H13:I21");
 
-                                SheetUtils.removeEditor("SEC-Drogen", "SEC-Drogen", email);
+                                SheetUtils.removeEditor("SEC", "SEC-Drogen", email);
                                 SheetUtils.removeEditor("Spot\u00fcbersicht", "Spots", email);
 
                                 player.sendChatMessage("/f %INFO% :&6&l" + args[1] + "&e wurde von " + player.getName() + " aus dem SEC geworfen.");
@@ -124,9 +124,14 @@ public class SECCommand extends CommandBase implements IClientCommand {
                     player.sendMessage(new TextComponentString(PREFIX + "Aktuelle SEC-Mitglieder:"));
                     player.sendMessage(new TextComponentString(""));
 
-                    for (List<Object> list : SheetUtils.getValueRange("SEC-Drogen", "H13:I21").getValues()) {
+                    for (List<Object> list : SheetUtils.getValueRange("SEC", "H13:J21").getValues()) {
                         if (!list.get(1).toString().contains("Tester")) {
-                            player.sendMessage(new TextComponentString("  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString() + InformationUtils.getRankName(MEMBER.get(list.get(0).toString())).toLowerCase()));
+                            String entry = "  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString() + InformationUtils.getRankName(MEMBER.get(list.get(0).toString())).toLowerCase();
+                            if (SEC && !list.get(1).toString().equals("Feld")) {
+                                player.sendMessage(new TextComponentString(entry));
+                            } else {
+                                player.sendMessage(new TextComponentString(entry + " " + TextFormatting.DARK_GRAY + "(" + TextFormatting.BOLD + list.get(2).toString() + TextFormatting.DARK_GRAY + "P)"));
+                            }
                         }
                     }
                 } catch (IOException e) {

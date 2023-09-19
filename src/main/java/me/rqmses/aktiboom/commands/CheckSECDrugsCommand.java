@@ -54,28 +54,28 @@ public class CheckSECDrugsCommand extends CommandBase implements IClientCommand 
             String temppulver;
             try {
                 valueRange = sheetsService.spreadsheets().values()
-                        .get(SPREADSHEET_ID, "SEC-Drogen!H5")
+                        .get(SPREADSHEET_ID, "SEC!H5")
                         .execute();
                 temppulver = valueRange.getValues().get(0).get(0).toString();
             } catch (IOException e) {
-                player.sendMessage(new TextComponentString(PREFIX + "Das Pulver des" + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + "konnte nicht erfasst werden."));
+                player.sendMessage(new TextComponentString(PREFIX + "Das Pulver des" + TextFormatting.GOLD + " SEC " + TextFormatting.YELLOW + "konnte nicht erfasst werden."));
                 return;
             }
             String tempkraeuter;
             try {
                 valueRange = sheetsService.spreadsheets().values()
-                        .get(SPREADSHEET_ID, "SEC-Drogen!I5")
+                        .get(SPREADSHEET_ID, "SEC!I5")
                         .execute();
                 tempkraeuter = valueRange.getValues().get(0).get(0).toString();
             } catch (IOException e) {
-                player.sendMessage(new TextComponentString(PREFIX + "Die Kr\u00e4uter des" + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + "konnten nicht erfasst werden."));
+                player.sendMessage(new TextComponentString(PREFIX + "Die Kr\u00e4uter des" + TextFormatting.GOLD + " SEC " + TextFormatting.YELLOW + "konnten nicht erfasst werden."));
                 return;
             }
 
             int pulver = Integer.parseInt(temppulver.replace(" ", "").split("/")[0]);
             int kraeuter = Integer.parseInt(tempkraeuter.replace(" ", "").split("/")[0]);
 
-            player.sendMessage(new TextComponentString(PREFIX + "Drogen des " + TextFormatting.GOLD + "SEC"));
+            player.sendMessage(new TextComponentString(PREFIX + "Drogen des " + TextFormatting.GOLD + "SEC" + TextFormatting.YELLOW + ":"));
             player.sendMessage(new TextComponentString(""));
 
             player.sendMessage(new TextComponentString(TextFormatting.GOLD + "Pulver: "));

@@ -127,6 +127,7 @@ public class AktiBoom {
         ClientCommandHandler.instance.registerCommand(new AddSpotCommand());
         ClientCommandHandler.instance.registerCommand(new RemoveSpotCommand());
         ClientCommandHandler.instance.registerCommand(new SpotCommand());
+        ClientCommandHandler.instance.registerCommand(new SECPointsCommand());
     }
 
     public void ListenerRegistration() {
