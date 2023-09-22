@@ -28,6 +28,14 @@ import static me.rqmses.aktiboom.AktiBoom.*;
 
 public class ChatReceiveListener {
 
+    private static final List<String> prefixes = Arrays.asList(  "Rekrut", "Rekrutin",
+            "Feldwebel", "Feldwebel",
+            "Leutnant", "Leutnant",
+            "Hauptmann", "Hauptfrau",
+            "Major", "Majorin",
+            "General", "Generalin",
+            "Kommandant", "Kommandantin");
+
     public static boolean hide = false;
     public static String searchprefix = "";
     public static String result = "0";
@@ -39,27 +47,10 @@ public class ChatReceiveListener {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         String message = event.getMessage().getUnformattedText();
 
-        List<String> prefixes = Arrays.asList(  "Rekrut", "Rekrutin",
-                                                "Feldwebel", "Feldwebel",
-                                                "Leutnant", "Leutnant",
-                                                "Hauptmann", "Hauptfrau",
-                                                "Major", "Majorin",
-                                                "General", "Generalin",
-                                                "Kommandant", "Kommandantin");
         if (StreamerModeCommand.streamermode) {
             if (prefixes.contains(message.split(" ")[0])) {
                 event.setCanceled(true);
                 return;
-            }
-        }
-
-        if (prefixes.contains(message.split(" ")[0])) {
-            String[] contents = message.split(" ");
-            if (MEMBER.containsKey(contents[1].replace(":", "")) && contents[1].endsWith(":")) {
-                String name = contents[1].replace(":", "");
-                if (SECMEMBER.containsKey(name)) {
-                    event.setMessage(new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], InformationUtils.getSECRankName(SECMEMBER.get(name)) + contents[0].toLowerCase())));
-                }
             }
         }
 
@@ -476,6 +467,22 @@ public class ChatReceiveListener {
                 }
 
                 FBankCommand.checkTaxes = false;
+            }
+        }
+    }
+
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onPrefix(ClientChatReceivedEvent event) {
+        String message = event.getMessage().getUnformattedText();
+
+        if (prefixes.contains(message.split(" ")[0])) {
+            String[] contents = message.split(" ");
+            if (MEMBER.containsKey(contents[1].replace(":", "")) && contents[1].endsWith(":")) {
+                String name = contents[1].replace(":", "");
+                if (SECMEMBER.containsKey(name)) {
+                    event.setMessage(new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], InformationUtils.getSECRankName(SECMEMBER.get(name)) + contents[0].toLowerCase())));
+                }
             }
         }
     }
