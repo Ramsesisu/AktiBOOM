@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -54,7 +53,7 @@ public class ClearNachweisCommand extends CommandBase implements IClientCommand 
 
             if (args.length > 0) {
                 if (args[0].equals(player.getName())) {
-                    if (RANK >= 5) {
+                    if (MEMBER.get(player.getName()) >= 5) {
                         List<String> memberlist = new ArrayList<>();
                         List<List<Object>> names;
 

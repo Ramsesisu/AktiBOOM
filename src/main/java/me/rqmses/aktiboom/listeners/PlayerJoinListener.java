@@ -33,7 +33,7 @@ public class PlayerJoinListener {
     @SubscribeEvent
     public void onJoin(ClientChatReceivedEvent event) {
         if (event.getMessage().getUnformattedText().equals("Willkommen zur\u00fcck!")) {
-            refresh(true);
+            refresh();
 
             if (ConfigHandler.showaktis) {
                 new Thread(() -> {
@@ -83,14 +83,10 @@ public class PlayerJoinListener {
         }
     }
 
-    public static void refresh(boolean rejoin) {
+    public static void refresh() {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         AFK = false;
-
-        if (!rejoin) {
-            OPERATION = false;
-        }
 
         BombeCommand.planter = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);
@@ -137,11 +133,10 @@ public class PlayerJoinListener {
             }
         }).start();
 
-
         new Thread(() -> {
             List<List<Object>> members = new ArrayList<>();
             try {
-                members = SheetUtils.getValueRange(InformationType.NAMES.getSheet(), "A4:B27").getValues();
+                members = SheetUtils.getValueRange(InformationType.MEMBER.getSheet(), InformationType.MEMBER.getRange()).getValues();
             } catch (IOException ignored) {
             }
 
@@ -151,11 +146,7 @@ public class PlayerJoinListener {
         }).start();
 
         new Thread(() -> {
-            SEC = SheetUtils.isSEC(player.getName());
-            RANK = SheetUtils.getRank(player.getName());
-            SECRANK = SheetUtils.getSECRank(player.getName());
-
-            if (RANK >= 5) {
+            if (SheetUtils.getRank(player.getName()) >= 5) {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
@@ -166,19 +157,18 @@ public class PlayerJoinListener {
                 }, 0, 60 * 30 * 1000);
             }
 
+            List<List<Object>> values;
             try {
-                List<List<Object>> values = SheetUtils.getValueRange("SEC", "H13:I21").getValues();
+                values = SheetUtils.getValueRange(InformationType.SECRANKNAMES.getSheet(), InformationType.SECRANKNAMES.getRange()).getValues();
+                for (List<Object> value : values) {
+                    String secrankname = value.get(0).toString();
+                    SECRANKS.put(Integer.parseInt(value.get(1).toString()), secrankname);
+                }
+
+                values = SheetUtils.getValueRange(InformationType.SECMEMBER.getSheet(), InformationType.SECMEMBER.getRange()).getValues();
                 for (List<Object> value : values) {
                     String secrank = value.get(1).toString();
-                    String secrankname = secrank;
-                    if (secrank.startsWith("F")) {
-                        secrankname = "Feld";
-                    } else if (secrank.startsWith("O")) {
-                        secrankname = "Ober";
-                    } else if (secrank.startsWith("S")) {
-                        secrankname = "Stabs";
-                    }
-                    SECMEMBER.put(value.get(0).toString(), secrankname);
+                    SECMEMBER.put(value.get(0).toString(), Integer.parseInt(secrank));
                 }
             } catch (IOException e) {
                 player.sendMessage(new TextComponentString(PREFIX + "Die SEC-R\u00e4nge konnten nicht geladen werden!"));

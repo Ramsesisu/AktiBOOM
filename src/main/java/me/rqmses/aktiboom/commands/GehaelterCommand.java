@@ -19,8 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -44,7 +43,7 @@ public class GehaelterCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            if (RANK >= 4) {
+            if (MEMBER.get(player.getName()) >= 4) {
                 List<List<Object>> members;
                 try {
                     members = SheetUtils.getValueRange(InformationType.EMAILS.getSheet(), "C977:D1000").getValues();

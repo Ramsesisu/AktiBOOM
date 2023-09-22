@@ -4,6 +4,7 @@ import me.rqmses.aktiboom.commands.*;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.handlers.SoundHandler;
 import me.rqmses.aktiboom.utils.GameUtils;
+import me.rqmses.aktiboom.utils.InformationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.utils.TextUtils;
 import me.rqmses.aktiboom.utils.guis.GameGui;
@@ -57,7 +58,7 @@ public class ChatReceiveListener {
             if (MEMBER.containsKey(contents[1].replace(":", "")) && contents[1].endsWith(":")) {
                 String name = contents[1].replace(":", "");
                 if (SECMEMBER.containsKey(name)) {
-                    event.setMessage(new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], SECMEMBER.get(name) + contents[0].toLowerCase())));
+                    event.setMessage(new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], InformationUtils.getSECRankName(SECMEMBER.get(name)) + contents[0].toLowerCase())));
                 }
             }
         }
@@ -128,7 +129,6 @@ public class ChatReceiveListener {
                     if (netHandlerPlayClient != null) {
                         if (netHandlerPlayClient.getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity.de")) {
                             BOMBE = true;
-                            OPERATION = true;
 
                             if (ConfigHandler.autonavi) {
                                 if (!AFK) {
@@ -350,7 +350,7 @@ public class ChatReceiveListener {
             if (contents[2].replace(" ", "").equals(player.getName())) {
                 new Thread(() -> {
                     if (SheetUtils.getRank(contents[0].split(" ")[1].replace("[UC]", "")) >= 4) {
-                        PlayerJoinListener.refresh(false);
+                        PlayerJoinListener.refresh();
 
                         Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
                     }
@@ -365,11 +365,9 @@ public class ChatReceiveListener {
                 String[] contents = message.split(":");
                 if (SheetUtils.getRank(contents[0].split(" ")[1]) >= 4) {
                     if (contents[2].contains("start")) {
-                        OPERATION = true;
                         player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat eine Gro\u00dfaktivit\u00e4t gestartet!"));
                     }
                     if (contents[2].contains("end")) {
-                        OPERATION = false;
                         player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + contents[0].split(" ")[1] + TextFormatting.YELLOW + " hat die Gro\u00dfaktivit\u00e4t beendet!"));
                     }
                 }
@@ -394,7 +392,7 @@ public class ChatReceiveListener {
         }
 
         if (message.startsWith("[FrakPayDay] Zinsen: ") && message.endsWith("$)")) {
-            if (RANK >= 5) {
+            if (MEMBER.get(player.getName()) >= 5) {
                 String[] split = message.split(" ");
                 String fbank = split[split.length - 1].replace("$)", "");
 
@@ -484,7 +482,6 @@ public class ChatReceiveListener {
 
     public static void resetBomb() {
         BOMBE = false;
-        OPERATION = false;
 
         PlayerUpdateListener.showdistance = false;
         PlayerUpdateListener.bombpos = new BlockPos(0, -1, 0);

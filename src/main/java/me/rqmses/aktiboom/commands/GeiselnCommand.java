@@ -19,8 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("ALL")
 public class GeiselnCommand extends CommandBase implements IClientCommand {
@@ -66,7 +65,7 @@ public class GeiselnCommand extends CommandBase implements IClientCommand {
 
             if (args.length > 0) {
                 if (args[0].toLowerCase().equals("clear")) {
-                    if (RANK >= 3) {
+                    if (MEMBER.get(player.getName()) >= 3) {
                         try {
                             SheetUtils.clearValues("Auftr\u00e4ge", "C61:E100");
                             player.sendChatMessage("/f %INFO% :&6" + player.getName() + "&e hat die Geisel-Liste zur\u00fcckgesetzt!");

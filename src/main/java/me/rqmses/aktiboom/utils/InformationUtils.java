@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
+import static me.rqmses.aktiboom.AktiBoom.SECRANKS;
 
 public class InformationUtils {
     public static void getStats(String prefix) {
@@ -64,5 +65,9 @@ public class InformationUtils {
             default:
                 return "Zivilist";
         }
+    }
+
+    public static String getSECRankName(int rank) {
+        return SECRANKS.get(rank);
     }
 }

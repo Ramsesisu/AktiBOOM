@@ -70,15 +70,15 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
             String name;
             int rank;
-            String secrank;
+            int secrank;
             if (args.length > 0) {
                 name = args[0];
                 rank = SheetUtils.getRank(args[0]);
-                secrank = SheetUtils.getSECRank(args[0]);
+                secrank = Integer.parseInt(SheetUtils.getSECRank(args[0]));
             } else {
                 name = player.getName();
-                rank = RANK;
-                secrank = SECRANK;
+                rank = MEMBER.get(player.getName());
+                secrank = SECMEMBER.get(player.getName());
             }
 
             player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));
@@ -86,7 +86,7 @@ public class InfoCommand extends CommandBase implements IClientCommand {
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Name: " + TextFormatting.YELLOW + name));
 
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + InformationUtils.getRankName(rank) + " (" + rank + ")"));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + secrank + InformationUtils.getRankName(rank).toLowerCase()));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + InformationUtils.getSECRankName(secrank) + InformationUtils.getRankName(rank).toLowerCase()));
         }).start();
     }
 

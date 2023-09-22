@@ -20,8 +20,7 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -64,7 +63,7 @@ public class AddMemberCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 1) {
-                if (RANK >= 5) {
+                if (MEMBER.get(player.getName()) >= 5) {
                     try {
                         int sheetindex = SheetUtils.getSheetIndex();
                         SheetUtils.copySheet(976896585, args[0], sheetindex);

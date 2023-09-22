@@ -19,8 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("ALL")
 public class RefreshCommand extends CommandBase implements IClientCommand {
@@ -60,7 +59,7 @@ public class RefreshCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 0) {
-                if (RANK >= 4) {
+                if (MEMBER.get(player.getName()) >= 4) {
                     player.sendChatMessage("/f %REFRESH% : " + args[0]);
 
                     player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wird neu geladen."));
@@ -68,7 +67,7 @@ public class RefreshCommand extends CommandBase implements IClientCommand {
                     player.sendMessage(new TextComponentString(PREFIX + "Du hast nicht die ben\u00f6tigten Rechte!"));
                 }
             } else {
-                PlayerJoinListener.refresh(false);
+                PlayerJoinListener.refresh();
 
                 Minecraft.getMinecraft().player.sendMessage(new TextComponentString(PREFIX + "Alle Daten wurden neu geladen."));
             }

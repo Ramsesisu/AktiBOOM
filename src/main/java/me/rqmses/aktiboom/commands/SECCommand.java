@@ -1,5 +1,6 @@
 package me.rqmses.aktiboom.commands;
 
+import me.rqmses.aktiboom.enums.InformationType;
 import me.rqmses.aktiboom.utils.InformationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import net.minecraft.client.Minecraft;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.util.*;
 
 import static me.rqmses.aktiboom.AktiBoom.*;
-import static me.rqmses.aktiboom.AktiBoom.MEMBER;
 
 @SuppressWarnings("ALL")
 public class SECCommand extends CommandBase implements IClientCommand {
@@ -67,7 +67,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
             if (args.length > 0) {
                 if (args.length > 1) {
-                    if (SECRANK.equals("Ober") || SECRANK.equals("Stabs")) {
+                    if (SECMEMBER.get(player.getName()) > 1) {
                         SheetUtils.tobecontinued = false;
                         SheetUtils.returnvalues = 0;
 
@@ -78,10 +78,12 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                         if (args[0].equalsIgnoreCase("invite")) {
                             try {
-                                SheetUtils.addValues("SEC", "H13:I21", new String[]{args[1], "Feld"});
+                                SheetUtils.addValues("SEC", "H13:I21", new String[]{args[1], "1"});
 
                                 SheetUtils.addEditor("SEC", "SEC-Drogen", email);
-                                SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
+                                if (MEMBER.get(player.getName()) < 4) {
+                                    SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
+                                }
 
                                 player.sendChatMessage("/f %INFO% :&6&l" + args[1] + "&e wurde von " + player.getName() + " in das SEC invitet.");
                             } catch (IOException e) {
@@ -100,7 +102,9 @@ public class SECCommand extends CommandBase implements IClientCommand {
                                 SheetUtils.sortRange("SEC", "H13:I21");
 
                                 SheetUtils.removeEditor("SEC", "SEC-Drogen", email);
-                                SheetUtils.removeEditor("Spot\u00fcbersicht", "Spots", email);
+                                if (MEMBER.get(player.getName()) < 4) {
+                                    SheetUtils.removeEditor("Spot\u00fcbersicht", "Spots", email);
+                                }
 
                                 player.sendChatMessage("/f %INFO% :&6&l" + args[1] + "&e wurde von " + player.getName() + " aus dem SEC geworfen.");
                             } catch (IOException e) {
@@ -114,7 +118,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
                             SheetUtils.returnvalues = 0;
                         }
                     } else {
-                        player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Ober" + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + " oder Stabs" + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + "!"));
+                        player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Teil der SEC-Leitung!"));
                     }
                 } else {
                     player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));
@@ -124,10 +128,10 @@ public class SECCommand extends CommandBase implements IClientCommand {
                     player.sendMessage(new TextComponentString(PREFIX + "Aktuelle SEC-Mitglieder:"));
                     player.sendMessage(new TextComponentString(""));
 
-                    for (List<Object> list : SheetUtils.getValueRange("SEC", "H13:J21").getValues()) {
+                    for (List<Object> list : SheetUtils.getValueRange(InformationType.SECMEMBER.getSheet(), InformationType.SECMEMBER.getRange()).getValues()) {
                         if (!list.get(1).toString().contains("Tester")) {
-                            String entry = "  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + list.get(1).toString() + InformationUtils.getRankName(MEMBER.get(list.get(0).toString())).toLowerCase();
-                            if (SEC && !list.get(1).toString().equals("Feld")) {
+                            String entry = "  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + InformationUtils.getSECRankName(Integer.parseInt(list.get(1).toString())) + InformationUtils.getRankName(MEMBER.get(list.get(0).toString())).toLowerCase();
+                            if (!SECMEMBER.containsKey(player.getName()) || SECMEMBER.get(list.get(0).toString()) > 1) {
                                 player.sendMessage(new TextComponentString(entry));
                             } else {
                                 player.sendMessage(new TextComponentString(entry + " " + TextFormatting.DARK_GRAY + "(" + TextFormatting.BOLD + list.get(2).toString() + TextFormatting.DARK_GRAY + "P)"));

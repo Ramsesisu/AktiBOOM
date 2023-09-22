@@ -61,7 +61,7 @@ public class RemoveSpotCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            if (RANK > 3 || SEC) {
+            if (MEMBER.get(player.getName()) > 3 || SECMEMBER.containsKey(player.getName())) {
                 if (args.length > 0) {
                     new Thread(() -> {
                         int line;

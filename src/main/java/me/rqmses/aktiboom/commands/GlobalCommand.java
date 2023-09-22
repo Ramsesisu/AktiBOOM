@@ -13,8 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -39,7 +38,7 @@ public class GlobalCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 0) {
-                if (RANK >= 4) {
+                if (MEMBER.get(player.getName()) >= 4) {
                     StringBuilder text = new StringBuilder();
                     for (String arg : args) {
                         text.append(" ").append(arg);

@@ -114,8 +114,6 @@ public class LeitfadenCommand extends CommandBase implements IClientCommand {
         description("Zeigt an, ob bei einem Member die aktuellste Mod-Version installiert ist.");
         command("/checkschutz");
         description("Gibt Informationen zum Schutzgeld des Spielers aus.");
-        command("/checksecdrugs");
-        description("Gibt die Anzahl \u00fcbriger und verbrauchter SEC-Drogen aus.");
         command("/checksprengi");
         description("Gibt Informationen zum Sprengg\u00fcrtelauftrag des Spielers aus.");
         command("/checktuning");

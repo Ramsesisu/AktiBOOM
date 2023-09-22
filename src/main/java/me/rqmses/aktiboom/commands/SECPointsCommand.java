@@ -73,7 +73,7 @@ public class SECPointsCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            String secrank = SECMEMBER.get(player.getName());
+            int secrank = SECMEMBER.get(player.getName());
             if (args.length == 1) {
                 player.sendMessage(new TextComponentString(PREFIX + "SEC-Punkte von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + ":"));
 
@@ -86,7 +86,7 @@ public class SECPointsCommand extends CommandBase implements IClientCommand {
                 }
                 player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + SECMEMBER.get(args[0]) + InformationUtils.getRankName(MEMBER.get(args[0])).toLowerCase() + " " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + ":" + TextFormatting.YELLOW + " " + TextFormatting.BOLD + points + TextFormatting.YELLOW + " Punkte"));
             } else if (args.length > 1) {
-                if (secrank.equals("Ober") || secrank.equals("Stabs")) {
+                if (secrank > 1) {
                     String error = PREFIX + "Die SEC-Punkte von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " konnten nicht gesetzt werden!";
                     int line;
                     try {
@@ -105,6 +105,8 @@ public class SECPointsCommand extends CommandBase implements IClientCommand {
                         return;
                     }
                     player.sendMessage(new TextComponentString(PREFIX + "Die SEC-Punkte von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurden auf " + TextFormatting.GOLD + "" + TextFormatting.BOLD + args[1] + TextFormatting.YELLOW + " gesetzt."));
+                } else {
+                    player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Teil der SEC-Leitung!"));
                 }
             } else {
                 player.sendMessage(new TextComponentString(PREFIX + getUsage(sender)));

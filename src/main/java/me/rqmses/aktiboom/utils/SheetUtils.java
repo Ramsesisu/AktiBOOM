@@ -91,7 +91,7 @@ public class SheetUtils {
             }
             return getValueRange(InformationType.SECRANKS.getSheet(), InformationType.SECRANKS.getRange()).getValues().get(valueRange.getValues().indexOf(Collections.singletonList(name))).get(0).toString();
         } catch (IOException e) {
-            return "Executive";
+            return "0";
         }
     }
 
@@ -438,20 +438,6 @@ public class SheetUtils {
                                                 .setStartColumnIndex(startColumn)
                                                 .setEndRowIndex(endRow)
                                                 .setEndColumnIndex(endColumn))))))
-                .execute();
-    }
-
-    public static void fillColumn(String sheet, String range, String string) throws IOException {
-        List<List<Object>> values = new ArrayList<>();
-        String numrange = range.replaceAll("[^\\d:]", "");
-        String[] ranges = numrange.split(":");
-        int lines = Integer.parseInt(ranges[1]) - Integer.parseInt(ranges[0]) - 1;
-        for (int i = 0; i < lines; i++) {
-            values.add(Collections.singletonList(string));
-        }
-        sheetsService.spreadsheets().values()
-                .update(SPREADSHEET_ID, sheet + "!" + range, new ValueRange().setValues(values))
-                .setValueInputOption("USER_ENTERED")
                 .execute();
     }
 }

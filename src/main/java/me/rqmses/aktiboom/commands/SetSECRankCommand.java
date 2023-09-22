@@ -50,7 +50,7 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
             }
         }
         if (args.length == 2) {
-            targets = Arrays.asList("Feld", "Ober", "Stabs");
+            targets.addAll(SECRANKS.values());
         }
         for (String target : targets) {
             if (target.toUpperCase().startsWith(args[args.length-1].toUpperCase()))
@@ -66,29 +66,34 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 1) {
-                if (SECRANK.equals("Ober") || SECRANK.equals("Stabs")) {
-                    String rank = args[1];
-                    String oldrank = SheetUtils.getSECRank(args[0]);
+                if (SECMEMBER.get(player.getName()) > 1) {
+                    int rank = 0;
+                    for (Map.Entry<Integer, String> entry : SECRANKS.entrySet()) {
+                        if (Objects.equals(args[1], entry.getValue())) {
+                            rank = entry.getKey();
+                        }
+                    }
+                    int oldrank = Integer.parseInt(SheetUtils.getSECRank(args[0]));
 
-                    if (rank.equals("Feld") || rank.equals("Ober") || rank.equals("Stabs")) {
-                        if (!SheetUtils.setSECRank(args[0], rank)) {
+                    if (rank > 0 && rank < 4) {
+                        if (!SheetUtils.setSECRank(args[0], String.valueOf(rank))) {
                             player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " ist nicht in der Fraktion!"));
                         } else {
                             String email = SheetUtils.getEmail(args[0]);
 
-                            if (rank.equals("Feld") && !oldrank.equals("Feld")) {
+                            if (rank == 1 && oldrank > 1) {
                                 SheetUtils.removeEditor("SEC", "SEC-Member", email);
-                            } else if ((rank.equals("Ober") || rank.equals("Stabs")) && oldrank.equals("Feld")) {
+                            } else if (rank > 1 && oldrank == 1) {
                                 SheetUtils.addEditor("SEC", "SEC-Member", email);
                             }
 
-                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + rank + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + TextFormatting.YELLOW + " aktualisiert."));
+                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + InformationUtils.getSECRankName(rank) + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + TextFormatting.YELLOW + " aktualisiert."));
                         }
                     } else {
                         player.sendMessage(new TextComponentString(PREFIX + "Gib einen g\u00fcltigen Rang an!"));
                     }
                 } else {
-                    player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Ober" + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + " oder Stabs" + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + "!"));
+                    player.sendMessage(new TextComponentString(PREFIX + "Du bist kein Teil der SEC-Leitung!"));
                 }
             } else if (args.length == 1) {
                 player.sendMessage(new TextComponentString(PREFIX + "Gib einen Rang an!"));

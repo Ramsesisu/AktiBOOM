@@ -78,7 +78,7 @@ public class AddSpotCommand extends CommandBase implements IClientCommand {
         new Thread(() -> {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-            if (RANK > 3 || SEC) {
+            if (MEMBER.get(player.getName()) > 3 || SECMEMBER.containsKey(player.getName())) {
                 if (args.length > 5) {
                     StringBuilder taktik = new StringBuilder();
                     if (args.length > 6) {

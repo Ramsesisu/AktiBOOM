@@ -18,8 +18,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("ALL")
 public class KalenderCommand extends CommandBase implements IClientCommand {
@@ -69,7 +68,7 @@ public class KalenderCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 3) {
-                if (RANK > 2) {
+                if (MEMBER.get(player.getName()) > 2) {
                     String column;
                     String line;
                     if (args[2].contains(".")) {

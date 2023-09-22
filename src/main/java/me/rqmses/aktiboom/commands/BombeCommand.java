@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("ALL")
 public class BombeCommand extends CommandBase implements IClientCommand {
@@ -62,7 +61,7 @@ public class BombeCommand extends CommandBase implements IClientCommand {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         if (Minecraft.getMinecraft().getConnection().getNetworkManager().channel().remoteAddress().toString().toLowerCase().contains("unicacity")) {
-            if (RANK >= 4) {
+            if (MEMBER.get(player.getName()) >= 4) {
                 if (player.inventory.getCurrentItem().getItem() != Item.getItemById(46)) {
                     player.sendMessage(new TextComponentString(PREFIX + "Du musst die Bombe in der Hand halten!"));
                     return;

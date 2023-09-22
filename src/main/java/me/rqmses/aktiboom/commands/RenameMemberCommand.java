@@ -23,8 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import static me.rqmses.aktiboom.AktiBoom.MEMBER;
 import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -67,7 +67,7 @@ public class RenameMemberCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 1) {
-                if (RANK >= 5) {
+                if (MEMBER.get(player.getName()) >= 5) {
                     try {
                         if (!SheetUtils.getValueRange("\u00dcbersicht", "B4:B27").getValues().toString().contains(args[0])) {
                             player.sendMessage(new TextComponentString(PREFIX + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " befindet sich nicht im Aktivit\u00e4tsnachweis!"));

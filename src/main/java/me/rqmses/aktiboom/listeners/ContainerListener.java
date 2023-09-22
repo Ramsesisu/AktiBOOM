@@ -45,7 +45,7 @@ public class ContainerListener {
                     }
                     lastclick = System.currentTimeMillis();
 
-                    if (RANK < 3) {
+                    if (MEMBER.get(player.getName()) < 3) {
                         player.sendMessage(new TextComponentString(PREFIX + "Du kannst dir keinen " + TextFormatting.GOLD + "Sprengg\u00fcrtel" + TextFormatting.YELLOW + " equippen!"));
                         event.setCanceled(true);
                         return;
@@ -77,13 +77,13 @@ public class ContainerListener {
                     }
                     lastclick = System.currentTimeMillis();
 
-                    if (RANK < 3) {
+                    if (MEMBER.get(player.getName()) < 3) {
                         player.sendMessage(new TextComponentString(PREFIX + "Du kannst dir keine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " equippen!"));
                         event.setCanceled(true);
                         return;
                     }
 
-                    if (!SEC && RANK < 4) {
+                    if (!SECMEMBER.containsKey(player.getName()) && MEMBER.get(player.getName()) < 4) {
                         player.sendMessage(new TextComponentString(PREFIX + "Du darfst dir keine " + TextFormatting.GOLD + "Alpha-7" + TextFormatting.YELLOW + " equippen!"));
                         event.setCanceled(true);
                         return;

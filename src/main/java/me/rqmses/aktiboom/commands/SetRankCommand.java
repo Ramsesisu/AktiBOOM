@@ -20,8 +20,7 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
 
-import static me.rqmses.aktiboom.AktiBoom.PREFIX;
-import static me.rqmses.aktiboom.AktiBoom.RANK;
+import static me.rqmses.aktiboom.AktiBoom.*;
 
 @SuppressWarnings("NullableProblems")
 @SideOnly(Side.CLIENT)
@@ -67,7 +66,7 @@ public class SetRankCommand extends CommandBase implements IClientCommand {
             EntityPlayerSP player = Minecraft.getMinecraft().player;
 
             if (args.length > 1) {
-                if (RANK >= 5) {
+                if (MEMBER.get(player.getName()) >= 5) {
                     int rank;
                     int oldrank = SheetUtils.getRank(args[0]);
 
@@ -114,9 +113,11 @@ public class SetRankCommand extends CommandBase implements IClientCommand {
                                 SheetUtils.addEditor("Equiplog", "Equiplog", email);
                                 SheetUtils.addEditor("Win/Lose Statistik", "Win/Lose", email);
                                 SheetUtils.addEditor("Win/Lose Statistik", "Last", email);
-                                SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
                                 SheetUtils.addEditor("Kalender", "Datum", email);
                                 SheetUtils.addEditor("Equiplog", "Besprechung", email);
+                                if (!SECMEMBER.containsKey(player.getName())) {
+                                    SheetUtils.addEditor("Spot\u00fcbersicht", "Spots", email);
+                                }
                                 for (String member : memberlist) {
                                     if (!Objects.equals(member, args[0])) {
                                         SheetUtils.addEditor(member, "Sheet", email);
@@ -126,9 +127,11 @@ public class SetRankCommand extends CommandBase implements IClientCommand {
                                 SheetUtils.removeEditor("Equiplog", "Equiplog", email);
                                 SheetUtils.removeEditor("Win/Lose Statistik", "Win/Lose", email);
                                 SheetUtils.removeEditor("Win/Lose Statistik", "Last", email);
-                                SheetUtils.removeEditor("Spot\u00fcbersicht", "Spots", email);
                                 SheetUtils.removeEditor("Kalender", "Datum", email);
                                 SheetUtils.removeEditor("Equiplog", "Besprechung", email);
+                                if (!SECMEMBER.containsKey(player.getName())) {
+                                    SheetUtils.removeEditor("Spot\u00fcbersicht", "Spots", email);
+                                }
                                 for (String member : memberlist) {
                                     if (!Objects.equals(member, args[0])) {
                                         SheetUtils.removeEditor(member, "Sheet", email);
