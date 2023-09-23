@@ -70,15 +70,19 @@ public class InfoCommand extends CommandBase implements IClientCommand {
 
             String name;
             int rank;
-            int secrank;
+            int secrank = 0;
             if (args.length > 0) {
                 name = args[0];
                 rank = SheetUtils.getRank(args[0]);
-                secrank = Integer.parseInt(SheetUtils.getSECRank(args[0]));
+                if (SECMEMBER.containsKey(player.getName())) {
+                    secrank = Integer.parseInt(SheetUtils.getSECRank(args[0]));
+                }
             } else {
                 name = player.getName();
                 rank = MEMBER.get(player.getName());
-                secrank = SECMEMBER.get(player.getName());
+                if (SECMEMBER.containsKey(player.getName())) {
+                    secrank = SECMEMBER.get(player.getName());
+                }
             }
 
             player.sendMessage(new TextComponentString(PREFIX + "Informationen \u00fcber " + TextFormatting.GOLD + name + TextFormatting.YELLOW + ":"));

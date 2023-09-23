@@ -160,6 +160,7 @@ public class PlayerJoinListener {
             List<List<Object>> values;
             try {
                 values = SheetUtils.getValueRange(InformationType.SECRANKNAMES.getSheet(), InformationType.SECRANKNAMES.getRange()).getValues();
+                SECRANKS.put(0, "-");
                 for (List<Object> value : values) {
                     String secrankname = value.get(0).toString();
                     SECRANKS.put(Integer.parseInt(value.get(1).toString()), secrankname);
