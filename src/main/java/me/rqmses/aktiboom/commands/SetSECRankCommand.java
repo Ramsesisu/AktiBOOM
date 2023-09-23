@@ -87,7 +87,7 @@ public class SetSECRankCommand extends CommandBase implements IClientCommand {
                                 SheetUtils.addEditor("SEC", "SEC-Member", email);
                             }
 
-                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + InformationUtils.getSECRankName(rank) + InformationUtils.getRankName(MEMBER.get(player.getName())).toLowerCase() + TextFormatting.YELLOW + " aktualisiert."));
+                            player.sendMessage(new TextComponentString(PREFIX + "Der SEC-Rang von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " wurde zu " + TextFormatting.GOLD + InformationUtils.getSECRankName(rank) + TextFormatting.YELLOW + " aktualisiert."));
                         }
                     } else {
                         player.sendMessage(new TextComponentString(PREFIX + "Gib einen g\u00fcltigen Rang an!"));

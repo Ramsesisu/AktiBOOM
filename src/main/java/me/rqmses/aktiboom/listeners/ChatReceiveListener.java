@@ -4,7 +4,6 @@ import me.rqmses.aktiboom.commands.*;
 import me.rqmses.aktiboom.handlers.ConfigHandler;
 import me.rqmses.aktiboom.handlers.SoundHandler;
 import me.rqmses.aktiboom.utils.GameUtils;
-import me.rqmses.aktiboom.utils.InformationUtils;
 import me.rqmses.aktiboom.utils.SheetUtils;
 import me.rqmses.aktiboom.utils.TextUtils;
 import me.rqmses.aktiboom.utils.guis.GameGui;
@@ -474,16 +473,24 @@ public class ChatReceiveListener {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPrefix(ClientChatReceivedEvent event) {
-        String message = event.getMessage().getUnformattedText();
+        TextComponentString message = new TextComponentString(event.getMessage().getFormattedText());
 
-        if (prefixes.contains(message.split(" ")[0])) {
-            String[] contents = message.split(" ");
+        if (prefixes.contains(event.getMessage().getUnformattedText().split(" ")[0])) {
+            String[] contents = event.getMessage().getUnformattedText().split(" ");
             if (MEMBER.containsKey(contents[1].replace(":", "")) && contents[1].endsWith(":")) {
                 String name = contents[1].replace(":", "");
                 if (SECMEMBER.containsKey(name)) {
-                    event.setMessage(new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], InformationUtils.getSECRankName(SECMEMBER.get(name)) + contents[0].toLowerCase())));
+                    message = new TextComponentString(event.getMessage().getFormattedText().replaceFirst(contents[0], "SEC " + contents[0]));
                 }
             }
+
+            for (String string : contents) {
+                if (string.startsWith("https://")) {
+                    message = TextUtils.clickable(TextFormatting.WHITE, message.getFormattedText(), TextFormatting.GRAY + string, ClickEvent.Action.OPEN_URL, string);
+                }
+            }
+
+            event.setMessage(message);
         }
     }
 

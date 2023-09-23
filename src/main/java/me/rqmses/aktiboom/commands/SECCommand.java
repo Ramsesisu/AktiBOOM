@@ -78,7 +78,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                         if (args[0].equalsIgnoreCase("invite")) {
                             try {
-                                SheetUtils.addValues("SEC", "H13:I21", new String[]{args[1], "1"});
+                                SheetUtils.addValues("SEC", "H13:I21", new String[]{args[1], "1", "0"});
 
                                 SheetUtils.addEditor("SEC", "SEC-Drogen", email);
                                 if (MEMBER.get(player.getName()) < 4) {
@@ -93,13 +93,12 @@ public class SECCommand extends CommandBase implements IClientCommand {
                         if (args[0].equalsIgnoreCase("uninvite")) {
                             try {
                                 int line = SheetUtils.searchLine("SEC", "H13:H21", args[1]) + 13;
-                                List<Object> list = SheetUtils.getValueRange("SEC", "H" + line + ":I" + line).getValues().get(0);
-                                if (list.get(1).toString().equalsIgnoreCase("Name")) {
+                                if (!SECMEMBER.containsKey(args[1])) {
                                     player.sendMessage(new TextComponentString(PREFIX + "Der Spieler befindet sich nicht im SEC."));
                                     return;
                                 }
-                                SheetUtils.clearValues("SEC", "H" + line + ":I" + line);
-                                SheetUtils.sortRange("SEC", "H13:I21");
+                                SheetUtils.clearValues("SEC", "H" + line + ":J" + line);
+                                SheetUtils.sortRange("SEC", "H13:J21");
 
                                 SheetUtils.removeEditor("SEC", "SEC-Drogen", email);
                                 if (MEMBER.get(player.getName()) < 4) {
@@ -130,7 +129,7 @@ public class SECCommand extends CommandBase implements IClientCommand {
 
                     for (List<Object> list : SheetUtils.getValueRange(InformationType.SECMEMBER.getSheet(), InformationType.SECMEMBER.getRange()).getValues()) {
                         if (!list.get(1).toString().contains("Tester")) {
-                            String entry = "  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + InformationUtils.getSECRankName(Integer.parseInt(list.get(1).toString())) + InformationUtils.getRankName(MEMBER.get(list.get(0).toString())).toLowerCase();
+                            String entry = "  " + TextFormatting.YELLOW + list.get(0).toString() + TextFormatting.DARK_GRAY + " | " + TextFormatting.GRAY + InformationUtils.getSECRankName(Integer.parseInt(list.get(1).toString()));
                             if (!SECMEMBER.containsKey(player.getName()) || SECMEMBER.get(list.get(0).toString()) > 1) {
                                 player.sendMessage(new TextComponentString(entry));
                             } else {

@@ -86,7 +86,7 @@ public class InfoCommand extends CommandBase implements IClientCommand {
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Name: " + TextFormatting.YELLOW + name));
 
             player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  Rang: " + TextFormatting.YELLOW + InformationUtils.getRankName(rank) + " (" + rank + ")"));
-            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + InformationUtils.getSECRankName(secrank) + InformationUtils.getRankName(rank).toLowerCase()));
+            player.sendMessage(new TextComponentString(TextFormatting.GRAY + "  SEC: " + TextFormatting.YELLOW + InformationUtils.getSECRankName(secrank)));
         }).start();
     }
 

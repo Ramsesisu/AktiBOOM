@@ -84,7 +84,7 @@ public class SECPointsCommand extends CommandBase implements IClientCommand {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + SECMEMBER.get(args[0]) + InformationUtils.getRankName(MEMBER.get(args[0])).toLowerCase() + " " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + ":" + TextFormatting.YELLOW + " " + TextFormatting.BOLD + points + TextFormatting.YELLOW + " Punkte"));
+                player.sendMessage(new TextComponentString("   " + TextFormatting.GRAY + InformationUtils.getSECRankName(SECMEMBER.get(args[0])) + " " + TextFormatting.GOLD + args[0] + TextFormatting.GRAY + ":" + TextFormatting.YELLOW + " " + TextFormatting.BOLD + points + TextFormatting.YELLOW + " Punkte"));
             } else if (args.length > 1) {
                 if (secrank > 1) {
                     String error = PREFIX + "Die SEC-Punkte von " + TextFormatting.GOLD + args[0] + TextFormatting.YELLOW + " konnten nicht gesetzt werden!";
